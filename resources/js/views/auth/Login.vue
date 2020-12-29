@@ -53,7 +53,7 @@ export default {
                 axios.post('/api/login', this.formData)
                 .then((response) => {
                     localStorage.setItem('token', response.data.data.token )
-                    this.$cho
+                    // this.$cho
                     this.$router.push('/dashboard')
                 })
                 .catch(err => {

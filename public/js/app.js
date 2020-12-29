@@ -2194,8 +2194,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 2;
                 return axios.get('/sanctum/csrf-cookie').then(function (response) {
                   axios.post('/api/login', _this.formData).then(function (response) {
-                    localStorage.setItem('token', response.data.data.token);
-                    _this.$cho;
+                    localStorage.setItem('token', response.data.data.token); // this.$cho
 
                     _this.$router.push('/dashboard');
                   })["catch"](function (err) {
@@ -20745,6 +20744,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mode: 'history',
   routes: [{
+    path: '/',
+    name: 'Home',
+    redirect: '/dashboard'
+  }, {
     path: '/dashboard',
     name: 'Dashboard',
     component: _views_pages_Dashboard__WEBPACK_IMPORTED_MODULE_0__["default"],

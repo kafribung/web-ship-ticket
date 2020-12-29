@@ -4,6 +4,11 @@ export default {
     mode: 'history',
     routes: [
         {
+            path: '/',
+            name: 'Home',
+            redirect: '/dashboard'
+        },
+        {
             path: '/dashboard',
             name: 'Dashboard',
             component: Dashboard,
