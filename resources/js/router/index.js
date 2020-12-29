@@ -24,7 +24,7 @@ export default {
             path: '/login',
             name: 'Login',
             component: Login,
-            beforeEnter: (to, from, next) => {
+            beforeEach: (to, from, next) => {
                 if (localStorage.getItem('token') == '') {
                     next()
                 } else next('/dashboard')
