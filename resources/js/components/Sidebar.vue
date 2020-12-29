@@ -139,9 +139,7 @@
 
 <script>
 export default {
-    name: 'Sidebar',
     methods: {
-
         handleLogout(){
             const header = {
                 headers: {
