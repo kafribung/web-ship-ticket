@@ -2179,7 +2179,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         email: '',
         password: ''
       },
-      errors: []
+      errors: ''
     };
   },
   methods: {
@@ -2194,11 +2194,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.next = 2;
                 return axios.get('/sanctum/csrf-cookie').then(function (response) {
                   axios.post('/api/login', _this.formData).then(function (response) {
-                    localStorage.setItem('token', response.data.data.token); // this.$cho
-
                     _this.$router.push('/dashboard');
                   })["catch"](function (err) {
-                    _this.errors = err.response.data.errors;
+                    _this.errors = err.response.data.message;
                   });
                 });
 
@@ -2420,8 +2418,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     handleDashboard: function handleDashboard() {
-      var _this = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -2441,7 +2437,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-                return _context.abrupt("return", _this.$router.push('/login'));
+                console.log(_context.t0);
 
               case 10:
               case "end":
@@ -2472,7 +2468,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* BASIC */\nhtml {\r\n    background-color: #56baed;\n}\nbody {\r\n    font-family: \"Poppins\", sans-serif;\r\n    height: 100vh;\n}\na {\r\n    color: #92badd;\r\n    display: inline-block;\r\n    text-decoration: none;\r\n    font-weight: 400;\n}\nh2 {\r\n    text-align: center;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    text-transform: uppercase;\r\n    display: inline-block;\r\n    margin: 40px 8px 10px 8px;\r\n    color: #cccccc;\n}\r\n\r\n/* STRUCTURE */\n.wrapper {\r\n    display: flex;\r\n    align-items: center;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    width: 100%;\r\n    min-height: 100%;\r\n    padding: 20px;\n}\n#formContent {\r\n    -webkit-border-radius: 10px 10px 10px 10px;\r\n    border-radius: 10px 10px 10px 10px;\r\n    background: #fff;\r\n    padding: 30px;\r\n    width: 90%;\r\n    max-width: 450px;\r\n    position: relative;\r\n    padding: 0px;\r\n    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);\r\n    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);\r\n    text-align: center;\n}\n#formFooter {\r\n    background-color: #f6f6f6;\r\n    border-top: 1px solid #dce8f1;\r\n    padding: 25px;\r\n    text-align: center;\r\n    -webkit-border-radius: 0 0 10px 10px;\r\n    border-radius: 0 0 10px 10px;\n}\r\n\r\n/* TABS */\nh2.inactive {\r\n    color: #cccccc;\n}\nh2.active {\r\n    color: #0d0d0d;\r\n    border-bottom: 2px solid #5fbae9;\n}\r\n\r\n/* FORM TYPOGRAPHY*/\nbutton {\r\n    background-color: #56baed;\r\n    border: none;\r\n    color: white;\r\n    padding: 15px 80px;\r\n    text-align: center;\r\n    text-decoration: none;\r\n    display: inline-block;\r\n    text-transform: uppercase;\r\n    font-size: 13px;\r\n    -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);\r\n    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);\r\n    -webkit-border-radius: 5px 5px 5px 5px;\r\n    border-radius: 5px 5px 5px 5px;\r\n    margin: 5px 20px 40px 20px;\r\n    -webkit-transition: all 0.3s ease-in-out;\r\n    -moz-transition: all 0.3s ease-in-out;\r\n    -ms-transition: all 0.3s ease-in-out;\r\n    -o-transition: all 0.3s ease-in-out;\r\n    transition: all 0.3s ease-in-out;\n}\nbutton:hover {\r\n    background-color: #39ace7;\n}\nbutton:active {\r\n    -moz-transform: scale(0.95);\r\n    -webkit-transform: scale(0.95);\r\n    -o-transform: scale(0.95);\r\n    -ms-transform: scale(0.95);\r\n    transform: scale(0.95);\n}\n.form-control {\r\n    background-color: #f6f6f6;\r\n    border: none;\r\n    color: #0d0d0d;\r\n    padding: 15px 32px;\r\n    text-align: center;\r\n    text-decoration: none;\r\n    display: inline-block;\r\n    font-size: 16px;\r\n    margin: 5px;\r\n    width: 85%;\r\n    border: 2px solid #f6f6f6;\r\n    -webkit-transition: all 0.5s ease-in-out;\r\n    -moz-transition: all 0.5s ease-in-out;\r\n    -ms-transition: all 0.5s ease-in-out;\r\n    -o-transition: all 0.5s ease-in-out;\r\n    transition: all 0.5s ease-in-out;\r\n    -webkit-border-radius: 5px 5px 5px 5px;\r\n    border-radius: 5px 5px 5px 5px;\n}\n.form-control:focus {\r\n    background-color: #fff;\r\n    border-bottom: 2px solid #5fbae9;\n}\n.form-control:placeholder {\r\n    color: #cccccc;\n}\r\n\r\n/* ANIMATIONS */\r\n\r\n/* Simple CSS3 Fade-in-down Animation */\n.fadeInDown {\r\n    -webkit-animation-name: fadeInDown;\r\n    animation-name: fadeInDown;\r\n    -webkit-animation-duration: 1s;\r\n    animation-duration: 1s;\r\n    -webkit-animation-fill-mode: both;\r\n    animation-fill-mode: both;\n}\n@-webkit-keyframes fadeInDown {\n0% {\r\n        opacity: 0;\r\n        -webkit-transform: translate3d(0, -100%, 0);\r\n        transform: translate3d(0, -100%, 0);\n}\n100% {\r\n        opacity: 1;\r\n        -webkit-transform: none;\r\n        transform: none;\n}\n}\n@keyframes fadeInDown {\n0% {\r\n        opacity: 0;\r\n        -webkit-transform: translate3d(0, -100%, 0);\r\n        transform: translate3d(0, -100%, 0);\n}\n100% {\r\n        opacity: 1;\r\n        -webkit-transform: none;\r\n        transform: none;\n}\n}\r\n\r\n/* Simple CSS3 Fade-in Animation */\n@-webkit-keyframes fadeIn {\nfrom {\r\n        opacity: 0;\n}\nto {\r\n        opacity: 1;\n}\n}\n@-moz-keyframes fadeIn {\nfrom {\r\n        opacity: 0;\n}\nto {\r\n        opacity: 1;\n}\n}\n@keyframes fadeIn {\nfrom {\r\n        opacity: 0;\n}\nto {\r\n        opacity: 1;\n}\n}\n.fadeIn {\r\n    opacity: 0;\r\n    -webkit-animation: fadeIn ease-in 1;\r\n    -moz-animation: fadeIn ease-in 1;\r\n    animation: fadeIn ease-in 1;\r\n\r\n    -webkit-animation-fill-mode: forwards;\r\n    -moz-animation-fill-mode: forwards;\r\n    animation-fill-mode: forwards;\r\n\r\n    -webkit-animation-duration: 1s;\r\n    -moz-animation-duration: 1s;\r\n    animation-duration: 1s;\n}\n.fadeIn.first {\r\n    -webkit-animation-delay: 0.4s;\r\n    -moz-animation-delay: 0.4s;\r\n    animation-delay: 0.4s;\n}\n.fadeIn.second {\r\n    -webkit-animation-delay: 0.6s;\r\n    -moz-animation-delay: 0.6s;\r\n    animation-delay: 0.6s;\n}\n.fadeIn.third {\r\n    -webkit-animation-delay: 0.8s;\r\n    -moz-animation-delay: 0.8s;\r\n    animation-delay: 0.8s;\n}\n.fadeIn.fourth {\r\n    -webkit-animation-delay: 1s;\r\n    -moz-animation-delay: 1s;\r\n    animation-delay: 1s;\n}\r\n\r\n/* Simple CSS3 Fade-in Animation */\n.underlineHover:after {\r\n    display: block;\r\n    left: 0;\r\n    bottom: -10px;\r\n    width: 0;\r\n    height: 2px;\r\n    background-color: #56baed;\r\n    content: \"\";\r\n    transition: width 0.2s;\n}\n.underlineHover:hover {\r\n    color: #0d0d0d;\n}\n.underlineHover:hover:after {\r\n    width: 100%;\n}\r\n\r\n/* OTHERS */\n*:focus {\r\n    outline: none;\n}\n#icon {\r\n    width: 60%;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* BASIC */\nhtml {\r\n    background-color: #56baed;\n}\nbody {\r\n    font-family: \"Poppins\", sans-serif;\r\n    height: 100vh;\n}\na {\r\n    color: #92badd;\r\n    display: inline-block;\r\n    text-decoration: none;\r\n    font-weight: 400;\n}\nh2 {\r\n    text-align: center;\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    text-transform: uppercase;\r\n    display: inline-block;\r\n    margin: 40px 8px 10px 8px;\r\n    color: #cccccc;\n}\r\n\r\n/* STRUCTURE */\n.wrapper {\r\n    display: flex;\r\n    align-items: center;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    width: 100%;\r\n    min-height: 100%;\r\n    padding: 20px;\n}\n#formContent {\r\n    -webkit-border-radius: 10px 10px 10px 10px;\r\n    border-radius: 10px 10px 10px 10px;\r\n    background: #fff;\r\n    padding: 30px;\r\n    width: 90%;\r\n    max-width: 450px;\r\n    position: relative;\r\n    padding: 0px;\r\n    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);\r\n    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);\r\n    text-align: center;\n}\n#formFooter {\r\n    background-color: #f6f6f6;\r\n    border-top: 1px solid #dce8f1;\r\n    padding: 25px;\r\n    text-align: center;\r\n    -webkit-border-radius: 0 0 10px 10px;\r\n    border-radius: 0 0 10px 10px;\n}\r\n\r\n/* TABS */\nh2.inactive {\r\n    color: #cccccc;\n}\nh2.active {\r\n    color: #0d0d0d;\r\n    border-bottom: 2px solid #5fbae9;\n}\r\n\r\n/* FORM TYPOGRAPHY*/\nbutton {\r\n    background-color: #56baed;\r\n    border: none;\r\n    color: white;\r\n    padding: 15px 80px;\r\n    text-align: center;\r\n    text-decoration: none;\r\n    display: inline-block;\r\n    text-transform: uppercase;\r\n    font-size: 13px;\r\n    -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);\r\n    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);\r\n    -webkit-border-radius: 5px 5px 5px 5px;\r\n    border-radius: 5px 5px 5px 5px;\r\n    margin: 5px 20px 40px 20px;\r\n    -webkit-transition: all 0.3s ease-in-out;\r\n    -moz-transition: all 0.3s ease-in-out;\r\n    -ms-transition: all 0.3s ease-in-out;\r\n    -o-transition: all 0.3s ease-in-out;\r\n    transition: all 0.3s ease-in-out;\n}\nbutton:hover {\r\n    background-color: #39ace7;\n}\nbutton:active {\r\n    -moz-transform: scale(0.95);\r\n    -webkit-transform: scale(0.95);\r\n    -o-transform: scale(0.95);\r\n    -ms-transform: scale(0.95);\r\n    transform: scale(0.95);\n}\n.form-control {\r\n    background-color: #f6f6f6;\r\n    border: none;\r\n    color: #0d0d0d;\r\n    padding: 15px 32px;\r\n    text-align: center;\r\n    text-decoration: none;\r\n    display: inline-block;\r\n    font-size: 16px;\r\n    margin: 5px;\r\n    width: 85%;\r\n    border: 2px solid #f6f6f6;\r\n    -webkit-transition: all 0.5s ease-in-out;\r\n    -moz-transition: all 0.5s ease-in-out;\r\n    -ms-transition: all 0.5s ease-in-out;\r\n    -o-transition: all 0.5s ease-in-out;\r\n    transition: all 0.5s ease-in-out;\r\n    -webkit-border-radius: 5px 5px 5px 5px;\r\n    border-radius: 5px 5px 5px 5px;\n}\n.form-control:focus {\r\n    background-color: #fff;\r\n    border-bottom: 2px solid #5fbae9;\n}\n.form-control:placeholder {\r\n    color: #cccccc;\n}\r\n\r\n/* ANIMATIONS */\r\n\r\n/* Simple CSS3 Fade-in-down Animation */\n.fadeInDown {\r\n    -webkit-animation-name: fadeInDown;\r\n    animation-name: fadeInDown;\r\n    -webkit-animation-duration: 1s;\r\n    animation-duration: 1s;\r\n    -webkit-animation-fill-mode: both;\r\n    animation-fill-mode: both;\n}\n@-webkit-keyframes fadeInDown {\n0% {\r\n        opacity: 0;\r\n        -webkit-transform: translate3d(0, -100%, 0);\r\n        transform: translate3d(0, -100%, 0);\n}\n100% {\r\n        opacity: 1;\r\n        -webkit-transform: none;\r\n        transform: none;\n}\n}\n@keyframes fadeInDown {\n0% {\r\n        opacity: 0;\r\n        -webkit-transform: translate3d(0, -100%, 0);\r\n        transform: translate3d(0, -100%, 0);\n}\n100% {\r\n        opacity: 1;\r\n        -webkit-transform: none;\r\n        transform: none;\n}\n}\r\n\r\n/* Simple CSS3 Fade-in Animation */\n@-webkit-keyframes fadeIn {\nfrom {\r\n        opacity: 0;\n}\nto {\r\n        opacity: 1;\n}\n}\n@-moz-keyframes fadeIn {\nfrom {\r\n        opacity: 0;\n}\nto {\r\n        opacity: 1;\n}\n}\n@keyframes fadeIn {\nfrom {\r\n        opacity: 0;\n}\nto {\r\n        opacity: 1;\n}\n}\n.fadeIn {\r\n    opacity: 0;\r\n    -webkit-animation: fadeIn ease-in 1;\r\n    -moz-animation: fadeIn ease-in 1;\r\n    animation: fadeIn ease-in 1;\r\n\r\n    -webkit-animation-fill-mode: forwards;\r\n    -moz-animation-fill-mode: forwards;\r\n    animation-fill-mode: forwards;\r\n\r\n    -webkit-animation-duration: 1s;\r\n    -moz-animation-duration: 1s;\r\n    animation-duration: 1s;\n}\n.fadeIn.first {\r\n    -webkit-animation-delay: 0.4s;\r\n    -moz-animation-delay: 0.4s;\r\n    animation-delay: 0.4s;\n}\n.fadeIn.second {\r\n    -webkit-animation-delay: 0.6s;\r\n    -moz-animation-delay: 0.6s;\r\n    animation-delay: 0.6s;\n}\n.fadeIn.third {\r\n    -webkit-animation-delay: 0.8s;\r\n    -moz-animation-delay: 0.8s;\r\n    animation-delay: 0.8s;\n}\n.fadeIn.fourth {\r\n    -webkit-animation-delay: 1s;\r\n    -moz-animation-delay: 1s;\r\n    animation-delay: 1s;\n}\r\n\r\n/* Simple CSS3 Fade-in Animation */\n.underlineHover:after {\r\n    display: block;\r\n    left: 0;\r\n    bottom: -10px;\r\n    width: 0;\r\n    height: 2px;\r\n    background-color: #56baed;\r\n    content: \"\";\r\n    transition: width 0.2s;\n}\n.underlineHover:hover {\r\n    color: #0d0d0d;\n}\n.underlineHover:hover:after {\r\n    width: 100%;\n}\r\n\r\n/* OTHERS */\n*:focus {\r\n    outline: none;\n}\n#icon {\r\n    width: 60%;\n}\r\n", ""]);
 
 // exports
 
@@ -4332,6 +4328,218 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/tiny-cookie/tiny-cookie.js":
+/*!*************************************************!*\
+  !*** ./node_modules/tiny-cookie/tiny-cookie.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * tiny-cookie - A tiny cookie manipulation plugin
+ * https://github.com/Alex1990/tiny-cookie
+ * Under the MIT license | (c) Alex Chao
+ */
+
+!(function(root, factory) {
+
+  // Uses CommonJS, AMD or browser global to create a jQuery plugin.
+  // See: https://github.com/umdjs/umd
+  if (true) {
+    // Expose this plugin as an AMD module. Register an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+
+}(this, function() {
+
+  'use strict';
+
+  // The public function which can get/set/remove cookie.
+  function Cookie(key, value, opts) {
+    if (value === void 0) {
+      return Cookie.get(key);
+    } else if (value === null) {
+      Cookie.remove(key);
+    } else {
+      Cookie.set(key, value, opts);
+    }
+  }
+
+  // Check if the cookie is enabled.
+  Cookie.enabled = function() {
+    var key = '__test_key';
+    var enabled;
+
+    document.cookie = key + '=1';
+    enabled = !!document.cookie;
+
+    if (enabled) Cookie.remove(key);
+
+    return enabled;
+  };
+
+  // Get the cookie value by the key.
+  Cookie.get = function(key, raw) {
+    if (typeof key !== 'string' || !key) return null;
+
+    key = '(?:^|; )' + escapeRe(key) + '(?:=([^;]*?))?(?:;|$)';
+
+    var reKey = new RegExp(key);
+    var res = reKey.exec(document.cookie);
+
+    return res !== null ? (raw ? res[1] : decodeURIComponent(res[1])) : null;
+  };
+
+  // Get the cookie's value without decoding.
+  Cookie.getRaw = function(key) {
+    return Cookie.get(key, true);
+  };
+
+  // Set a cookie.
+  Cookie.set = function(key, value, raw, opts) {
+    if (raw !== true) {
+      opts = raw;
+      raw = false;
+    }
+    opts = opts ? convert(opts) : convert({});
+    var cookie = key + '=' + (raw ? value : encodeURIComponent(value)) + opts;
+    document.cookie = cookie;
+  };
+
+  // Set a cookie without encoding the value.
+  Cookie.setRaw = function(key, value, opts) {
+    Cookie.set(key, value, true, opts);
+  };
+
+  // Remove a cookie by the specified key.
+  Cookie.remove = function(key) {
+    Cookie.set(key, 'a', { expires: new Date() });
+  };
+
+  // Helper function
+  // ---------------
+
+  // Escape special characters.
+  function escapeRe(str) {
+    return str.replace(/[.*+?^$|[\](){}\\-]/g, '\\$&');
+  }
+
+  // Convert an object to a cookie option string.
+  function convert(opts) {
+    var res = '';
+
+    for (var p in opts) {
+      if (opts.hasOwnProperty(p)) {
+
+        if (p === 'expires') {
+          var expires = opts[p];
+          if (typeof expires !== 'object') {
+            expires += typeof expires === 'number' ? 'D' : '';
+            expires = computeExpires(expires);
+          }
+          opts[p] = expires.toUTCString();
+        }
+
+        if (p === 'secure') {
+          if (opts[p]) {
+            res += ';' + p;
+          }
+
+          continue;
+        }
+
+        res += ';' + p + '=' + opts[p];
+      }
+    }
+
+    if (!opts.hasOwnProperty('path')) {
+      res += ';path=/';
+    }
+
+    return res;
+  }
+
+  // Return a future date by the given string.
+  function computeExpires(str) {
+    var expires = new Date();
+    var lastCh = str.charAt(str.length - 1);
+    var value = parseInt(str, 10);
+
+    switch (lastCh) {
+      case 'Y': expires.setFullYear(expires.getFullYear() + value); break;
+      case 'M': expires.setMonth(expires.getMonth() + value); break;
+      case 'D': expires.setDate(expires.getDate() + value); break;
+      case 'h': expires.setHours(expires.getHours() + value); break;
+      case 'm': expires.setMinutes(expires.getMinutes() + value); break;
+      case 's': expires.setSeconds(expires.getSeconds() + value); break;
+      default: expires = new Date(str);
+    }
+
+    return expires;
+  }
+
+  return Cookie;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-cookie/src/vue-cookie.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vue-cookie/src/vue-cookie.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function () {
+    Number.isInteger = Number.isInteger || function (value) {
+        return typeof value === 'number' &&
+            isFinite(value) &&
+            Math.floor(value) === value;
+    };
+    var Cookie = __webpack_require__(/*! tiny-cookie */ "./node_modules/tiny-cookie/tiny-cookie.js");
+
+    var VueCookie = {
+
+        install: function (Vue) {
+            Vue.prototype.$cookie = this;
+            Vue.cookie = this;
+        },
+        set: function (name, value, daysOrOptions) {
+            var opts = daysOrOptions;
+            if(Number.isInteger(daysOrOptions)) {
+                opts = {expires: daysOrOptions};
+            }
+            return Cookie.set(name, value, opts);
+        },
+
+        get: function (name) {
+            return Cookie.get(name);
+        },
+
+        delete: function (name, options) {
+            var opts = {expires: -1};
+            if(options !== undefined) {
+                opts = Object.assign(options, opts);
+            }
+            this.set(name, '', opts);
+        }
+    };
+
+    if (true) {
+        module.exports = VueCookie;
+    } else {}
+
+})();
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Footer.vue?vue&type=template&id=61a7c374& ***!
@@ -4852,6 +5060,17 @@ var render = function() {
             }
           }),
           _vm._v(" "),
+          _vm.errors
+            ? _c(
+                "small",
+                {
+                  staticClass: "text-danger font-italic",
+                  staticStyle: { display: "block" }
+                },
+                [_vm._v(_vm._s(_vm.errors))]
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -4877,17 +5096,6 @@ var render = function() {
               }
             }
           }),
-          _vm._v(" "),
-          _vm.errors.password
-            ? _c(
-                "small",
-                {
-                  staticClass: "text-danger font-italic",
-                  staticStyle: { display: "block" }
-                },
-                [_vm._v(_vm._s(_vm.errors.password[0]))]
-              )
-            : _vm._e(),
           _vm._v(" "),
           _c(
             "button",
@@ -20576,13 +20784,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
+/* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-cookie */ "./node_modules/vue-cookie/src/vue-cookie.js");
+/* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_cookie__WEBPACK_IMPORTED_MODULE_3__);
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.withCredentials = true;
  // Router
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+ // Vue Cookie
 
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_cookie__WEBPACK_IMPORTED_MODULE_3___default.a);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
   router: new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"](_router__WEBPACK_IMPORTED_MODULE_2__["default"])
@@ -20739,6 +20952,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_pages_Dashboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../views/pages/Dashboard */ "./resources/js/views/pages/Dashboard.vue");
 /* harmony import */ var _views_auth_Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../views/auth/Login */ "./resources/js/views/auth/Login.vue");
+/* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-cookie */ "./node_modules/vue-cookie/src/vue-cookie.js");
+/* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_cookie__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -20761,7 +20977,12 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     path: '/login',
     name: 'Login',
-    component: _views_auth_Login__WEBPACK_IMPORTED_MODULE_1__["default"]
+    component: _views_auth_Login__WEBPACK_IMPORTED_MODULE_1__["default"],
+    beforeEnter: function beforeEnter(to, from, next) {
+      if (localStorage.getItem('token') == '') {
+        next();
+      } else next('/dashboard');
+    }
   }]
 });
 

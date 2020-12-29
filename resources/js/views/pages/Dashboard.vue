@@ -189,7 +189,7 @@ export default {
                 const response = await axios.get('/api/dashboard');
                 console.log(response.data.data)
             } catch (error) {
-                return this.$router.push('/login')            
+                console.log(error)         
             }
         }
     },

@@ -17,6 +17,7 @@
                     v-model="formData.email"
                     placeholder="email"
                 />
+                <small v-if="errors" style="display:block" class="text-danger font-italic">{{ errors }}</small>
                 <input
                     type="password"
                     id="password"
@@ -24,7 +25,6 @@
                     v-model="formData.password"
                     placeholder="password"
                 />
-                <small v-if="errors.password" style="display:block" class="text-danger font-italic">{{ errors.password[0] }}</small>
                 <button type="submit" class="fadeIn fourth">Log In</button>
             </form>
 
@@ -44,7 +44,7 @@ export default {
                 email : '',
                 password: ''
             },
-            errors : []
+            errors : ''
         }
     },
     methods: {
@@ -52,12 +52,10 @@ export default {
             await axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.formData)
                 .then((response) => {
-                    localStorage.setItem('token', response.data.data.token )
-                    // this.$cho
                     this.$router.push('/dashboard')
                 })
                 .catch(err => {
-                    this.errors = err.response.data.errors
+                    this.errors =  err.response.data.message
                 })
             });
             // await axios.post('/api/login', this.formData)

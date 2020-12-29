@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Auth\LoginResource;
-use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
