@@ -13,12 +13,24 @@
         <hr class="sidebar-divider my-0" />
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.html">
+        <router-link :to="'/dashboard'" class="nav-item">
+            <p class="nav-link">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
+                <span>Dashboard</span>
+            </p>
+        </router-link>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider" />
+
+        <!-- Nav Item - Charts -->
+        <router-link :to="'/admin'" class="nav-item">
+            <p class="nav-link">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Admin</span>
+            </p>
+        </router-link>
+        
         <!-- Divider -->
         <hr class="sidebar-divider" />
 

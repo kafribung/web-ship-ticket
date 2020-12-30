@@ -1,9 +1,11 @@
 import Dashboard from '../views/pages/Dashboard'
+import Admin from '../views/pages/Admin'
 import Login from '../views/auth/Login'
-import VueCookie from 'vue-cookie'
 
 export default {
     mode: 'history',
+    // linkExactActiveClass: 'active',
+    linkActiveClass: "active",
     routes: [
         {
             path: '/',
@@ -19,6 +21,16 @@ export default {
                     next()
                 }).catch(() => next('/login'))
             }
+        },
+        {
+            path: '/admin',
+            name: 'Admin',
+            component: Admin,
+            // beforeEnter: (to, from, next) => {
+            //     axios.get('/api/dashboard').then(()=> { 
+            //         next()
+            //     }).catch(() => next('/login'))
+            // }
         },
         {
             path: '/login',

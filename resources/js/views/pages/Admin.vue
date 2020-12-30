@@ -7,7 +7,7 @@
             <!-- Main Content -->
             <div id="content">
                 <Navbar/>
-                <Dashboard/>
+                <Admin/>
             </div>
             <!-- End of Main Content -->
             <Footer/>
@@ -22,14 +22,18 @@ import Sidebar from '../../components/Sidebar'
 import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
 
-import Dashboard from '../../components/pages/Dashboard'
+import Admin from '../../components/pages/Admin'
 
 export default {
     components:{
         Sidebar,
         Footer,
         Navbar,
-        Dashboard,
+        Admin,
     }
 }
 </script>
+
+<style>
+
+</style>

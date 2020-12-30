@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
-use App\Http\Controllers\API\Dash\DashboardController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\Dash\{AdminConrtoller,  DashboardController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('dashboard', DashboardController::class);
+    // Admin
+    Route::get('admin', [AdminConrtoller::class, 'index']);
+    Route::post('admin', [AdminConrtoller::class, 'store']);
+
     Route::post('logout', LogoutController::class);
 });
 Route::post('login', LoginController::class);

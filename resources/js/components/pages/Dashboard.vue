@@ -74,7 +74,22 @@
 
 <script>
 export default {
-    props: ['user', 'countAdmin']
+    data() {
+        return {
+            user: '',
+            countAdmin: ''
+        }
+    },
+    created() {
+        this.handleDashboard()
+    },
+    methods: {
+        async handleDashboard(){
+            const response = await axios.get('/api/dashboard');
+            this.user = response.data.data.user
+            this.countAdmin = response.data.data.countAdmin
+        }
+    },
 }
 </script>
 

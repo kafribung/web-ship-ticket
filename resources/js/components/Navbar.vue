@@ -12,7 +12,7 @@
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user }}</span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth }}</span>
                     <img class="img-profile rounded-circle"
                         src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
                 </a>
@@ -45,7 +45,20 @@
 
 <script>
 export default {
-    props: ['user'],
+    data() {
+        return {
+            auth: ''
+        }
+    },
+    mounted() {
+        this.handleNavbar()
+    },
+    methods: {
+        async handleNavbar(){
+            const response = await axios.get('/api/dashboard');
+            this.auth = response.data.data.user
+        }
+    },
 }
 </script>
 
