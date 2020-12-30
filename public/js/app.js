@@ -2333,11 +2333,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       admins: {},
-      formData: {}
+      formDataStore: {},
+      formDataUpdate: {},
+      errors: {}
     };
   },
   created: function created() {
@@ -2368,7 +2408,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    setAdmin: function setAdmin() {
+    storeAdmin: function storeAdmin() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -2377,10 +2417,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return axios.post('api/admin', _this2.formData);
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.post('api/admin', _this2.formDataStore);
 
-              case 2:
+              case 3:
                 response = _context2.sent;
 
                 _this2.$toasted.success('Data admin berhasil ditambahkan', {
@@ -2388,13 +2429,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
                 location.reload();
+                _context2.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                _this2.errors = _context2.t0.response.data.errors;
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[0, 8]]);
+      }))();
+    },
+    editAdmin: function editAdmin(email) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios.get("api/admin/".concat(email));
+
+              case 3:
+                response = _context3.sent;
+                _this3.formDataUpdate = response.data.data;
+                _context3.next = 10;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                _this3.errors = _context3.t0.response.data.errors;
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 7]]);
       }))();
     }
   }
@@ -5255,7 +5335,26 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(admin.role))]),
                         _vm._v(" "),
-                        _vm._m(3, true)
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-warning btn-sm",
+                              attrs: {
+                                "data-toggle": "modal",
+                                "data-target": "#modalUpdate"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.editAdmin(admin.email)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-edit" })]
+                          ),
+                          _vm._v(" "),
+                          _vm._m(3, true)
+                        ])
                       ])
                     }),
                     0
@@ -5273,7 +5372,7 @@ var render = function() {
       {
         staticClass: "modal fade",
         attrs: {
-          id: "exampleModal",
+          id: "modalStore",
           tabindex: "-1",
           role: "dialog",
           "aria-labelledby": "exampleModalLabel",
@@ -5295,7 +5394,7 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.setAdmin($event)
+                        return _vm.storeAdmin($event)
                       }
                     }
                   },
@@ -5306,8 +5405,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.formData.name,
-                            expression: "formData.name"
+                            value: _vm.formDataStore.name,
+                            expression: "formDataStore.name"
                           }
                         ],
                         staticClass: "form-control",
@@ -5316,20 +5415,28 @@ var render = function() {
                           id: "username",
                           placeholder: "name"
                         },
-                        domProps: { value: _vm.formData.name },
+                        domProps: { value: _vm.formDataStore.name },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.formData, "name", $event.target.value)
+                            _vm.$set(
+                              _vm.formDataStore,
+                              "name",
+                              $event.target.value
+                            )
                           }
                         }
                       }),
                       _vm._v(" "),
-                      _c("small", { staticClass: "text-danger font-italic" }, [
-                        _vm._v("Error")
-                      ])
+                      _vm.errors.name
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.name[0]))]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -5338,8 +5445,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.formData.email,
-                            expression: "formData.email"
+                            value: _vm.formDataStore.email,
+                            expression: "formDataStore.email"
                           }
                         ],
                         staticClass: "form-control",
@@ -5348,16 +5455,28 @@ var render = function() {
                           id: "email",
                           placeholder: "email"
                         },
-                        domProps: { value: _vm.formData.email },
+                        domProps: { value: _vm.formDataStore.email },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.formData, "email", $event.target.value)
+                            _vm.$set(
+                              _vm.formDataStore,
+                              "email",
+                              $event.target.value
+                            )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.email
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.email[0]))]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -5366,8 +5485,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.formData.password,
-                            expression: "formData.password"
+                            value: _vm.formDataStore.password,
+                            expression: "formDataStore.password"
                           }
                         ],
                         staticClass: "form-control",
@@ -5376,20 +5495,28 @@ var render = function() {
                           id: "password",
                           placeholder: "password"
                         },
-                        domProps: { value: _vm.formData.password },
+                        domProps: { value: _vm.formDataStore.password },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.formData,
+                              _vm.formDataStore,
                               "password",
                               $event.target.value
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.password
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.password[0]))]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -5398,8 +5525,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.formData.password_confirmation,
-                            expression: "formData.password_confirmation"
+                            value: _vm.formDataStore.password_confirmation,
+                            expression: "formDataStore.password_confirmation"
                           }
                         ],
                         staticClass: "form-control",
@@ -5408,14 +5535,16 @@ var render = function() {
                           id: "passwor_confirmation",
                           placeholder: "passwor_confirmation"
                         },
-                        domProps: { value: _vm.formData.password_confirmation },
+                        domProps: {
+                          value: _vm.formDataStore.password_confirmation
+                        },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.formData,
+                              _vm.formDataStore,
                               "password_confirmation",
                               $event.target.value
                             )
@@ -5425,6 +5554,189 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _vm._m(5)
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalUpdate",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(6),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateAdmin($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.name,
+                            expression: "formDataUpdate.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "name" },
+                        domProps: { value: _vm.formDataUpdate.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.name
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.name[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.email,
+                            expression: "formDataUpdate.email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "email", placeholder: "email" },
+                        domProps: { value: _vm.formDataUpdate.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "email",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.email
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.email[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.password,
+                            expression: "formDataUpdate.password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "password", placeholder: "password" },
+                        domProps: { value: _vm.formDataUpdate.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "password",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.password
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.password[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.password_confirmation,
+                            expression: "formDataUpdate.password_confirmation"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "password",
+                          placeholder: "passwor_confirmation"
+                        },
+                        domProps: {
+                          value: _vm.formDataUpdate.password_confirmation
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(7)
                   ]
                 )
               ])
@@ -5456,7 +5768,7 @@ var staticRenderFns = [
       "button",
       {
         staticClass: "btn btn-primary btn-sm float-right",
-        attrs: { "data-toggle": "modal", "data-target": "#exampleModal" }
+        attrs: { "data-toggle": "modal", "data-target": "#modalStore" }
       },
       [_c("i", { staticClass: "fa fa-plus" })]
     )
@@ -5483,14 +5795,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-warning btn-sm" }, [
-        _c("i", { staticClass: "fa fa-edit" })
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger btn-sm" }, [
-        _c("i", { staticClass: "fa fa-trash" })
-      ])
+    return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
+      _c("i", { staticClass: "fa fa-trash" })
     ])
   },
   function() {
@@ -5536,6 +5842,52 @@ var staticRenderFns = [
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Tambah")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Edit admin")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-warning", attrs: { type: "submit" } },
+        [_vm._v("Update")]
       )
     ])
   }

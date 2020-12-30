@@ -13,7 +13,7 @@ class AdminRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'     => 'required|string|min:3|max:20',
+            'email'    => 'required|email|unique:users,email,'. optional($this->user)->id,
+            'password' => 'required|string|min:8|confirmed',
         ];
     }
 }

@@ -20,6 +20,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     // Admin
     Route::get('admin', [AdminConrtoller::class, 'index']);
     Route::post('admin', [AdminConrtoller::class, 'store']);
+    Route::get('admin/{user:email}', [AdminConrtoller::class, 'show']);
+    Route::patch('admin/{user:email}', [AdminConrtoller::class, 'update']);
 
     Route::post('logout', LogoutController::class);
 });

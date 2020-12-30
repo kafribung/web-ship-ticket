@@ -12,7 +12,7 @@
             <div class="col-xl-12 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
-                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalStore"><i class="fa fa-plus"></i></button>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -31,7 +31,7 @@
                                     <td>{{ admin.email }}</td>
                                     <td>{{ admin.role }}</td>
                                     <td>
-                                        <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button>
+                                        <button @click="editAdmin(admin.email)" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
                                         <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
@@ -45,7 +45,7 @@
         </div>
 
         <!-- Modal Store -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalStore" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -55,19 +55,21 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="setAdmin">
+                        <form @submit.prevent="storeAdmin">
                             <div class="form-group">
-                                <input type="text" v-model="formData.name" id="username" class="form-control" placeholder="name">
-                                <small class="text-danger font-italic">Error</small>
+                                <input type="text" v-model="formDataStore.name" id="username" class="form-control" placeholder="name">
+                                <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="email" v-model="formData.email" id="email" class="form-control" placeholder="email">
+                                <input type="email" v-model="formDataStore.email" id="email" class="form-control" placeholder="email">
+                                <small v-if="errors.email" class="text-danger font-italic d-block">{{ errors.email[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="password"  v-model="formData.password" id="password" class="form-control" placeholder="password">
+                                <input type="password"  v-model="formDataStore.password" id="password" class="form-control" placeholder="password">
+                                <small v-if="errors.password" class="text-danger font-italic d-block">{{ errors.password[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="password" v-model="formData.password_confirmation" id="passwor_confirmation" class="form-control" placeholder="passwor_confirmation">
+                                <input type="password" v-model="formDataStore.password_confirmation" id="passwor_confirmation" class="form-control" placeholder="passwor_confirmation">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -80,6 +82,42 @@
             </div>
         </div>
 
+        <!-- Modal Upadte -->
+        <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit admin</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="updateAdmin">
+                            <div class="form-group">
+                                <input type="text" v-model="formDataUpdate.name"  class="form-control" placeholder="name">
+                                <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" v-model="formDataUpdate.email"  class="form-control" placeholder="email">
+                                <small v-if="errors.email" class="text-danger font-italic d-block">{{ errors.email[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="password"  v-model="formDataUpdate.password"  class="form-control" placeholder="password">
+                                <small v-if="errors.password" class="text-danger font-italic d-block">{{ errors.password[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" v-model="formDataUpdate.password_confirmation"  class="form-control" placeholder="passwor_confirmation">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.container-fluid -->
     
@@ -90,7 +128,9 @@ export default {
     data() {
         return {
             admins : {},
-            formData: {},
+            formDataStore: {},
+            formDataUpdate: {},
+            errors: {}
         }
     },
     created() {
@@ -102,13 +142,27 @@ export default {
             this.admins = response.data.data
         },
 
-        async setAdmin(){
-            const response = await axios.post('api/admin', this.formData)
-            this.$toasted.success('Data admin berhasil ditambahkan', {
-                duration : 3000,
-            })
-            location.reload()
-        }
+        async storeAdmin(){
+            try {
+                const response = await axios.post('api/admin', this.formDataStore)
+                this.$toasted.success('Data admin berhasil ditambahkan', {
+                    duration : 3000,
+                })
+                location.reload()
+            } catch (error) {
+                this.errors = error.response.data.errors
+            }
+        },
+
+        async editAdmin(email){
+            try {
+                const response = await axios.get(`api/admin/${email}`)
+                this.formDataUpdate = response.data.data 
+            } catch (error) {
+                this.errors = error.response.data.errors
+            }
+        },
+
 
     },
 }
