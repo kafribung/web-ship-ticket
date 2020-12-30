@@ -26,7 +26,7 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="(admin, index) in admins" :key="index">
-                                    <th scope="row">1</th>
+                                    <th scope="row">{{ index+1 }}</th>
                                     <td>{{ admin.name }}</td>
                                     <td>{{ admin.email }}</td>
                                     <td>{{ admin.role }}</td>
@@ -44,7 +44,7 @@
 
         </div>
 
-        <!-- Modal -->
+        <!-- Modal Store -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -69,12 +69,13 @@
                             <div class="form-group">
                                 <input type="password" v-model="formData.password_confirmation" id="passwor_confirmation" class="form-control" placeholder="passwor_confirmation">
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Tambah</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -102,7 +103,11 @@ export default {
         },
 
         async setAdmin(){
-            
+            const response = await axios.post('api/admin', this.formData)
+            this.$toasted.success('Data admin berhasil ditambahkan', {
+                duration : 3000,
+            })
+            location.reload()
         }
 
     },

@@ -11,7 +11,7 @@ class AdminConrtoller extends Controller
 {
     public function index()
     {
-        $admins = User::where('role', 1)->get(['name', 'email', 'role']);
+        $admins = User::where('role', 1)->orderBy('id', 'desc')->get(['name', 'email', 'role']);
         return AdminResource::collection($admins);
     }
 
