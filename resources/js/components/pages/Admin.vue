@@ -32,7 +32,7 @@
                                     <td>{{ admin.role }}</td>
                                     <td>
                                         <button @click="editAdmin(admin.email)" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button @click="deleteAdmin(admin.email)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -130,7 +130,8 @@ export default {
             admins : {},
             formDataStore: {},
             formDataUpdate: {},
-            errors: {}
+            email: null,
+            errors: {},
         }
     },
     created() {
@@ -150,20 +151,44 @@ export default {
                 })
                 location.reload()
             } catch (error) {
-                this.errors = error.response.data.errors
+                if (error.response.data.errors) {
+                    this.errors = error.response.data.errors    
+                } else {
+                    this.$toasted.error('Data maximal 4', {
+                        duration : 3000,
+                    })
+                }
             }
         },
 
         async editAdmin(email){
+            this.email = email
+            const response = await axios.get(`api/admin/${email}`)
+            this.formDataUpdate = response.data.data 
+        },
+
+        async updateAdmin(){
             try {
-                const response = await axios.get(`api/admin/${email}`)
-                this.formDataUpdate = response.data.data 
+                const response = await axios.patch(`api/admin/${this.email}`, this.formDataUpdate)
+                this.$toasted.success('Data admin berhasil diedit', {
+                    duration : 3000,
+                })
+                location.reload()
             } catch (error) {
-                this.errors = error.response.data.errors
+                if (error.response.data.errors) {
+                    this.errors = error.response.data.errors    
+                } else {
+                    this.$toasted.error('Dia milik orang,!', {
+                        duration : 3000,
+                    })
+                }
             }
         },
 
-
+        async deleteAdmin(email){
+            const response = await axios.delete(`api/admin/${email}`)
+            this.formDataUpdate = response.data.data 
+        },
     },
 }
 </script>

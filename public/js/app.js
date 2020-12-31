@@ -2377,6 +2377,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       admins: {},
       formDataStore: {},
       formDataUpdate: {},
+      email: null,
       errors: {}
     };
   },
@@ -2435,7 +2436,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](0);
-                _this2.errors = _context2.t0.response.data.errors;
+
+                if (_context2.t0.response.data.errors) {
+                  _this2.errors = _context2.t0.response.data.errors;
+                } else {
+                  _this2.$toasted.error('Data maximal 4', {
+                    duration: 3000
+                  });
+                }
 
               case 11:
               case "end":
@@ -2454,27 +2462,88 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.prev = 0;
+                _this3.email = email;
                 _context3.next = 3;
                 return axios.get("api/admin/".concat(email));
 
               case 3:
                 response = _context3.sent;
                 _this3.formDataUpdate = response.data.data;
-                _context3.next = 10;
-                break;
 
-              case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](0);
-                _this3.errors = _context3.t0.response.data.errors;
-
-              case 10:
+              case 5:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 7]]);
+        }, _callee3);
+      }))();
+    },
+    updateAdmin: function updateAdmin() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios.patch("api/admin/".concat(_this4.email), _this4.formDataUpdate);
+
+              case 3:
+                response = _context4.sent;
+
+                _this4.$toasted.success('Data admin berhasil diedit', {
+                  duration: 3000
+                });
+
+                location.reload();
+                _context4.next = 11;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+
+                if (_context4.t0.response.data.errors) {
+                  _this4.errors = _context4.t0.response.data.errors;
+                } else {
+                  _this4.$toasted.error('Dia milik orang,!', {
+                    duration: 3000
+                  });
+                }
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 8]]);
+      }))();
+    },
+    deleteAdmin: function deleteAdmin(email) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios["delete"]("api/admin/".concat(email));
+
+              case 2:
+                response = _context5.sent;
+                _this5.formDataUpdate = response.data.data;
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }
@@ -5353,7 +5422,18 @@ var render = function() {
                             [_c("i", { staticClass: "fa fa-edit" })]
                           ),
                           _vm._v(" "),
-                          _vm._m(3, true)
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteAdmin(admin.email)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-trash" })]
+                          )
                         ])
                       ])
                     }),
@@ -5385,7 +5465,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -5553,7 +5633,7 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _vm._m(5)
+                    _vm._m(4)
                   ]
                 )
               ])
@@ -5581,7 +5661,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(6),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -5736,7 +5816,7 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _vm._m(7)
+                    _vm._m(6)
                   ]
                 )
               ])
@@ -5789,14 +5869,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
-      _c("i", { staticClass: "fa fa-trash" })
     ])
   },
   function() {
@@ -21924,12 +21996,14 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     path: '/admin',
     name: 'Admin',
-    component: _views_pages_Admin__WEBPACK_IMPORTED_MODULE_1__["default"] // beforeEnter: (to, from, next) => {
-    //     axios.get('/api/dashboard').then(()=> { 
-    //         next()
-    //     }).catch(() => next('/login'))
-    // }
-
+    component: _views_pages_Admin__WEBPACK_IMPORTED_MODULE_1__["default"],
+    beforeEnter: function beforeEnter(to, from, next) {
+      axios.get('/api/admin').then(function () {
+        next();
+      })["catch"](function () {
+        return next('/login');
+      });
+    }
   }, {
     path: '/login',
     name: 'Login',

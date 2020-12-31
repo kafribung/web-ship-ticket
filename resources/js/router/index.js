@@ -26,11 +26,11 @@ export default {
             path: '/admin',
             name: 'Admin',
             component: Admin,
-            // beforeEnter: (to, from, next) => {
-            //     axios.get('/api/dashboard').then(()=> { 
-            //         next()
-            //     }).catch(() => next('/login'))
-            // }
+            beforeEnter: (to, from, next) => {
+                axios.get('/api/admin').then(()=> { 
+                    next()
+                }).catch(() => next('/login'))
+            }
         },
         {
             path: '/login',
