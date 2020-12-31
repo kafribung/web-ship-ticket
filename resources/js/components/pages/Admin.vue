@@ -32,7 +32,7 @@
                                     <td>{{ admin.role }}</td>
                                     <td>
                                         <button @click="editAdmin(admin.email)" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button @click="deleteAdmin(admin.email)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button ref="delete" @click="deleteAdmin(admin.email)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -124,6 +124,8 @@
 </template>
 
 <script>
+import swal from 'sweetalert'
+
 export default {
     data() {
         return {
@@ -186,8 +188,37 @@ export default {
         },
 
         async deleteAdmin(email){
-            const response = await axios.delete(`api/admin/${email}`)
-            this.formDataUpdate = response.data.data 
+            try {
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    axios.delete(`api/admin/${email}`)
+                    .then(response => {
+                        swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                        });
+                        this.$toasted.success('Data admin berhasil diedit', {
+                            duration : 3000,
+                        })
+                        location.reload()
+                    })
+                    
+                } else {
+                    swal("Your imaginary file is safe!");
+                }
+                });
+                
+
+            } catch (error) {
+                
+            }
+            
         },
     },
 }
