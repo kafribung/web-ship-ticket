@@ -160,7 +160,6 @@ export default {
             }
             axios.post('http://127.0.0.1:8000/api/logout', header)
             .then(response => {
-                localStorage.removeItem('token')
                 this.$router.push('/login')
             }).catch(error => {
                 console.log(error)

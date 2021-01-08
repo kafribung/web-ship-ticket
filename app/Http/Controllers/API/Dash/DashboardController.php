@@ -12,9 +12,8 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
-        $admin = User::where('role', 1)->count();
-        $data['countAdmin'] = $admin;
-        $data['user']  = Auth::user()->name;
+        $data = Auth::user();
+        $data['count'] = User::where('role', 1)->count();
         return DashboardResource::make($data);
     }
 }

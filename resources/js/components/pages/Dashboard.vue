@@ -18,7 +18,7 @@
                                     Admin
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ countAdmin }}
+                                    {{ auth.count }}
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -60,7 +60,7 @@
                     <div class="col-lg-12 mb-4">
                         <div class="card bg-success text-white shadow">
                             <div class="card-body text-center">
-                                <h3>Hi {{ user }} Selamat datang di aplikasi tiket Fery</h3>
+                                <h3>Hi {{ auth.name }} Selamat datang di aplikasi tiket Ferry</h3>
                                 <h5>Berikan yang terbaik demi kenyamanan penumpang</h5>  
                             </div>
                         </div>
@@ -76,8 +76,7 @@
 export default {
     data() {
         return {
-            user: '',
-            countAdmin: ''
+            auth: {},
         }
     },
     created() {
@@ -86,8 +85,7 @@ export default {
     methods: {
         async handleDashboard(){
             const response = await axios.get('/api/dashboard');
-            this.user = response.data.data.user
-            this.countAdmin = response.data.data.countAdmin
+            this.auth = response.data.data
         }
     },
 }

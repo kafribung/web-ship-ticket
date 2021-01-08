@@ -52,7 +52,6 @@ export default {
             await axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.formData)
                 .then((response) => {
-                    localStorage.setItem('token', response.data.data.token)
                     this.$router.push('/dashboard')
                 })
                 .catch(err => {

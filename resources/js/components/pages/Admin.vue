@@ -31,8 +31,8 @@
                                     <td>{{ admin.email }}</td>
                                     <td>{{ admin.role }}</td>
                                     <td>
-                                        <button @click="editAdmin(admin.email)" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button ref="delete" @click="deleteAdmin(admin.email)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button v-if="auth.email == admin.email" @click="editAdmin(admin.email)" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button  v-if="auth.email == admin.email" ref="delete" @click="deleteAdmin(admin.email)" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -134,12 +134,21 @@ export default {
             formDataUpdate: {},
             email: null,
             errors: {},
+
+            auth: {},
         }
     },
     created() {
         this.getAdmin()
+        this.getAuth()
     },
     methods: {
+        // Get Auth
+        async getAuth(){
+            const response = await axios.get('api/dashboard')
+            this.auth = response.data.data
+            console.log(this.auth)
+        },
         // Read
         async getAdmin(){
             const response = await axios.get('/api/admin')
