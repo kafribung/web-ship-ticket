@@ -18,7 +18,6 @@ class LoginController extends Controller
             if (auth()->user()->role == 0) { 
                 return response()->json(['message' => 'Your not super admin'], 401);
             }
-            // $request->session()->regenerate();
             $data = Auth::user();
             $data['token'] = $request->user()->createToken($request->email)->plainTextToken;
             return LoginResource::make($data);

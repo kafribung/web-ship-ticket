@@ -140,11 +140,13 @@ export default {
         this.getAdmin()
     },
     methods: {
+        // Read
         async getAdmin(){
             const response = await axios.get('/api/admin')
             this.admins = response.data.data
         },
 
+        // Create
         async storeAdmin(){
             try {
                 const response = await axios.post('api/admin', this.formDataStore)
@@ -163,12 +165,14 @@ export default {
             }
         },
 
+        //Edit 
         async editAdmin(email){
             this.email = email
             const response = await axios.get(`api/admin/${email}`)
             this.formDataUpdate = response.data.data 
         },
 
+        //Update 
         async updateAdmin(){
             try {
                 const response = await axios.patch(`api/admin/${this.email}`, this.formDataUpdate)
@@ -187,6 +191,7 @@ export default {
             }
         },
 
+        //Destroy 
         async deleteAdmin(email){
             try {
                 swal({
@@ -214,12 +219,8 @@ export default {
                 }
                 });
                 
-
-            } catch (error) {
-                
-            }
-            
-        },
+            } catch (error) {}
+        }
     },
 }
 </script>

@@ -56,16 +56,11 @@ export default {
                     this.$router.push('/dashboard')
                 })
                 .catch(err => {
-                    this.errors =  err.response.data.message
+                    if (err.response.data.message)
+                        this.errors = err.response.data.message
+                    else this.errors = err.response.message
                 })
             });
-            // await axios.post('/api/login', this.formData)
-            // .then(() => {
-            //     this.$router.push('/dashboard')
-            // })
-            // .catch(err => {
-            //     this.errors = err.response.data.errors
-            // })
         },
     }
 }
