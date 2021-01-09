@@ -6767,9 +6767,13 @@ var render = function() {
                             [_vm._v("Tujuan")]
                           ),
                           _vm._v(" "),
-                          _c("option", [_vm._v("Pamatata")]),
+                          _vm.formDataStore.departure == "Bira"
+                            ? _c("option", [_vm._v("Pamatata")])
+                            : _vm._e(),
                           _vm._v(" "),
-                          _c("option", [_vm._v("Bira")])
+                          _vm.formDataStore.departure == "Pamatata"
+                            ? _c("option", [_vm._v("Bira")])
+                            : _vm._e()
                         ]
                       ),
                       _vm._v(" "),

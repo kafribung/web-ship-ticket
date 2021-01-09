@@ -73,8 +73,8 @@
                             <div class="form-control">
                                 <select v-model="formDataStore.destination">
                                     <option selected disabled>Tujuan</option>
-                                    <option>Pamatata</option>
-                                    <option>Bira</option>
+                                    <option v-if="formDataStore.departure == 'Bira'">Pamatata</option>
+                                    <option v-if="formDataStore.departure == 'Pamatata'">Bira</option>
                                 </select>
                                 <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
                             </div>
