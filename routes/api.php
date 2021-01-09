@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
-use App\Http\Controllers\API\Dash\{AdminConrtoller,  DashboardController};
+use App\Http\Controllers\API\Dash\{AdminConrtoller,  DashboardController, ScheduleController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +23,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('admin/{user:email}', [AdminConrtoller::class, 'show']);
     Route::patch('admin/{user:email}', [AdminConrtoller::class, 'update']);
     Route::delete('admin/{user:email}', [AdminConrtoller::class, 'destory']);
+
+    // Jadwal
+    Route::get('schedule', [ScheduleController::class, 'index']);
+    Route::post('schedule', [ScheduleController::class, 'store']);
 
     Route::post('logout', LogoutController::class);
 });
