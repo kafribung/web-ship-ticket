@@ -34,7 +34,7 @@
                                     <td>{{ schedule.date }}</td>
                                     <td>
                                         <button  @click="editSchedule(schedule.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button  ref="delete" @click="deleteschedule(schedule.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button  ref="delete" @click="deleteSchedule(schedule.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -199,7 +199,7 @@ export default {
         },
 
         //Destroy 
-        async deleteAdmin(email){
+        async deleteSchedule(id){
             try {
                 swal({
                     title: "Are you sure?",
@@ -210,7 +210,7 @@ export default {
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`api/admin/${email}`)
+                    axios.delete(`api/schedule/${id}`)
                     .then(response => {
                         swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",

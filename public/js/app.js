@@ -3023,7 +3023,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     //Destroy 
-    deleteAdmin: function deleteAdmin(email) {
+    deleteSchedule: function deleteSchedule(id) {
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
@@ -3040,7 +3040,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     dangerMode: true
                   }).then(function (willDelete) {
                     if (willDelete) {
-                      axios["delete"]("api/admin/".concat(email)).then(function (response) {
+                      axios["delete"]("api/schedule/".concat(id)).then(function (response) {
                         sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Poof! Your imaginary file has been deleted!", {
                           icon: "success"
                         });
@@ -6588,7 +6588,7 @@ var render = function() {
                               staticClass: "btn btn-danger btn-circle btn-sm",
                               on: {
                                 click: function($event) {
-                                  return _vm.deleteschedule(schedule.id)
+                                  return _vm.deleteSchedule(schedule.id)
                                 }
                               }
                             },

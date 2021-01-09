@@ -12,7 +12,7 @@ class ScheduleController extends Controller
     // Read
     public function index()
     {
-        $schedules = Schedule::get();
+        $schedules = Schedule::orderBy('id', 'desc')->get();
         return ScheduleResource::collection($schedules);
     }
 
@@ -50,5 +50,10 @@ class ScheduleController extends Controller
         return ScheduleResource::make($schedule);
     }
 
-    
+    // Destroy
+    public function destroy($id)
+    {
+        Schedule::destroy($id);
+        return response()->json([ "message" => "The item was delete successfully"], 204);
+    }
 }
