@@ -12,7 +12,7 @@
             <div class="col-xl-12 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
-                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalStore"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-primary btn-circle btn-sm float-right" data-toggle="modal" data-target="#modalStore"><i class="fa fa-plus"></i></button>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>

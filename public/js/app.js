@@ -2190,14 +2190,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     handleLogout: function handleLogout() {
@@ -5456,10 +5448,6 @@ var render = function() {
       _vm._v(" "),
       _vm._m(3),
       _vm._v(" "),
-      _c("hr", { staticClass: "sidebar-divider d-none d-md-block" }),
-      _vm._v(" "),
-      _vm._m(4),
-      _vm._v(" "),
       _c(
         "div",
         {
@@ -5478,7 +5466,7 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(5),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _vm._v(
@@ -5712,17 +5700,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("span", [_vm._v("Tables")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center d-none d-md-inline" }, [
-      _c("button", {
-        staticClass: "rounded-circle border-0",
-        attrs: { id: "sidebarToggle" }
-      })
     ])
   },
   function() {
@@ -6253,7 +6230,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-primary btn-sm float-right",
+        staticClass: "btn btn-primary btn-circle btn-sm float-right",
         attrs: { "data-toggle": "modal", "data-target": "#modalStore" }
       },
       [_c("i", { staticClass: "fa fa-plus" })]
@@ -6656,7 +6633,7 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.storeAdmin($event)
+                        return _vm.storeSchedule($event)
                       }
                     }
                   },
@@ -6697,7 +6674,7 @@ var render = function() {
                         : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "form-control" }, [
                       _c(
                         "select",
                         {
@@ -6742,7 +6719,7 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _vm.formDataStore.departure
+                      _vm.errors.departure
                         ? _c(
                             "small",
                             { staticClass: "text-danger font-italic d-block" },
@@ -6751,7 +6728,7 @@ var render = function() {
                         : _vm._e()
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "form-control" }, [
                       _c(
                         "select",
                         {
@@ -6763,7 +6740,6 @@ var render = function() {
                               expression: "formDataStore.destination"
                             }
                           ],
-                          staticClass: "form-control",
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -6812,19 +6788,13 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.formDataStore.password_confirmation,
-                            expression: "formDataStore.password_confirmation"
+                            value: _vm.formDataStore.date,
+                            expression: "formDataStore.date"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: {
-                          type: "password",
-                          id: "passwor_confirmation",
-                          placeholder: "passwor_confirmation"
-                        },
-                        domProps: {
-                          value: _vm.formDataStore.password_confirmation
-                        },
+                        attrs: { type: "datetime-local" },
+                        domProps: { value: _vm.formDataStore.date },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
@@ -6832,7 +6802,7 @@ var render = function() {
                             }
                             _vm.$set(
                               _vm.formDataStore,
-                              "password_confirmation",
+                              "date",
                               $event.target.value
                             )
                           }
@@ -6875,7 +6845,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-primary btn-sm float-right",
+        staticClass: "btn btn-primary btn-circle btn-sm float-right",
         attrs: { "data-toggle": "modal", "data-target": "#modalStore" }
       },
       [_c("i", { staticClass: "fa fa-plus" })]

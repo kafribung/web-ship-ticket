@@ -12,7 +12,7 @@
             <div class="col-xl-12 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
-                        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalStore"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-primary btn-circle btn-sm float-right" data-toggle="modal" data-target="#modalStore"><i class="fa fa-plus"></i></button>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -57,21 +57,21 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="storeAdmin">
+                        <form @submit.prevent="storeSchedule">
                             <div class="form-group">
                                 <input type="text" v-model="formDataStore.ship"  class="form-control" placeholder="Kapal">
                                 <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
                             </div>
-                            <div class="form-group">
+                            <div class="form-control">
                                 <select v-model="formDataStore.departure">
                                     <option selected disabled>Keberangkatan</option>
                                     <option>Pamatata</option>
                                     <option>Bira</option>
                                 </select>
-                                <small v-if="formDataStore.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
+                                <small v-if="errors.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
                             </div>
-                            <div class="form-group">
-                                <select v-model="formDataStore.destination" class="form-control">
+                            <div class="form-control">
+                                <select v-model="formDataStore.destination">
                                     <option selected disabled>Tujuan</option>
                                     <option>Pamatata</option>
                                     <option>Bira</option>
@@ -79,7 +79,7 @@
                                 <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="password" v-model="formDataStore.password_confirmation" id="passwor_confirmation" class="form-control" placeholder="passwor_confirmation">
+                                <input type="datetime-local" v-model="formDataStore.date" class="form-control">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
