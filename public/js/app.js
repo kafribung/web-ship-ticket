@@ -2871,6 +2871,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2878,9 +2886,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       schedules: {},
       formDataStore: {},
       formDataUpdate: {},
-      email: null,
+      id: null,
       errors: {},
-      auth: {}
+      date: new Date()
     };
   },
   created: function created() {
@@ -2951,7 +2959,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     //Edit 
-    editAdmin: function editAdmin(email) {
+    editSchedule: function editSchedule(id) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -2960,9 +2968,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.email = email;
+                _this3.id = id;
                 _context3.next = 3;
-                return axios.get("api/admin/".concat(email));
+                return axios.get("api/schedule/".concat(id));
 
               case 3:
                 response = _context3.sent;
@@ -2977,7 +2985,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     //Update 
-    updateAdmin: function updateAdmin() {
+    updateSchedule: function updateSchedule() {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
@@ -2988,12 +2996,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return axios.patch("api/admin/".concat(_this4.email), _this4.formDataUpdate);
+                return axios.patch("api/schedule/".concat(_this4.id), _this4.formDataUpdate);
 
               case 3:
                 response = _context4.sent;
 
-                _this4.$toasted.success('Data admin berhasil diedit', {
+                _this4.$toasted.success('Jadwal berhasil diedit', {
                   duration: 3000
                 });
 
@@ -3004,14 +3012,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 8:
                 _context4.prev = 8;
                 _context4.t0 = _context4["catch"](0);
-
-                if (_context4.t0.response.data.errors) {
-                  _this4.errors = _context4.t0.response.data.errors;
-                } else {
-                  _this4.$toasted.error('Dia milik orang,!', {
-                    duration: 3000
-                  });
-                }
+                _this4.errors = _context4.t0.response.data.errors;
 
               case 11:
               case "end":
@@ -6572,7 +6573,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.editschedule(schedule.id)
+                                  return _vm.editSchedule(schedule.id)
                                 }
                               }
                             },
@@ -6822,6 +6823,224 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalUpdate",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateSchedule($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.ship,
+                            expression: "formDataUpdate.ship"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Kapal" },
+                        domProps: { value: _vm.formDataUpdate.ship },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "ship",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.ship
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.ship[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-control" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formDataUpdate.departure,
+                              expression: "formDataUpdate.departure"
+                            }
+                          ],
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.formDataUpdate,
+                                "departure",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            { attrs: { selected: "", disabled: "" } },
+                            [_vm._v("Keberangkatan")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Pamatata")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Bira")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.departure
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.departure[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-control" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formDataUpdate.destination,
+                              expression: "formDataUpdate.destination"
+                            }
+                          ],
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.formDataUpdate,
+                                "destination",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            { attrs: { selected: "", disabled: "" } },
+                            [_vm._v("Tujuan")]
+                          ),
+                          _vm._v(" "),
+                          _vm.formDataUpdate.departure == "Bira"
+                            ? _c("option", [_vm._v("Pamatata")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.formDataUpdate.departure == "Pamatata"
+                            ? _c("option", [_vm._v("Bira")])
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.destination
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.destination[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.date,
+                            expression: "formDataUpdate.date"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "datetime-local" },
+                        domProps: { value: _vm.formDataUpdate.date },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "date",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(6)
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -6918,6 +7137,52 @@ var staticRenderFns = [
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Tambah")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Edit Jadwal")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-warning", attrs: { type: "submit" } },
+        [_vm._v("Update")]
       )
     ])
   }
@@ -22450,10 +22715,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
  // TOasted
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toasted__WEBPACK_IMPORTED_MODULE_3___default.a); // Sweet alert
-// import swal from 'sweetalert'
-// Vue.use(swal)
-
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_toasted__WEBPACK_IMPORTED_MODULE_3___default.a);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: "#app",
   router: new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"](_router__WEBPACK_IMPORTED_MODULE_2__["default"])

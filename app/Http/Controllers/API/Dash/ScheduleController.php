@@ -28,4 +28,27 @@ class ScheduleController extends Controller
         Schedule::create($data);
         return response()->json([ "message" => "The item was created successfully"], 201);
     }
+
+    // Show
+    public function show($id)
+    {
+        $schedule = Schedule::findOrFail($id);
+        return ScheduleResource::make($schedule);
+    }
+
+    // Update
+    public function update($id)
+    {
+        $schedule = Schedule::findOrFail($id);
+        $data =  request()->validate([
+            'ship'      => 'required|string|min:5|max:30',
+            'departure' => 'required|string|min:3|max:30',
+            'destination' => 'required|string|min:3|max:30',
+            'date'      => 'required|date'
+        ]);   
+        $schedule->update($data);
+        return ScheduleResource::make($schedule);
+    }
+
+    
 }

@@ -41,7 +41,7 @@ class AdminConrtoller extends Controller
         return AdminResource::make($user);
     }
 
-    public function destory(User $user)
+    public function destroy(User $user)
     {
         $user->delete();
         return response()->json([ "message" => "The item was delete successfully"], 204);

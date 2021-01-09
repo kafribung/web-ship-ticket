@@ -33,7 +33,7 @@
                                     <td>{{ schedule.destination }}</td>
                                     <td>{{ schedule.date }}</td>
                                     <td>
-                                        <button  @click="editschedule(schedule.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button  @click="editSchedule(schedule.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
                                         <button  ref="delete" @click="deleteschedule(schedule.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
@@ -93,31 +93,39 @@
         </div>
 
         <!-- Modal Upadte -->
-        <!-- <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit admin</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Jadwal</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="updateAdmin">
+                        <form @submit.prevent="updateSchedule">
                             <div class="form-group">
-                                <input type="text" v-model="formDataUpdate.name"  class="form-control" placeholder="name">
-                                <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
+                                <input type="text" v-model="formDataUpdate.ship"  class="form-control" placeholder="Kapal">
+                                <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
+                            </div>
+                            <div class="form-control">
+                                <select v-model="formDataUpdate.departure">
+                                    <option selected disabled>Keberangkatan</option>
+                                    <option>Pamatata</option>
+                                    <option>Bira</option>
+                                </select>
+                                <small v-if="errors.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
+                            </div>
+                            <div class="form-control">
+                                <select v-model="formDataUpdate.destination">
+                                    <option selected disabled>Tujuan</option>
+                                    <option v-if="formDataUpdate.departure == 'Bira'">Pamatata</option>
+                                    <option v-if="formDataUpdate.departure == 'Pamatata'">Bira</option>
+                                </select>
+                                <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="email" v-model="formDataUpdate.email"  class="form-control" placeholder="email">
-                                <small v-if="errors.email" class="text-danger font-italic d-block">{{ errors.email[0] }}</small>
-                            </div>
-                            <div class="form-group">
-                                <input type="password"  v-model="formDataUpdate.password"  class="form-control" placeholder="password">
-                                <small v-if="errors.password" class="text-danger font-italic d-block">{{ errors.password[0] }}</small>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" v-model="formDataUpdate.password_confirmation"  class="form-control" placeholder="passwor_confirmation">
+                                <input type="datetime-local" v-model="formDataUpdate.date" class="form-control">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -127,7 +135,7 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
     <!-- /.container-fluid -->
     
@@ -142,10 +150,9 @@ export default {
             schedules : {},
             formDataStore: {},
             formDataUpdate: {},
-            email: null,
+            id: null,
             errors: {},
-
-            auth: {},
+            date: new Date()
         }
     },
     created() {
@@ -172,29 +179,23 @@ export default {
         },
 
         //Edit 
-        async editAdmin(email){
-            this.email = email
-            const response = await axios.get(`api/admin/${email}`)
+        async editSchedule(id){
+            this.id = id
+            const response = await axios.get(`api/schedule/${id}`)
             this.formDataUpdate = response.data.data 
         },
 
         //Update 
-        async updateAdmin(){
+        async updateSchedule(){
             try {
-                const response = await axios.patch(`api/admin/${this.email}`, this.formDataUpdate)
-                this.$toasted.success('Data admin berhasil diedit', {
+                const response = await axios.patch(`api/schedule/${this.id}`, this.formDataUpdate)
+                this.$toasted.success('Jadwal berhasil diedit', {
                     duration : 3000,
                 })
                 location.reload()
             } catch (error) {
-                if (error.response.data.errors) {
-                    this.errors = error.response.data.errors    
-                } else {
-                    this.$toasted.error('Dia milik orang,!', {
-                        duration : 3000,
-                    })
-                }
-            }
+                this.errors = error.response.data.errors
+            }    
         },
 
         //Destroy 
@@ -226,7 +227,8 @@ export default {
                 });
                 
             } catch (error) {}
-        }
+        },
+
     },
 }
 </script>

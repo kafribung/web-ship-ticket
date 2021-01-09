@@ -22,11 +22,14 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('admin', [AdminConrtoller::class, 'store']);
     Route::get('admin/{user:email}', [AdminConrtoller::class, 'show']);
     Route::patch('admin/{user:email}', [AdminConrtoller::class, 'update']);
-    Route::delete('admin/{user:email}', [AdminConrtoller::class, 'destory']);
+    Route::delete('admin/{user:email}', [AdminConrtoller::class, 'destroy']);
 
     // Jadwal
     Route::get('schedule', [ScheduleController::class, 'index']);
     Route::post('schedule', [ScheduleController::class, 'store']);
+    Route::get('schedule/{id}', [ScheduleController::class, 'show']);
+    Route::patch('schedule/{id}', [ScheduleController::class, 'update']);
+    Route::delete('schedule/{id}', [ScheduleController::class, 'destroy']);
 
     Route::post('logout', LogoutController::class);
 });
