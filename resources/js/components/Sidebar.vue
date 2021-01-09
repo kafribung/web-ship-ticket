@@ -2,22 +2,22 @@
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <router-link to="/dashboard" class="sidebar-brand d-flex align-items-center justify-content-center">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+                <i class="fas fa-ship"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-        </a>
+            <div class="sidebar-brand-text mx-3">Tiket Ferry</div>
+        </router-link>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0" />
 
         <!-- Nav Item - Dashboard -->
         <router-link :to="'/dashboard'" class="nav-item">
-            <p class="nav-link">
+            <div class="nav-link">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
-            </p>
+            </div>
         </router-link>
 
         <!-- Divider -->
@@ -25,10 +25,10 @@
 
         <!-- Nav Item - Charts -->
         <router-link :to="'/admin'" class="nav-item">
-            <p class="nav-link">
+            <div class="nav-link">
                 <i class="fas fa-fw fa-user"></i>
                 <span>Admin</span>
-            </p>
+            </div>
         </router-link>
         
         <!-- Divider -->
@@ -38,20 +38,12 @@
         <div class="sidebar-heading">Interface</div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Components</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Components:</h6>
-                    <a class="collapse-item" href="buttons.html">Buttons</a>
-                    <a class="collapse-item" href="cards.html">Cards</a>
-                </div>
+        <router-link :to="'/schedule'" class="nav-item">
+            <div class="nav-link">
+                <i class="fas fa-fw fa-calendar"></i>
+                <span>Jadwal</span>
             </div>
-        </li>
+        </router-link>
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">

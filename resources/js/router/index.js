@@ -1,6 +1,7 @@
 import Dashboard from '../views/pages/Dashboard'
 import Admin from '../views/pages/Admin'
 import Login from '../views/auth/Login'
+import Schedule from '../views/pages/Schedule'
 
 export default {
     mode: 'history',
@@ -28,6 +29,16 @@ export default {
             component: Admin,
             beforeEnter: (to, from, next) => {
                 axios.get('/api/admin').then(()=> { 
+                    next()
+                }).catch(() => next('/login'))
+            }
+        },
+        {
+            path: '/schedule',
+            name: 'Schedule',
+            component: Schedule,
+            beforeEnter: (to, from, next) => {
+                axios.get('/api/schedule').then(() => {
                     next()
                 }).catch(() => next('/login'))
             }

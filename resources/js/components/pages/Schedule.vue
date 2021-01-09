@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Admin</h1>
+            <h1 class="h3 mb-0 text-gray-800">Jadwal Ferry</h1>
         </div>
 
         <!-- Content Row -->
@@ -18,21 +18,23 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Nama</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
+                                    <th scope="col">Kapal</th>
+                                    <th scope="col">Keberangkatan</th>
+                                    <th scope="col">Tujuan</th>
+                                    <th scope="col">Tanggal</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(admin, index) in admins" :key="index">
+                                <tr v-for="(schedule, index) in schedules" :key="index">
                                     <th scope="row">{{ index+1 }}</th>
-                                    <td>{{ admin.name }}</td>
-                                    <td>{{ admin.email }}</td>
-                                    <td>{{ admin.role }}</td>
+                                    <td>{{ schedule.ship }}</td>
+                                    <td>{{ schedule.departure }}</td>
+                                    <td>{{ schedule.destination }}</td>
+                                    <td>{{ schedule.date }}</td>
                                     <td>
-                                        <button v-if="auth.email == admin.email" @click="editAdmin(admin.email)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button  v-if="auth.email == admin.email" ref="delete" @click="deleteAdmin(admin.email)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button  @click="editschedule(schedule.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button  ref="delete" @click="deleteschedule(schedule.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -49,7 +51,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah admin</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Jadwal</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -57,16 +59,24 @@
                     <div class="modal-body">
                         <form @submit.prevent="storeAdmin">
                             <div class="form-group">
-                                <input type="text" v-model="formDataStore.name" id="username" class="form-control" placeholder="name">
-                                <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
+                                <input type="text" v-model="formDataStore.ship"  class="form-control" placeholder="Kapal">
+                                <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="email" v-model="formDataStore.email" id="email" class="form-control" placeholder="email">
-                                <small v-if="errors.email" class="text-danger font-italic d-block">{{ errors.email[0] }}</small>
+                                <select v-model="formDataStore.departure">
+                                    <option selected disabled>Keberangkatan</option>
+                                    <option>Pamatata</option>
+                                    <option>Bira</option>
+                                </select>
+                                <small v-if="formDataStore.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="password"  v-model="formDataStore.password" id="password" class="form-control" placeholder="password">
-                                <small v-if="errors.password" class="text-danger font-italic d-block">{{ errors.password[0] }}</small>
+                                <select v-model="formDataStore.destination" class="form-control">
+                                    <option selected disabled>Tujuan</option>
+                                    <option>Pamatata</option>
+                                    <option>Bira</option>
+                                </select>
+                                <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
                             </div>
                             <div class="form-group">
                                 <input type="password" v-model="formDataStore.password_confirmation" id="passwor_confirmation" class="form-control" placeholder="passwor_confirmation">
@@ -83,7 +93,7 @@
         </div>
 
         <!-- Modal Upadte -->
-        <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -117,7 +127,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- /.container-fluid -->
     
@@ -129,7 +139,7 @@ import swal from 'sweetalert'
 export default {
     data() {
         return {
-            admins : {},
+            schedules : {},
             formDataStore: {},
             formDataUpdate: {},
             email: null,
@@ -139,38 +149,25 @@ export default {
         }
     },
     created() {
-        this.getAdmin()
-        this.getAuth()
+        this.getSchedule()
     },
     methods: {
-        // Get Auth
-        async getAuth(){
-            const response = await axios.get('api/dashboard')
-            this.auth = response.data.data
-            console.log(this.auth)
-        },
         // Read
-        async getAdmin(){
-            const response = await axios.get('/api/admin')
-            this.admins = response.data.data
+        async getSchedule(){
+            const response = await axios.get('/api/schedule')
+            this.schedules = response.data.data
         },
 
         // Create
-        async storeAdmin(){
+        async storeSchedule(){
             try {
-                const response = await axios.post('api/admin', this.formDataStore)
-                this.$toasted.success('Data admin berhasil ditambahkan', {
+                const response = await axios.post('api/schedule', this.formDataStore)
+                this.$toasted.success('Jadwal berhasil ditambahkan', {
                     duration : 3000,
                 })
                 location.reload()
             } catch (error) {
-                if (error.response.data.errors) {
-                    this.errors = error.response.data.errors    
-                } else {
-                    this.$toasted.error('Data maximal 4', {
-                        duration : 3000,
-                    })
-                }
+                this.errors = error.response.data.errors    
             }
         },
 

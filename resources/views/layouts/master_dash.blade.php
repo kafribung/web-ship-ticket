@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Tiket Ferry Selayar - Bira</title>
+    <script src="{{ asset('js/app.js') }}" defer></script>
     @include('includes.css_dash')
 </head>
 
@@ -15,9 +16,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    
-    <script src="{{ asset('js/app.js') }}" defer></script>
     @include('includes.script_dash')
 </body>
 
