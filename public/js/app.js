@@ -2879,6 +2879,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2887,8 +2903,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       formDataStore: {},
       formDataUpdate: {},
       id: null,
-      errors: {},
-      date: new Date()
+      errors: {}
     };
   },
   created: function created() {
@@ -6533,6 +6548,14 @@ var render = function() {
   return _c("div", { staticClass: "container-fluid" }, [
     _vm._m(0),
     _vm._v(" "),
+    _vm.schedules == ""
+      ? _c("div", [
+          _c("p", { staticClass: "alert alert-info" }, [
+            _vm._v("Data Jadwal Beluam Ada")
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-xl-12 col-md-6 mb-4" }, [
         _c(
@@ -6561,6 +6584,8 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(schedule.destination))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(schedule.date))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(schedule.time))]),
                         _vm._v(" "),
                         _c("td", [
                           _c(
@@ -6798,7 +6823,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "datetime-local" },
+                        attrs: { type: "date" },
                         domProps: { value: _vm.formDataStore.date },
                         on: {
                           input: function($event) {
@@ -6812,7 +6837,51 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.date
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.formDataStore.date[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataStore.time,
+                            expression: "formDataStore.time"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "time" },
+                        domProps: { value: _vm.formDataStore.time },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataStore,
+                              "time",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.time
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.formDataStore.time[0]))]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _vm._m(4)
@@ -7016,7 +7085,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { type: "datetime-local" },
+                        attrs: { type: "date" },
                         domProps: { value: _vm.formDataUpdate.date },
                         on: {
                           input: function($event) {
@@ -7030,7 +7099,51 @@ var render = function() {
                             )
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.date
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.date[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.time,
+                            expression: "formDataUpdate.time"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "time" },
+                        domProps: { value: _vm.formDataUpdate.time },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "time",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.time
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.time[0]))]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _vm._m(6)
@@ -7089,6 +7202,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tujuan")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Tanggal")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Jam")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
       ])

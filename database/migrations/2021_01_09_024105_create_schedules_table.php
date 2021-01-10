@@ -18,7 +18,8 @@ class CreateSchedulesTable extends Migration
             $table->string('ship');
             $table->string('departure');
             $table->string('destination');
-            $table->dateTime('date', $precision = 0);
+            $table->date('date');
+            $table->time('time');
         });
     }
 

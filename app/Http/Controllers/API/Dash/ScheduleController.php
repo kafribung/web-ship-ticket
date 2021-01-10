@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\Dash;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dash\ScheduleRequest;
 use App\Http\Resources\Dash\ScheduleResource;
 use App\Models\Schedule;
-use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
@@ -17,14 +17,9 @@ class ScheduleController extends Controller
     }
 
     // Store
-    public function store()
+    public function store(ScheduleRequest $request)
     {
-        $data =  request()->validate([
-            'ship'      => 'required|string|min:5|max:30',
-            'departure' => 'required|string|min:3|max:30',
-            'destination' => 'required|string|min:3|max:30',
-            'date'      => 'required|date'
-        ]);
+        $data = $request->validated();
         Schedule::create($data);
         return response()->json([ "message" => "The item was created successfully"], 201);
     }
@@ -37,15 +32,10 @@ class ScheduleController extends Controller
     }
 
     // Update
-    public function update($id)
+    public function update(ScheduleRequest $request ,$id)
     {
+        $data = $request->validated();
         $schedule = Schedule::findOrFail($id);
-        $data =  request()->validate([
-            'ship'      => 'required|string|min:5|max:30',
-            'departure' => 'required|string|min:3|max:30',
-            'destination' => 'required|string|min:3|max:30',
-            'date'      => 'required|date'
-        ]);   
         $schedule->update($data);
         return ScheduleResource::make($schedule);
     }

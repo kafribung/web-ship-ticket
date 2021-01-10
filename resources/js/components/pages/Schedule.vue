@@ -6,6 +6,10 @@
             <h1 class="h3 mb-0 text-gray-800">Jadwal Ferry</h1>
         </div>
 
+        <div v-if="schedules == ''">
+            <p class="alert alert-info">Data Jadwal Beluam Ada</p>
+        </div>
+
         <!-- Content Row -->
         <div class="row">
             <!-- Earnings (Monthly) Card Example -->
@@ -22,6 +26,7 @@
                                     <th scope="col">Keberangkatan</th>
                                     <th scope="col">Tujuan</th>
                                     <th scope="col">Tanggal</th>
+                                    <th scope="col">Jam</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
@@ -32,6 +37,7 @@
                                     <td>{{ schedule.departure }}</td>
                                     <td>{{ schedule.destination }}</td>
                                     <td>{{ schedule.date }}</td>
+                                    <td>{{ schedule.time }}</td>
                                     <td>
                                         <button  @click="editSchedule(schedule.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
                                         <button  ref="delete" @click="deleteSchedule(schedule.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
@@ -79,7 +85,12 @@
                                 <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="datetime-local" v-model="formDataStore.date" class="form-control">
+                                <input type="date" v-model="formDataStore.date" class="form-control">
+                                <small v-if="errors.date" class="text-danger font-italic d-block">{{ formDataStore.date[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="time" v-model="formDataStore.time" class="form-control">
+                                <small v-if="errors.time" class="text-danger font-italic d-block">{{ formDataStore.time[0] }}</small>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -125,7 +136,12 @@
                                 <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="datetime-local" v-model="formDataUpdate.date" class="form-control">
+                                <input type="date" v-model="formDataUpdate.date" class="form-control">
+                                <small v-if="errors.date" class="text-danger font-italic d-block">{{ errors.date[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="time" v-model="formDataUpdate.time" class="form-control">
+                                <small v-if="errors.time" class="text-danger font-italic d-block">{{ errors.time[0] }}</small>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -152,7 +168,6 @@ export default {
             formDataUpdate: {},
             id: null,
             errors: {},
-            date: new Date()
         }
     },
     created() {
