@@ -13,20 +13,39 @@ class VehicleSeeder extends Seeder
      */
     public function run()
     {
-        $vehicles = collect([
-            'Golongan I	(Sedan, Jip, Pick Up/Truk Kecil, dan Bus)',
-            'Golongan II (Truk dengan 2 gandar)',
-            'Golongan III (Truk dengan 3 gandar)',
-            'Golongan III (Truk dengan 3 gandar)',
-            'Golongan IV (Truk dengan 4 gandar)',
-            'Golongan V	(Truk dengan 5 gandar)',
-            'Golongan VI (Kendaraan bermotor roda 2)',
+        $vehicles = [
+            [
+                'type' =>  'Golongan V.a (Bis sedang, tinggi <= 7m)',
+                'budget' => '800300'
+            ],
+            [
+                'type' =>  'Golongan V.b (Truk sedang, tinggi <= 7m)',
+                'budget' => '495400'
+            ],
+            [
+                'type' =>  'Golongan VI.a (Bis besar, tinggi <= 10m)',
+                'budget' => '1277000'
+            ],
+            [
+                'type' =>  'Golongan VI.b (Truk besar, tinggi <= 10m)',
+                'budget' => '702100'
+            ],
+            [
+                'type' =>  'Golongan VII (Truk trailer, tinggi <=12m)',
+                'budget' => '1047600'
+            ],
+            [
+                'type' =>  'Golongan VIII (Truk trailer, tinggi <= 16m)',
+                'budget' => '1260600'
+            ],
+            [
+                'type' =>  'Golongan IX (Truk trailer, tinggi >16m)',
+                'budget' => '2659100'
+            ],
+        ];
 
-        ]);
-        $vehicles->each(function($vehicle){
-            \App\Models\Vehicle::create([
-                'type' => $vehicle
-            ]);
-        });
+        foreach ($vehicles as $vehicle) {
+            \App\Models\Vehicle::create($vehicle);
+        }
     }
 }
