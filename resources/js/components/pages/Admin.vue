@@ -31,8 +31,8 @@
                                     <td>{{ admin.email }}</td>
                                     <td>{{ admin.role }}</td>
                                     <td>
-                                        <button v-if="auth.email == admin.email" @click="editAdmin(admin.email)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button  v-if="auth.email == admin.email" ref="delete" @click="deleteAdmin(admin.email)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button v-if="auth.email == admin.email" @click="editAdmin(admin.email)" class="btn btn-warning btn-circle btn-sm m-0 p-0" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button  v-if="auth.email == admin.email" ref="delete" @click="deleteAdmin(admin.email)" class="btn btn-danger btn-circle btn-sm m-0 p-0"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -11,6 +11,10 @@ import router from './router'
 import Toasted from 'vue-toasted'
 Vue.use(Toasted)
 
+// Datatable
+import DataTable from 'laravel-vue-datatable';
+Vue.use(DataTable);
+
 new Vue({
     el: "#app",
     router: new VueRouter(router),

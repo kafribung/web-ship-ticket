@@ -26,25 +26,38 @@
                                     <th scope="col">Identitas</th>
                                     <th scope="col">Umur</th>
                                     <th scope="col">Kota</th>
-                                    <th scope="col">Jenis Kelamin</th>
-                                    <th scope="col">Jadwal</th>
+                                    <th scope="col">JK</th>
                                     <th scope="col">Layanan</th>
                                     <th scope="col">Kendaraan</th>
+                                    <th scope="col">Jadwal</th>
                                     <th scope="col">Biaya</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(customer, index) in customers" :key="index">
+                                <tr class="text-small" v-for="(customer, index) in customers" :key="index">
                                     <th scope="row">{{ index+1 }}</th>
-                                    <td>{{ customer.ship }}</td>
-                                    <td>{{ customer.departure }}</td>
-                                    <td>{{ customer.destination }}</td>
-                                    <td>{{ customer.date }}</td>
-                                    <td>{{ customer.time }}</td>
+                                    <td>{{ customer.name }}</td>
+                                    <td>{{ customer.identity }}</td>
+                                    <td>{{ customer.age }}</td>
+                                    <td>{{ customer.city }}</td>
+                                    <td>{{ customer.gender }}</td>
+                                    <td>{{ customer.service }}</td>
+                                    <td>{{ customer.vehicle.type }}</td>
                                     <td>
-                                        <button  @click="editCustomer(customer.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button  ref="delete" @click="deleteCustomer(customer.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
+                                        <ul>
+                                            <li><small>{{ customer.schedule.ship }}</small></li>
+                                            <li><small>{{ customer.schedule.departure }} - {{ customer.schedule.destination }}</small> </li>
+                                            <li><small>{{ customer.schedule.date }} - {{ customer.schedule.time }}</small> </li>
+                                        </ul>
+                                    </td>
+                                    <td>{{ customer.budget }}</td>
+                                    <td>{{ customer.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
+                                    <td>
+                                        <button   class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
+                                        <button  @click="editCustomer(customer.id)" class="btn btn-warning btn-circle btn-sm m-1 p-0" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button  ref="delete" @click="deleteCustomer(customer.id)" class="btn btn-danger btn-circle btn-sm m-1 py-0"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -173,6 +186,9 @@ export default {
             id: null,
             errors: {},
         }
+    },
+    mounted() {
+        console.log(this.customers)
     },
     created() {
         this.getCustomer()

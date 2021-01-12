@@ -13,7 +13,7 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        $services = ['orang', 'kendaraan'];
+        $services = ['Orang', 'Kendaraan'];
         foreach ($services as $service) {
             \App\Models\Service::create([
                 'type' => $service

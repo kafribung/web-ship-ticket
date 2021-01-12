@@ -15,6 +15,14 @@ class Customer extends Model
         'updated_at'  
     ];
 
+    // // Mutator
+    // public function getActiveAttribute()
+    // {
+    //     if ($this->status == 0) {
+    //         return 'Belum Lunas';
+    //     } else return 'Lunas';
+    // }
+
     // Relation many to one (Customer)
     public function service()
     {

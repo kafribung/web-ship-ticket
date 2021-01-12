@@ -17,15 +17,16 @@ class CustomerResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id'       => $this->id,
+            'name'     => $this->name,
             'identity' => $this->identity,
             'age'      => $this->age,
             'city'     => $this->city,
             'gender'   => $this->gender,
             'status'   => $this->status,
-            'budget'   => $this->budget,
+            'budget'   => number_format($this->budget, 2),
             'schedule' => ScheduleResource::make($this->schedule),
             'service'  => $this->service->type,
-            'vehicle'  => $this->vehicle()->get(['type', 'budget']),
+            'vehicle'  => $this->vehicle,
         ];
     }
 }

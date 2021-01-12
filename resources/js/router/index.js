@@ -2,6 +2,7 @@ import Dashboard from '../views/pages/Dashboard'
 import Admin from '../views/pages/Admin'
 import Login from '../views/auth/Login'
 import Schedule from '../views/pages/Schedule'
+import Customer from '../views/pages/Customer'
 
 export default {
     mode: 'history',
@@ -39,6 +40,16 @@ export default {
             component: Schedule,
             beforeEnter: (to, from, next) => {
                 axios.get('/api/schedule').then(() => {
+                    next()
+                }).catch(() => next('/login'))
+            }
+        },
+        {
+            path: '/customer',
+            name: 'Customer',
+            component: Customer,
+            beforeEnter: (to, from, next) => {
+                axios.get('/api/customer').then(() => { 
                     next()
                 }).catch(() => next('/login'))
             }
