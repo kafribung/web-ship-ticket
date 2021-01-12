@@ -11,7 +11,7 @@ class Customer extends Model
 
     protected $guarded = [
         'id',
-        'crated_at',
+        'created_at',
         'updated_at'  
     ];
 
@@ -25,5 +25,11 @@ class Customer extends Model
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);
+    }
+
+    // Relation many to one (Customer)
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
     }
 }

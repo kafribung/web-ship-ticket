@@ -15,4 +15,10 @@ class Schedule extends Model
     protected $guarded = [
         'id',
     ];
+
+    // Relation one to many (Customer)
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
 }

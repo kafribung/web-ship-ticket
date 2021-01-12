@@ -27,7 +27,10 @@
                                     <th scope="col">Umur</th>
                                     <th scope="col">Kota</th>
                                     <th scope="col">Jenis Kelamin</th>
+                                    <th scope="col">Jadwal</th>
                                     <th scope="col">Layanan</th>
+                                    <th scope="col">Kendaraan</th>
+                                    <th scope="col">Biaya</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>

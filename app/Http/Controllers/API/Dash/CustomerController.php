@@ -13,7 +13,7 @@ class CustomerController extends Controller
     // Read
     public function index()
     {
-        $customers = Customer::with('service')->get();
+        $customers = Customer::with('service', 'schedule', 'vehicle')->get();
         return CustomerResource::collection($customers);    
     }
     // Store
