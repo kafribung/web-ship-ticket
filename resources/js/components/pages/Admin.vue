@@ -217,7 +217,7 @@ export default {
                         swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                         });
-                        this.$toasted.success('Data admin berhasil diedit', {
+                        this.$toasted.success('Admin berhasil dihapus', {
                             duration : 3000,
                         })
                         location.reload()

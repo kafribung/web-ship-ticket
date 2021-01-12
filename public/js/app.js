@@ -2551,7 +2551,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                           icon: "success"
                         });
 
-                        _this6.$toasted.success('Data admin berhasil diedit', {
+                        _this6.$toasted.success('Admin berhasil dihapus', {
                           duration: 3000
                         });
 
@@ -3049,7 +3049,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                           icon: "success"
                         });
 
-                        _this5.$toasted.success('Data admin berhasil diedit', {
+                        _this5.$toasted.success('Admin berhasil dhapus', {
                           duration: 3000
                         });
 

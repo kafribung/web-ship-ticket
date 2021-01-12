@@ -3,11 +3,11 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Jadwal Ferry</h1>
+            <h1 class="h3 mb-0 text-gray-800">Pelanggan</h1>
         </div>
 
-        <div v-if="schedules == ''">
-            <p class="alert alert-info">Data Jadwal Beluam Ada</p>
+        <div v-if="customers == ''">
+            <p class="alert alert-info">Pelanggan Masih Kosong</p>
         </div>
 
         <!-- Content Row -->
@@ -22,25 +22,26 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Kapal</th>
-                                    <th scope="col">Keberangkatan</th>
-                                    <th scope="col">Tujuan</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Jam</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Identitas</th>
+                                    <th scope="col">Umur</th>
+                                    <th scope="col">Kota</th>
+                                    <th scope="col">Jenis Kelamin</th>
+                                    <th scope="col">Layanan</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(schedule, index) in schedules" :key="index">
+                                <tr v-for="(customer, index) in customers" :key="index">
                                     <th scope="row">{{ index+1 }}</th>
-                                    <td>{{ schedule.ship }}</td>
-                                    <td>{{ schedule.departure }}</td>
-                                    <td>{{ schedule.destination }}</td>
-                                    <td>{{ schedule.date }}</td>
-                                    <td>{{ schedule.time }}</td>
+                                    <td>{{ customer.ship }}</td>
+                                    <td>{{ customer.departure }}</td>
+                                    <td>{{ customer.destination }}</td>
+                                    <td>{{ customer.date }}</td>
+                                    <td>{{ customer.time }}</td>
                                     <td>
-                                        <button  @click="editSchedule(schedule.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button  ref="delete" @click="deleteSchedule(schedule.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button  @click="editCustomer(customer.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button  ref="delete" @click="deleteCustomer(customer.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -63,7 +64,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="storeSchedule">
+                        <form @submit.prevent="storeCustomer">
                             <div class="form-group">
                                 <input type="text" v-model="formDataStore.ship"  class="form-control" placeholder="Kapal">
                                 <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
@@ -114,7 +115,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="updateSchedule">
+                        <form @submit.prevent="updateCustomer">
                             <div class="form-group">
                                 <input type="text" v-model="formDataUpdate.ship"  class="form-control" placeholder="Kapal">
                                 <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
@@ -163,7 +164,7 @@ import swal from 'sweetalert'
 export default {
     data() {
         return {
-            schedules : {},
+            customers : {},
             formDataStore: {},
             formDataUpdate: {},
             id: null,
@@ -171,20 +172,20 @@ export default {
         }
     },
     created() {
-        this.getSchedule()
+        this.getCustomer()
     },
     methods: {
         // Read
-        async getSchedule(){
-            const response = await axios.get('/api/schedule')
-            this.schedules = response.data.data
+        async getCustomer(){
+            const response = await axios.get('/api/customer')
+            this.customers = response.data.data
         },
 
         // Create
-        async storeSchedule(){
+        async storeCustomer(){
             try {
-                const response = await axios.post('api/schedule', this.formDataStore)
-                this.$toasted.success('Jadwal berhasil ditambahkan', {
+                const response = await axios.post('api/customer', this.formDataStore)
+                this.$toasted.success('Pelanggan berhasil ditambahkan', {
                     duration : 3000,
                 })
                 location.reload()
@@ -194,17 +195,17 @@ export default {
         },
 
         //Edit 
-        async editSchedule(id){
+        async editCustomer(id){
             this.id = id
-            const response = await axios.get(`api/schedule/${id}`)
+            const response = await axios.get(`api/customer/${id}`)
             this.formDataUpdate = response.data.data 
         },
 
         //Update 
-        async updateSchedule(){
+        async updateCustomer(){
             try {
-                const response = await axios.patch(`api/schedule/${this.id}`, this.formDataUpdate)
-                this.$toasted.success('Jadwal berhasil diedit', {
+                const response = await axios.patch(`api/customer/${this.id}`, this.formDataUpdate)
+                this.$toasted.success('Pelanggan berhasil diedit', {
                     duration : 3000,
                 })
                 location.reload()
@@ -214,7 +215,7 @@ export default {
         },
 
         //Destroy 
-        async deleteSchedule(id){
+        async deleteCustomer(id){
             try {
                 swal({
                     title: "Are you sure?",
@@ -225,12 +226,12 @@ export default {
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`api/schedule/${id}`)
+                    axios.delete(`api/customer/${id}`)
                     .then(response => {
                         swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                         });
-                        this.$toasted.success('Admin berhasil dhapus', {
+                        this.$toasted.success('Pelanggan berhasil dhapus', {
                             duration : 3000,
                         })
                         location.reload()

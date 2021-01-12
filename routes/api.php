@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
-use App\Http\Controllers\API\Dash\{AdminConrtoller,  DashboardController, ScheduleController};
+use App\Http\Controllers\API\Dash\{AdminConrtoller, CustomerController, DashboardController, ScheduleController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +30,12 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('schedule/{id}', [ScheduleController::class, 'show']);
     Route::patch('schedule/{id}', [ScheduleController::class, 'update']);
     Route::delete('schedule/{id}', [ScheduleController::class, 'destroy']);
+
+    // Customer
+    Route::get('customer', [CustomerController::class, 'index']);
+    Route::post('customer', [CustomerController::class, 'store']);
+
+
 
     Route::post('logout', LogoutController::class);
 });
