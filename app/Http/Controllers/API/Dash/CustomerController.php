@@ -24,9 +24,8 @@ class CustomerController extends Controller
             'identify'=> ['required', 'string', 'min:8', 'max:17'],
             'age'     => ['required', 'min:3'],
             'city'    => ['required', 'string', 'min:5', 'max:20'],
-            'gender'  => ['required', 'string', 'min:7', 'max:9'],
-            'budget'  => ['required', 'integer'],
-            'service_id' => 'required',
+            'gender'  => ['required', 'string', 'min:6'],
+            'service' => 'required',
         ]);
         dd($data);
         Customer::create($data);

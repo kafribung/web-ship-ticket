@@ -39,8 +39,8 @@
                                     <td>{{ schedule.date }}</td>
                                     <td>{{ schedule.time }}</td>
                                     <td>
-                                        <button  @click="editSchedule(schedule.id)" class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
-                                        <button  ref="delete" @click="deleteSchedule(schedule.id)" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button  @click="editSchedule(schedule.id)" class="btn btn-warning btn-circle btn-sm m-0 p-0" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button  ref="delete" @click="deleteSchedule(schedule.id)" class="btn btn-danger btn-circle btn-sm m-0 p-0"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 </tbody>

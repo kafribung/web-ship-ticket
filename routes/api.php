@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
-use App\Http\Controllers\API\Dash\{AdminConrtoller, CustomerController, DashboardController, ScheduleController};
+use App\Http\Controllers\API\Dash\{AdminConrtoller, CustomerController, DashboardController, ScheduleController, ServiceController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +34,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     // Customer
     Route::get('customer', [CustomerController::class, 'index']);
     Route::post('customer', [CustomerController::class, 'store']);
+
+    // Layanan
+    Route::get('service', ServiceController::class);
 
 
 

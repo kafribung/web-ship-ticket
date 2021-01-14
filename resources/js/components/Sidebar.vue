@@ -48,8 +48,8 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <router-link :to="'/customer'" class="nav-item">
             <div class="nav-link">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Pelanggan</span>
+                <i class="fas fa-fw fa-book"></i>
+                <span>Booking</span>
             </div>
         </router-link>
 

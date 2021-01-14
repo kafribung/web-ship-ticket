@@ -3,11 +3,11 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Pelanggan</h1>
+            <h1 class="h3 mb-0 text-gray-800">Booking</h1>
         </div>
 
         <div v-if="customers == ''">
-            <p class="alert alert-info">Pelanggan Masih Kosong</p>
+            <p class="alert alert-info">Booking Masih Kosong</p>
         </div>
 
         <!-- Content Row -->
@@ -74,7 +74,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Jadwal</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Booking</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -82,23 +82,27 @@
                     <div class="modal-body">
                         <form @submit.prevent="storeCustomer">
                             <div class="form-group">
-                                <input type="text" v-model="formDataStore.ship"  class="form-control" placeholder="Kapal">
-                                <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
+                                <input type="text" maxlength="30" v-model="formDataStore.name"  class="form-control" placeholder="Nama Lengkap">
+                                <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
                             </div>
-                            <div class="form-control">
-                                <select v-model="formDataStore.departure">
-                                    <option selected disabled>Keberangkatan</option>
-                                    <option>Pamatata</option>
-                                    <option>Bira</option>
-                                </select>
+                            <div class="form-group">
+                                <input type="number" maxlength="17" v-model="formDataStore.identity"  class="form-control" placeholder="Identitas">
+                                <small v-if="errors.identity" class="text-danger font-italic d-block">{{ errors.identity[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" max="120" maxlength="3" v-model="formDataStore.age"  class="form-control" placeholder="Umur">
+                                <small v-if="errors.age" class="text-danger font-italic d-block">{{ errors.age[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" maxlength="20" v-model="formDataStore.city"  class="form-control" placeholder="Kota">
+                                <small v-if="errors.city" class="text-danger font-italic d-block">{{ errors.city[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <v-select v-model="formDataStore.gender" :options="['Pria', 'Wanita']"></v-select>
                                 <small v-if="errors.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
                             </div>
-                            <div class="form-control">
-                                <select v-model="formDataStore.destination">
-                                    <option selected disabled>Tujuan</option>
-                                    <option v-if="formDataStore.departure == 'Bira'">Pamatata</option>
-                                    <option v-if="formDataStore.departure == 'Pamatata'">Bira</option>
-                                </select>
+                            <div class="form-group">
+                                <v-select  :options="services" ></v-select>
                                 <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
                             </div>
                             <div class="form-group">
@@ -176,11 +180,13 @@
 
 <script>
 import swal from 'sweetalert'
+import 'vue-select/dist/vue-select.css';
 
 export default {
     data() {
         return {
             customers : {},
+            services : [],
             formDataStore: {},
             formDataUpdate: {},
             id: null,
@@ -188,12 +194,23 @@ export default {
         }
     },
     mounted() {
-        console.log(this.customers)
     },
     created() {
-        this.getCustomer()
+        this.getCustomer(),
+        this.getService()
     },
     methods: {
+        // Service
+        async getService(){
+            const response = await axios.get('/api/service')
+            // this.services = Object.values(response.data.data) 
+            for (let value of Object.values(response.data.data)) {
+                this.services.push(value.type) 
+            } 
+        },
+        async getVehicle(){
+            
+        }
         // Read
         async getCustomer(){
             const response = await axios.get('/api/customer')
@@ -204,7 +221,7 @@ export default {
         async storeCustomer(){
             try {
                 const response = await axios.post('api/customer', this.formDataStore)
-                this.$toasted.success('Pelanggan berhasil ditambahkan', {
+                this.$toasted.success('Booking berhasil ditambahkan', {
                     duration : 3000,
                 })
                 location.reload()
@@ -224,7 +241,7 @@ export default {
         async updateCustomer(){
             try {
                 const response = await axios.patch(`api/customer/${this.id}`, this.formDataUpdate)
-                this.$toasted.success('Pelanggan berhasil diedit', {
+                this.$toasted.success('Booking berhasil diedit', {
                     duration : 3000,
                 })
                 location.reload()
@@ -250,7 +267,7 @@ export default {
                         swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                         });
-                        this.$toasted.success('Pelanggan berhasil dhapus', {
+                        this.$toasted.success('Booking berhasil dhapus', {
                             duration : 3000,
                         })
                         location.reload()
