@@ -15,9 +15,6 @@ Vue.use(Toasted)
 import DataTable from 'laravel-vue-datatable';
 Vue.use(DataTable);
 
-// Vue-select
-import vSelect from 'vue-select'
-Vue.component('v-select', vSelect)
 
 new Vue({
     el: "#app",

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
-use App\Http\Controllers\API\Dash\{AdminConrtoller, CustomerController, DashboardController, ScheduleController, ServiceController};
+use App\Http\Controllers\API\Dash\{AdminConrtoller, CustomerController, DashboardController, ScheduleController, ServiceController, VehicleController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     // Layanan
     Route::get('service', ServiceController::class);
 
+    // Golongan Kendaraan
+    Route::get('vehicle', VehicleController::class);
 
 
     Route::post('logout', LogoutController::class);

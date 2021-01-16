@@ -23,9 +23,10 @@ class CreateCustomersTable extends Migration
             $table->boolean('status')->default(0);
             $table->integer('budget');
             $table->foreignId('schedule_id')->constrained('schedules')->cascadeOnDelete();
-            $table->foreignId('vehicle_id')->constrained('vehicles')->cascadeOnDelete()->nullable();
+            $table->unsignedBigInteger('vehicle_id')->nullable();
             $table->unsignedBigInteger('service_id');
 
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();
         });

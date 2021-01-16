@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
     public function __invoke()
     {
-        $services = Service::get('type');
+        $services = Service::get();
         return ServiceResource::collection($services);
     }
 }

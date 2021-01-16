@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Booking</h1>
+            <h1 class="h3 mb-0 text-gray-800">Booking ({{ customers.length }} Orang )</h1>
         </div>
 
         <div v-if="customers == ''">
@@ -21,7 +21,7 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">Tgl</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Identitas</th>
                                     <th scope="col">Umur</th>
@@ -37,14 +37,15 @@
                                 </thead>
                                 <tbody>
                                 <tr class="text-small" v-for="(customer, index) in customers" :key="index">
-                                    <th scope="row">{{ index+1 }}</th>
+                                    <td>{{ customer.created_at }}</td>
                                     <td>{{ customer.name }}</td>
                                     <td>{{ customer.identity }}</td>
                                     <td>{{ customer.age }}</td>
                                     <td>{{ customer.city }}</td>
                                     <td>{{ customer.gender }}</td>
                                     <td>{{ customer.service }}</td>
-                                    <td>{{ customer.vehicle.type }}</td>
+                                    <td v-if="customer.vehicle != null">{{ customer.vehicle.type }}</td>
+                                    <td v-else>-</td>
                                     <td>
                                         <ul>
                                             <li><small>{{ customer.schedule.ship }}</small></li>
@@ -82,7 +83,7 @@
                     <div class="modal-body">
                         <form @submit.prevent="storeCustomer">
                             <div class="form-group">
-                                <input type="text" maxlength="30" v-model="formDataStore.name"  class="form-control" placeholder="Nama Lengkap">
+                                <input type="text" v-model="formDataStore.name"  class="form-control" placeholder="Nama Lengkap">
                                 <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
                             </div>
                             <div class="form-group">
@@ -98,20 +99,41 @@
                                 <small v-if="errors.city" class="text-danger font-italic d-block">{{ errors.city[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <v-select v-model="formDataStore.gender" :options="['Pria', 'Wanita']"></v-select>
-                                <small v-if="errors.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
+                                <select v-model="formDataStore.gender" class="form-control" style="padding: 0 0 0 0;">
+                                    <option disabled :value="null">Jenis Kelamin</option>
+                                    <option>Pria</option>
+                                    <option>Wanita</option>
+                                </select>
+                                <small v-if="errors.gender" class="text-danger font-italic d-block">{{ errors.gender[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <v-select  :options="services" ></v-select>
-                                <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
+                                <select v-model="formDataStore.schedule" class="form-control" style="padding: 0 0 0 0;">
+                                    <option disabled :value="null">Jadwal</option>
+                                    <option v-for="(schedule, index) in schedules" :key="index" :value="schedule.id">
+                                        <ul>
+                                            <li>{{ schedule.ship }}-</li>
+                                            <li>{{ schedule.departure }}-</li>
+                                            <li>{{ schedule.destination }}-</li>
+                                            <li>{{ schedule.date }}-</li>
+                                            <li>{{ schedule.time }}-</li>
+                                        </ul>    
+                                    </option>
+                                </select>
+                                <small v-if="errors.schedule" class="text-danger font-italic d-block">{{ errors.schedule[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <input type="date" v-model="formDataStore.date" class="form-control">
-                                <small v-if="errors.date" class="text-danger font-italic d-block">{{ formDataStore.date[0] }}</small>
+                                <select v-model="formDataStore.service" class="form-control" style="padding: 0 0 0 0;">
+                                    <option disabled :value="null">Layanan</option>
+                                    <option v-for="(service, index) in services" :key="index" :value="service.id">{{ service.type }}</option>
+                                </select>
+                                <small v-if="errors.service" class="text-danger font-italic d-block">{{ formDataStore.service[0] }}</small>
                             </div>
-                            <div class="form-group">
-                                <input type="time" v-model="formDataStore.time" class="form-control">
-                                <small v-if="errors.time" class="text-danger font-italic d-block">{{ formDataStore.time[0] }}</small>
+                            <div class="form-group" v-if="formDataStore.service == '2'">
+                                <select v-model="formDataStore.vehicle" class="form-control" style="padding: 0 0 0 0;">
+                                    <option disabled :value="null">Golongan Kendaraan</option>
+                                    <option v-for="(vehicle, index) in vehicles" :key="index" :value="vehicle.id">{{ vehicle.type }}</option>
+                                </select>
+                                <small v-if="errors.vehicle" class="text-danger font-italic d-block">{{ formDataStore.vehicle[0] }}</small>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -180,14 +202,19 @@
 
 <script>
 import swal from 'sweetalert'
-import 'vue-select/dist/vue-select.css';
 
 export default {
     data() {
         return {
             customers : {},
-            services : [],
-            formDataStore: {},
+            schedules: {},
+            services : {},
+            vehicles : {},
+            formDataStore: {
+                gender: null,
+                schedule: null,
+                service: null,
+            },
             formDataUpdate: {},
             id: null,
             errors: {},
@@ -197,20 +224,25 @@ export default {
     },
     created() {
         this.getCustomer(),
-        this.getService()
+        this.getSchedule(),
+        this.getService(),
+        this.getVehicle()
     },
     methods: {
+        // Schedule
+        async getSchedule(){
+            const response = await axios.get('/api/schedule')
+            this.schedules  = response.data.data
+        },
         // Service
         async getService(){
             const response = await axios.get('/api/service')
-            // this.services = Object.values(response.data.data) 
-            for (let value of Object.values(response.data.data)) {
-                this.services.push(value.type) 
-            } 
+            this.services  = response.data.data
         },
         async getVehicle(){
-            
-        }
+            const response = await axios.get('/api/vehicle')
+            this.vehicles  = response.data.data
+        },
         // Read
         async getCustomer(){
             const response = await axios.get('/api/customer')

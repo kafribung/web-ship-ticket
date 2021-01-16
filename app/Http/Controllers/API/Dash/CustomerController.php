@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dash\CustomerRequest;
 use App\Http\Resources\Dash\CustomerResource;
 use App\Models\Customer;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -13,7 +14,7 @@ class CustomerController extends Controller
     // Read
     public function index()
     {
-        $customers = Customer::with('service', 'schedule', 'vehicle')->get();
+        $customers = Customer::with('service', 'schedule', 'vehicle')->latest()->get();
         return CustomerResource::collection($customers);    
     }
     // Store
@@ -21,13 +22,27 @@ class CustomerController extends Controller
     {
         $data = request()->validate([
             'name'    => ['required', 'string', 'min:3', 'max:30'],
-            'identify'=> ['required', 'string', 'min:8', 'max:17'],
-            'age'     => ['required', 'min:3'],
-            'city'    => ['required', 'string', 'min:5', 'max:20'],
-            'gender'  => ['required', 'string', 'min:6'],
+            'identity'=> ['required', 'string', 'min:8', 'max:17'],
+            'age'     => ['required', 'max:3'],
+            'city'    => ['required', 'string', 'min:3', 'max:20'],
+            'gender'  => ['required', 'string', 'min:4', 'max:6'],
+            'schedule'=> 'required',
             'service' => 'required',
         ]);
-        dd($data);
+        $data['schedule_id'] = request('schedule');
+        $data['service_id']  = request('service');
+
+        // Budeget Orang
+        if (request('age')  >= 20) {
+            $data['budget'] = 24000;
+        } else $data['budget'] = 11000;
+
+        // Budget Kendaraaan
+        if (request('service') == 2) {
+            $data['vehicle_id'] = request('vehicle');
+            $biayaKendaraan     = Vehicle::findOrFail($data['vehicle_id']);
+            $data['budget']     = $biayaKendaraan->budget + $data['budget'];
+        } else $data['vehicle_id'] = null;
         Customer::create($data);
         return response(['message' => 'The item was created successfully'], 201);
     }
