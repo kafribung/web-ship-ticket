@@ -18,11 +18,11 @@
                                     Admin
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ auth.count }}
+                                    {{ dashboard.admin }}
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                <i class="fas fa-user fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -36,19 +36,41 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Earnings (Annual)
+                                    Jadwal
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    $215,000
+                                    {{ dashboard.schedule }}
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Booking
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ dashboard.booking }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-book fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Content Row -->
@@ -60,7 +82,7 @@
                     <div class="col-lg-12 mb-4">
                         <div class="card bg-success text-white shadow">
                             <div class="card-body text-center">
-                                <h3>Hi {{ auth.name }} Selamat datang di aplikasi tiket Ferry</h3>
+                                <h3>Hi {{ dashboard.name }} Selamat datang di aplikasi tiket Ferry</h3>
                                 <h5>Berikan yang terbaik demi kenyamanan penumpang</h5>  
                             </div>
                         </div>
@@ -76,7 +98,7 @@
 export default {
     data() {
         return {
-            auth: {},
+            dashboard: {},
         }
     },
     created() {
@@ -85,7 +107,7 @@ export default {
     methods: {
         async handleDashboard(){
             const response = await axios.get('/api/dashboard');
-            this.auth = response.data.data
+            this.dashboard = response.data.data
         }
     },
 }

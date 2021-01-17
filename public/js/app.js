@@ -3146,10 +3146,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      auth: {}
+      dashboard: {}
     };
   },
   created: function created() {
@@ -3170,7 +3192,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                _this.auth = response.data.data;
+                _this.dashboard = response.data.data;
 
               case 4:
               case "end":
@@ -25570,7 +25592,7 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                                " +
-                          _vm._s(_vm.auth.count) +
+                          _vm._s(_vm.dashboard.admin) +
                           "\n                            "
                       )
                     ]
@@ -25584,7 +25606,83 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(2)
+      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
+        _c(
+          "div",
+          { staticClass: "card border-left-success shadow h-100 py-2" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row no-gutters align-items-center" }, [
+                _c("div", { staticClass: "col mr-2" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "text-xs font-weight-bold text-success text-uppercase mb-1"
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Jadwal\n                            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.dashboard.schedule) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
+        _c("div", { staticClass: "card border-left-info shadow h-100 py-2" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row no-gutters align-items-center" }, [
+              _c("div", { staticClass: "col mr-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-xs font-weight-bold text-success text-uppercase mb-1"
+                  },
+                  [
+                    _vm._v(
+                      "\n                                Booking\n                            "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
+                  [
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(_vm.dashboard.booking) +
+                        "\n                            "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ])
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -25596,7 +25694,7 @@ var render = function() {
                 _c("h3", [
                   _vm._v(
                     "Hi " +
-                      _vm._s(_vm.auth.name) +
+                      _vm._s(_vm.dashboard.name) +
                       " Selamat datang di aplikasi tiket Ferry"
                   )
                 ]),
@@ -25634,6 +25732,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-auto" }, [
+      _c("i", { staticClass: "fas fa-user fa-2x text-gray-300" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
       _c("i", { staticClass: "fas fa-calendar fa-2x text-gray-300" })
     ])
   },
@@ -25641,41 +25747,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-3 col-md-6 mb-4" }, [
-      _c("div", { staticClass: "card border-left-success shadow h-100 py-2" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row no-gutters align-items-center" }, [
-            _c("div", { staticClass: "col mr-2" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "text-xs font-weight-bold text-success text-uppercase mb-1"
-                },
-                [
-                  _vm._v(
-                    "\n                                Earnings (Annual)\n                            "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                [
-                  _vm._v(
-                    "\n                                $215,000\n                            "
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-auto" }, [
-              _c("i", { staticClass: "fas fa-dollar-sign fa-2x text-gray-300" })
-            ])
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("i", { staticClass: "fas fa-book fa-2x text-gray-300" })
     ])
   }
 ]
