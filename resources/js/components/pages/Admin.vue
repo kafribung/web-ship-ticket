@@ -204,9 +204,9 @@ export default {
         async deleteAdmin(email){
             try {
                 swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
+                    title: "Apakah kamu yakin?",
+                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan file ini!",
+                    icon: "peringatan",
                     buttons: true,
                     dangerMode: true,
                 })
@@ -224,7 +224,7 @@ export default {
                     })
                     
                 } else {
-                    swal("Your imaginary file is safe!");
+                    swal("File Anda aman!");
                 }
                 });
                 

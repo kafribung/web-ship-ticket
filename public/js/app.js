@@ -2539,9 +2539,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 try {
                   sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
+                    title: "Apakah kamu yakin?",
+                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan file ini!",
+                    icon: "peringatan",
                     buttons: true,
                     dangerMode: true
                   }).then(function (willDelete) {
@@ -2558,7 +2558,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         location.reload();
                       });
                     } else {
-                      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Your imaginary file is safe!");
+                      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("File Anda aman!");
                     }
                   });
                 } catch (error) {}
