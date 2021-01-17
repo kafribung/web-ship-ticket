@@ -2547,7 +2547,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }).then(function (willDelete) {
                     if (willDelete) {
                       axios["delete"]("api/admin/".concat(email)).then(function (response) {
-                        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Poof! Your imaginary file has been deleted!", {
+                        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("File anda berhasil dihapus!", {
                           icon: "success"
                         });
 
@@ -2595,56 +2595,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3032,15 +2982,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 try {
                   sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
+                    title: "Apakah kamu yakin?",
+                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan file ini!",
+                    icon: "peringatan",
                     buttons: true,
                     dangerMode: true
                   }).then(function (willDelete) {
                     if (willDelete) {
                       axios["delete"]("api/customer/".concat(id)).then(function (response) {
-                        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Poof! Your imaginary file has been deleted!", {
+                        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("File anda berhasil dihapus!", {
                           icon: "success"
                         });
 
@@ -3051,7 +3001,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         location.reload();
                       });
                     } else {
-                      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Your imaginary file is safe!");
+                      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("File anda aman!");
                     }
                   });
                 } catch (error) {}
@@ -3062,6 +3012,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee8);
+      }))();
+    },
+    // Status
+    statusCustomer: function statusCustomer(id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                // const response =  axios.patch('/api/status/' + id);
+                try {
+                  sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+                    title: "Apakah kamu yakin?",
+                    text: "Ubah status pembayaran!",
+                    buttons: true,
+                    dangerMode: false
+                  }).then(function (willDelete) {
+                    if (willDelete) {
+                      axios.patch('/api/status/' + id).then(function (response) {
+                        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Status berhasil diubah", {
+                          icon: "success"
+                        });
+                        location.reload();
+                      });
+                    } else {
+                      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Status gagal diubah!");
+                    }
+                  });
+                } catch (error) {}
+
+              case 1:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
       }))();
     }
   }
@@ -24870,7 +24856,7 @@ var render = function() {
                             : _c("td", [_vm._v("-")]),
                           _vm._v(" "),
                           _c("td", [
-                            _c("ul", [
+                            _c("ul", { attrs: { type: "disk" } }, [
                               _c("li", [
                                 _c("small", [
                                   _vm._v(_vm._s(customer.schedule.ship))
@@ -24882,7 +24868,8 @@ var render = function() {
                                   _vm._v(
                                     _vm._s(customer.schedule.departure) +
                                       " - " +
-                                      _vm._s(customer.schedule.destination)
+                                      _vm._s(customer.schedule.destination) +
+                                      " "
                                   )
                                 ])
                               ]),
@@ -24910,25 +24897,25 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("td", [
-                            _vm._m(2, true),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-warning btn-circle btn-sm m-1 p-0",
-                                attrs: {
-                                  "data-toggle": "modal",
-                                  "data-target": "#modalUpdate"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.editCustomer(customer.id)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-edit" })]
-                            ),
+                            customer.status == 0
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-info btn-circle btn-sm m-1 p-0",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.statusCustomer(customer.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-credit-card"
+                                    })
+                                  ]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             _c(
                               "button",
@@ -24977,7 +24964,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -25258,7 +25245,7 @@ var render = function() {
                               [
                                 _c("ul", [
                                   _c("li", [
-                                    _vm._v(_vm._s(schedule.ship) + "-")
+                                    _vm._v(_vm._s(schedule.ship) + " ♦")
                                   ]),
                                   _vm._v(" "),
                                   _c("li", [
@@ -25266,16 +25253,14 @@ var render = function() {
                                   ]),
                                   _vm._v(" "),
                                   _c("li", [
-                                    _vm._v(_vm._s(schedule.destination) + "-")
+                                    _vm._v(_vm._s(schedule.destination) + " ♦")
                                   ]),
                                   _vm._v(" "),
                                   _c("li", [
                                     _vm._v(_vm._s(schedule.date) + "-")
                                   ]),
                                   _vm._v(" "),
-                                  _c("li", [
-                                    _vm._v(_vm._s(schedule.time) + "-")
-                                  ])
+                                  _c("li", [_vm._v(_vm._s(schedule.time))])
                                 ])
                               ]
                             )
@@ -25429,269 +25414,7 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(4)
-                  ]
-                )
-              ])
-            ])
-          ]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "modalUpdate",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "exampleModalLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _vm._m(5),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.updateCustomer($event)
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.formDataUpdate.ship,
-                            expression: "formDataUpdate.ship"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Kapal" },
-                        domProps: { value: _vm.formDataUpdate.ship },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.formDataUpdate,
-                              "ship",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.ship
-                        ? _c(
-                            "small",
-                            { staticClass: "text-danger font-italic d-block" },
-                            [_vm._v(_vm._s(_vm.errors.ship[0]))]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-control" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formDataUpdate.departure,
-                              expression: "formDataUpdate.departure"
-                            }
-                          ],
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.formDataUpdate,
-                                "departure",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "option",
-                            { attrs: { selected: "", disabled: "" } },
-                            [_vm._v("Keberangkatan")]
-                          ),
-                          _vm._v(" "),
-                          _c("option", [_vm._v("Pamatata")]),
-                          _vm._v(" "),
-                          _c("option", [_vm._v("Bira")])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.errors.departure
-                        ? _c(
-                            "small",
-                            { staticClass: "text-danger font-italic d-block" },
-                            [_vm._v(_vm._s(_vm.errors.departure[0]))]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-control" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formDataUpdate.destination,
-                              expression: "formDataUpdate.destination"
-                            }
-                          ],
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.formDataUpdate,
-                                "destination",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "option",
-                            { attrs: { selected: "", disabled: "" } },
-                            [_vm._v("Tujuan")]
-                          ),
-                          _vm._v(" "),
-                          _vm.formDataUpdate.departure == "Bira"
-                            ? _c("option", [_vm._v("Pamatata")])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.formDataUpdate.departure == "Pamatata"
-                            ? _c("option", [_vm._v("Bira")])
-                            : _vm._e()
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.errors.destination
-                        ? _c(
-                            "small",
-                            { staticClass: "text-danger font-italic d-block" },
-                            [_vm._v(_vm._s(_vm.errors.destination[0]))]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.formDataUpdate.date,
-                            expression: "formDataUpdate.date"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "date" },
-                        domProps: { value: _vm.formDataUpdate.date },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.formDataUpdate,
-                              "date",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.date
-                        ? _c(
-                            "small",
-                            { staticClass: "text-danger font-italic d-block" },
-                            [_vm._v(_vm._s(_vm.errors.date[0]))]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.formDataUpdate.time,
-                            expression: "formDataUpdate.time"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "time" },
-                        domProps: { value: _vm.formDataUpdate.time },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.formDataUpdate,
-                              "time",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.time
-                        ? _c(
-                            "small",
-                            { staticClass: "text-danger font-italic d-block" },
-                            [_vm._v(_vm._s(_vm.errors.time[0]))]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(6)
+                    _vm._m(3)
                   ]
                 )
               ])
@@ -25752,16 +25475,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-info btn-circle btn-sm m-1 p-0" },
-      [_c("i", { staticClass: "fa fa-credit-card" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c(
         "h5",
@@ -25801,52 +25514,6 @@ var staticRenderFns = [
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Tambah")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Edit Jadwal")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-warning", attrs: { type: "submit" } },
-        [_vm._v("Update")]
       )
     ])
   }

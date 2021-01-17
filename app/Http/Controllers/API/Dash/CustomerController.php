@@ -46,4 +46,10 @@ class CustomerController extends Controller
         Customer::create($data);
         return response(['message' => 'The item was created successfully'], 201);
     }
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+        return response()->json([ "message" => "The item was delete successfully"], 204);
+    } 
 }

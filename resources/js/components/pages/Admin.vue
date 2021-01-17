@@ -214,7 +214,7 @@ export default {
                 if (willDelete) {
                     axios.delete(`api/admin/${email}`)
                     .then(response => {
-                        swal("Poof! Your imaginary file has been deleted!", {
+                        swal("File anda berhasil dihapus!", {
                         icon: "success",
                         });
                         this.$toasted.success('Admin berhasil dihapus', {

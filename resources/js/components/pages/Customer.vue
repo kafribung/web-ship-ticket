@@ -47,19 +47,19 @@
                                     <td v-if="customer.vehicle != null">{{ customer.vehicle.type }}</td>
                                     <td v-else>-</td>
                                     <td>
-                                        <ul>
+                                        <ul type="disk">
                                             <li><small>{{ customer.schedule.ship }}</small></li>
-                                            <li><small>{{ customer.schedule.departure }} - {{ customer.schedule.destination }}</small> </li>
+                                            <li><small>{{ customer.schedule.departure }} - {{ customer.schedule.destination }} </small> </li>
                                             <li><small>{{ customer.schedule.date }} - {{ customer.schedule.time }}</small> </li>
                                         </ul>
                                     </td>
                                     <td>{{ customer.budget }}</td>
                                     <td>{{ customer.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
                                     <td>
-                                        <button   class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
-                                        <button  @click="editCustomer(customer.id)" class="btn btn-warning btn-circle btn-sm m-1 p-0" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
+                                        <button   v-if="customer.status == 0" @click="statusCustomer(customer.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
                                         <button  ref="delete" @click="deleteCustomer(customer.id)" class="btn btn-danger btn-circle btn-sm m-1 py-0"><i class="fa fa-trash"></i></button>
                                     </td>
+                                    
                                 </tr>
                                 </tbody>
                             </table>
@@ -111,11 +111,11 @@
                                     <option disabled :value="null">Jadwal</option>
                                     <option v-for="(schedule, index) in schedules" :key="index" :value="schedule.id">
                                         <ul>
-                                            <li>{{ schedule.ship }}-</li>
+                                            <li>{{ schedule.ship }} &diams;</li>
                                             <li>{{ schedule.departure }}-</li>
-                                            <li>{{ schedule.destination }}-</li>
+                                            <li>{{ schedule.destination }} &diams;</li>
                                             <li>{{ schedule.date }}-</li>
-                                            <li>{{ schedule.time }}-</li>
+                                            <li>{{ schedule.time }}</li>
                                         </ul>    
                                     </option>
                                 </select>
@@ -142,56 +142,6 @@
                         </form>
                     </div>
                     
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Upadte -->
-        <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Jadwal</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form @submit.prevent="updateCustomer">
-                            <div class="form-group">
-                                <input type="text" v-model="formDataUpdate.ship"  class="form-control" placeholder="Kapal">
-                                <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
-                            </div>
-                            <div class="form-control">
-                                <select v-model="formDataUpdate.departure">
-                                    <option selected disabled>Keberangkatan</option>
-                                    <option>Pamatata</option>
-                                    <option>Bira</option>
-                                </select>
-                                <small v-if="errors.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
-                            </div>
-                            <div class="form-control">
-                                <select v-model="formDataUpdate.destination">
-                                    <option selected disabled>Tujuan</option>
-                                    <option v-if="formDataUpdate.departure == 'Bira'">Pamatata</option>
-                                    <option v-if="formDataUpdate.departure == 'Pamatata'">Bira</option>
-                                </select>
-                                <small v-if="errors.destination" class="text-danger font-italic d-block">{{ errors.destination[0] }}</small>
-                            </div>
-                            <div class="form-group">
-                                <input type="date" v-model="formDataUpdate.date" class="form-control">
-                                <small v-if="errors.date" class="text-danger font-italic d-block">{{ errors.date[0] }}</small>
-                            </div>
-                            <div class="form-group">
-                                <input type="time" v-model="formDataUpdate.time" class="form-control">
-                                <small v-if="errors.time" class="text-danger font-italic d-block">{{ errors.time[0] }}</small>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning">Update</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -286,9 +236,9 @@ export default {
         async deleteCustomer(id){
             try {
                 swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
+                    title: "Apakah kamu yakin?",
+                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan file ini!",
+                    icon: "peringatan",
                     buttons: true,
                     dangerMode: true,
                 })
@@ -296,7 +246,7 @@ export default {
                 if (willDelete) {
                     axios.delete(`api/customer/${id}`)
                     .then(response => {
-                        swal("Poof! Your imaginary file has been deleted!", {
+                        swal("File anda berhasil dihapus!", {
                         icon: "success",
                         });
                         this.$toasted.success('Booking berhasil dhapus', {
@@ -306,12 +256,40 @@ export default {
                     })
                     
                 } else {
-                    swal("Your imaginary file is safe!");
+                    swal("File anda aman!");
                 }
                 });
                 
             } catch (error) {}
         },
+
+        // Status
+        async statusCustomer(id){
+            // const response =  axios.patch('/api/status/' + id);
+            try {
+                swal({
+                    title: "Apakah kamu yakin?",
+                    text: "Ubah status pembayaran!",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    axios.patch('/api/status/' + id)
+                    .then(response => {
+                        swal("Status berhasil diubah", {
+                        icon: "success",
+                        });
+                        location.reload()
+                    })
+                    
+                } else {
+                    swal("Status gagal diubah!");
+                }
+                });
+                
+            } catch (error) {}
+        }
 
     },
 }
