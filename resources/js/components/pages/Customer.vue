@@ -171,6 +171,7 @@ export default {
         }
     },
     mounted() {
+        this.deleteBooking();
     },
     created() {
         this.getCustomer(),
@@ -289,12 +290,17 @@ export default {
                 });
                 
             } catch (error) {}
-        }
+        },
 
+        // Delete Booking
+        deleteBooking(){
+                setInterval(function(){
+                axios.get('/delete-booking')
+                .then(() => {
+                console.log('5 detik')
+                })
+            }, 5000)
+        }
     },
 }
 </script>
-
-<style>
-
-</style>

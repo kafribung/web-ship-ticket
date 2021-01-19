@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Tiket Ferry Selayar - Bira</title>
+    <title>Tiket Kapal Ferry</title>
     <script src="{{ asset('js/app.js') }}" defer></script>
     @include('includes.css_dash')
 </head>

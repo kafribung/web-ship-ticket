@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\API\Dash;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dash\CustomerRequest;
 use App\Http\Resources\Dash\CustomerResource;
-use App\Models\Customer;
-use App\Models\Vehicle;
-use Illuminate\Http\Request;
+use App\Models\{Customer, Vehicle};
 
 class CustomerController extends Controller
 {
@@ -26,14 +23,15 @@ class CustomerController extends Controller
             'age'     => ['required', 'max:3'],
             'city'    => ['required', 'string', 'min:3', 'max:20'],
             'gender'  => ['required', 'string', 'min:4', 'max:6'],
-            'schedule'=> 'required',
-            'service' => 'required',
+            'schedule'=> ['required'],
+            'service' => ['required'],
         ]);
+
         $data['schedule_id'] = request('schedule');
         $data['service_id']  = request('service');
 
         // Budeget Orang
-        if (request('age')  >= 20) {
+        if (request('age')  >= 17) {
             $data['budget'] = 24000;
         } else $data['budget'] = 11000;
 

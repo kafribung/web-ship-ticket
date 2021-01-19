@@ -13,7 +13,7 @@ class CustomerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'    => ['required', 'string', 'min:3', 'max:30'],
+            'identity'=> ['required', 'string', 'min:8', 'max:17'],
+            'age'     => ['required', 'max:3'],
+            'city'    => ['required', 'string', 'min:3', 'max:20'],
+            'gender'  => ['required', 'string', 'min:4', 'max:6'],
+            'schedule'=> 'required',
+            'service' => 'required',
         ];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
-use App\Http\Controllers\API\Dash\{AdminConrtoller, CustomerController, DashboardController, ScheduleController, ServiceController, StatusController, VehicleController};
+use App\Http\Controllers\API\Dash\{AdminConrtoller, CustomerController, DashboardController, DeleteBookingController, ScheduleController, ServiceController, StatusController, VehicleController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +44,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     // Statsu customer
     Route::patch('status/{customer:id}', StatusController::class);
+
+    // Delete Booking Otomatis
+    Route::get('delete-booking', DeleteBookingController::class);
 
     Route::post('logout', LogoutController::class);
 });

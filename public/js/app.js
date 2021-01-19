@@ -2765,7 +2765,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       errors: {}
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.deleteBooking();
+  },
   created: function created() {
     this.getCustomer(), this.getSchedule(), this.getService(), this.getVehicle();
   },
@@ -3049,6 +3051,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee9);
       }))();
+    },
+    // Delete Booking
+    deleteBooking: function deleteBooking() {
+      setInterval(function () {
+        axios.get('/delete-booking').then(function () {
+          console.log('5 detik');
+        });
+      }, 5000);
     }
   }
 });

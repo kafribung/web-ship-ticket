@@ -4,9 +4,7 @@ namespace App\Http\Controllers\API\Dash;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Dash\DashboardResource;
-use App\Models\Customer;
-use App\Models\Schedule;
-use App\Models\User;
+use App\Models\{Customer, Schedule, User};
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller

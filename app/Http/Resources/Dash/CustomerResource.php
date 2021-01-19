@@ -27,7 +27,7 @@ class CustomerResource extends JsonResource
             'schedule' => ScheduleResource::make($this->schedule),
             'service'  => $this->service->type,
             'vehicle'  => $this->vehicle,
-            'created_at' => $this->created_at->format('d-M-Y'),
+            'created_at' => $this->created_at->format('d-M-Y  H:i'),
         ];
     }
 }
