@@ -3,11 +3,11 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Booking ({{ customers.length }} Orang )</h1>
+            <h1 class="h3 mb-0 text-gray-800">Booking ({{ bookings.length }} Orang )</h1>
             <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
         </div>
 
-        <div v-if="customers == ''">
+        <div v-if="bookings == ''">
             <p class="alert alert-info">Booking Masih Kosong</p>
         </div>
 
@@ -17,12 +17,13 @@
             <div class="col-xl-12 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
+                        <input v-model="search" class="form-control mr-sm-2" type="search" placeholder="Cari" aria-label="Cari">
                         <button class="btn btn-primary btn-circle btn-sm float-right" data-toggle="modal" data-target="#modalStore"><i class="fa fa-plus"></i></button>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Tgl</th>
+                                    <th scope="col">Tgl Booking</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Identitas</th>
                                     <th scope="col">Umur</th>
@@ -37,31 +38,39 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="text-small" v-for="(customer, index) in customers" :key="index">
-                                    <td>{{ customer.created_at }}</td>
-                                    <td>{{ customer.name }}</td>
-                                    <td>{{ customer.identity }}</td>
-                                    <td>{{ customer.age }}</td>
-                                    <td>{{ customer.city }}</td>
-                                    <td>{{ customer.gender }}</td>
-                                    <td>{{ customer.service }}</td>
-                                    <td v-if="customer.vehicle != null">{{ customer.vehicle.type }}</td>
+                                <template v-if="filterBookings != ''">
+                                    <tr class="text-small" v-for="(booking, index) in filterBookings" :key="index">
+                                    <td>{{ booking.created_at }}</td>
+                                    <td>{{ booking.name }}</td>
+                                    <td>{{ booking.identity }}</td>
+                                    <td>{{ booking.age }}</td>
+                                    <td>{{ booking.city }}</td>
+                                    <td>{{ booking.gender }}</td>
+                                    <td>{{ booking.service }}</td>
+                                    <td v-if="booking.vehicle != null">{{ booking.vehicle.type }}</td>
                                     <td v-else>-</td>
                                     <td>
                                         <ul type="disk">
-                                            <li><small>{{ customer.schedule.ship }}</small></li>
-                                            <li><small>{{ customer.schedule.departure }} - {{ customer.schedule.destination }} </small> </li>
-                                            <li><small>{{ customer.schedule.date }} - {{ customer.schedule.time }}</small> </li>
+                                            <li><small>{{ booking.schedule.ship }}</small></li>
+                                            <li><small>{{ booking.schedule.departure }} - {{ booking.schedule.destination }} </small> </li>
+                                            <li><small>{{ booking.schedule.date }} - {{ booking.schedule.time }}</small> </li>
                                         </ul>
                                     </td>
-                                    <td>{{ customer.budget }}</td>
-                                    <td>{{ customer.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
+                                    <td>{{ booking.budget }}</td>
+                                    <td>{{ booking.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
                                     <td>
-                                        <button   v-if="customer.status == 0" @click="statusCustomer(customer.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
-                                        <button  ref="delete" @click="deleteCustomer(customer.id)" class="btn btn-danger btn-circle btn-sm m-1 py-0"><i class="fa fa-trash"></i></button>
+                                        <button   v-if="booking.status == 0" @click="statusBooking(booking.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
+                                        <button  ref="delete" @click="deleteBooking(booking.id)" class="btn btn-danger btn-circle btn-sm m-1 py-0"><i class="fa fa-trash"></i></button>
                                     </td>
                                     
                                 </tr>
+                                </template>
+                                <template v-else>
+                                    <tr>
+                                        <td colspan="12"><p>Data tidak ditemukan</p></td>
+                                    </tr>
+                                </template>
+                                
                                 </tbody>
                             </table>
                         </div>
@@ -82,7 +91,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="storeCustomer">
+                        <form @submit.prevent="storeBooking">
                             <div class="form-group">
                                 <input type="text" v-model="formDataStore.name"  class="form-control" placeholder="Nama Lengkap">
                                 <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
@@ -157,7 +166,7 @@ import swal from 'sweetalert'
 export default {
     data() {
         return {
-            customers : {},
+            bookings : {},
             schedules: {},
             services : {},
             vehicles : {},
@@ -167,18 +176,30 @@ export default {
                 service: null,
             },
             formDataUpdate: {},
-            id: null,
+            search: null,
             errors: {},
         }
     },
     mounted() {
-        this.deleteBooking();
+        this.deleteBookingOtomatis();
     },
     created() {
-        this.getCustomer(),
+        this.getBooking(),
         this.getSchedule(),
         this.getService(),
         this.getVehicle()
+    },
+    computed: {
+        filterBookings() {
+            if (this.search) {
+                return this.bookings.filter((booking) => {
+                    return booking.name
+                        .toLowerCase()
+                        .split(' ')
+                        .includes(this.search.toLowerCase());
+                });
+            } else return this.bookings;
+        },
     },
     methods: {
         // Schedule
@@ -196,15 +217,15 @@ export default {
             this.vehicles  = response.data.data
         },
         // Read
-        async getCustomer(){
-            const response = await axios.get('/api/customer')
-            this.customers = response.data.data
+        async getBooking(){
+            const response = await axios.get('/api/booking')
+            this.bookings = response.data.data
         },
 
         // Create
-        async storeCustomer(){
+        async storeBooking(){
             try {
-                const response = await axios.post('api/customer', this.formDataStore)
+                const response = await axios.post('api/booking', this.formDataStore)
                 this.$toasted.success('Booking berhasil ditambahkan', {
                     duration : 3000,
                 })
@@ -214,28 +235,8 @@ export default {
             }
         },
 
-        //Edit 
-        async editCustomer(id){
-            this.id = id
-            const response = await axios.get(`api/customer/${id}`)
-            this.formDataUpdate = response.data.data 
-        },
-
-        //Update 
-        async updateCustomer(){
-            try {
-                const response = await axios.patch(`api/customer/${this.id}`, this.formDataUpdate)
-                this.$toasted.success('Booking berhasil diedit', {
-                    duration : 3000,
-                })
-                location.reload()
-            } catch (error) {
-                this.errors = error.response.data.errors
-            }    
-        },
-
         //Destroy 
-        async deleteCustomer(id){
+        async deleteBooking(id){
             try {
                 swal({
                     title: "Apakah kamu yakin?",
@@ -246,7 +247,7 @@ export default {
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`api/customer/${id}`)
+                    axios.delete(`api/booking/${id}`)
                     .then(response => {
                         swal("File anda berhasil dihapus!", {
                         icon: "success",
@@ -266,18 +267,20 @@ export default {
         },
 
         // Status
-        async statusCustomer(id){
+        async statusBooking(id){
             // const response =  axios.patch('/api/status/' + id);
             try {
                 swal({
                     title: "Apakah kamu yakin?",
-                    text: "Ubah status pembayaran!",
+                    text: "Ubah status pembayaran menjadi Lunas!",
                     buttons: true,
                     dangerMode: false,
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    axios.patch('/api/status/' + id)
+                    axios.patch('/api/status/' + id, {
+                        status: 1
+                    })
                     .then(response => {
                         swal("Status berhasil diubah", {
                         icon: "success",
@@ -294,7 +297,7 @@ export default {
         },
 
         // Delete Booking
-        deleteBooking(){
+        deleteBookingOtomatis(){
                 setInterval(function(){
                 axios.get('/delete-booking')
                 .then(() => {

@@ -3,6 +3,8 @@ import Admin from '../views/pages/Admin'
 import Login from '../views/auth/Login'
 import Schedule from '../views/pages/Schedule'
 import Booking from '../views/pages/Booking'
+import Customer from '../views/pages/Customer'
+
 
 export default {
     mode: 'history',
@@ -48,6 +50,16 @@ export default {
             path: '/booking',
             name: 'Booking',
             component: Booking,
+            beforeEnter: (to, from, next) => {
+                axios.get('/api/booking').then(() => { 
+                    next()
+                }).catch(() => next('/login'))
+            }
+        },
+        {
+            path: '/customer',
+            name: 'Customer',
+            component: Customer,
             beforeEnter: (to, from, next) => {
                 axios.get('/api/customer').then(() => { 
                     next()

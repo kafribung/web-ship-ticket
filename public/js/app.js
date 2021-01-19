@@ -2736,11 +2736,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      customers: {},
+      bookings: {},
       schedules: {},
       services: {},
       vehicles: {},
@@ -2750,20 +2759,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         service: null
       },
       formDataUpdate: {},
-      id: null,
+      search: null,
       errors: {}
     };
   },
   mounted: function mounted() {
-    this.deleteBooking();
+    this.deleteBookingOtomatis();
   },
   created: function created() {
-    this.getCustomer(), this.getSchedule(), this.getService(), this.getVehicle();
+    this.getBooking(), this.getSchedule(), this.getService(), this.getVehicle();
+  },
+  computed: {
+    filterBookings: function filterBookings() {
+      var _this = this;
+
+      if (this.search) {
+        return this.bookings.filter(function (booking) {
+          return booking.name.toLowerCase().split(' ').includes(_this.search.toLowerCase());
+        });
+      } else return this.bookings;
+    }
   },
   methods: {
     // Schedule
     getSchedule: function getSchedule() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response;
@@ -2776,7 +2796,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                _this.schedules = response.data.data;
+                _this2.schedules = response.data.data;
 
               case 4:
               case "end":
@@ -2788,7 +2808,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // Service
     getService: function getService() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response;
@@ -2801,7 +2821,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context2.sent;
-                _this2.services = response.data.data;
+                _this3.services = response.data.data;
 
               case 4:
               case "end":
@@ -2812,7 +2832,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     getVehicle: function getVehicle() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response;
@@ -2825,7 +2845,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context3.sent;
-                _this3.vehicles = response.data.data;
+                _this4.vehicles = response.data.data;
 
               case 4:
               case "end":
@@ -2836,8 +2856,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     // Read
-    getCustomer: function getCustomer() {
-      var _this4 = this;
+    getBooking: function getBooking() {
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var response;
@@ -2846,11 +2866,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios.get('/api/customer');
+                return axios.get('/api/booking');
 
               case 2:
                 response = _context4.sent;
-                _this4.customers = response.data.data;
+                _this5.bookings = response.data.data;
 
               case 4:
               case "end":
@@ -2861,8 +2881,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     // Create
-    storeCustomer: function storeCustomer() {
-      var _this5 = this;
+    storeBooking: function storeBooking() {
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var response;
@@ -2872,12 +2892,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
-                return axios.post('api/customer', _this5.formDataStore);
+                return axios.post('api/booking', _this6.formDataStore);
 
               case 3:
                 response = _context5.sent;
 
-                _this5.$toasted.success('Booking berhasil ditambahkan', {
+                _this6.$toasted.success('Booking berhasil ditambahkan', {
                   duration: 3000
                 });
 
@@ -2888,7 +2908,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 8:
                 _context5.prev = 8;
                 _context5.t0 = _context5["catch"](0);
-                _this5.errors = _context5.t0.response.data.errors;
+                _this6.errors = _context5.t0.response.data.errors;
 
               case 11:
               case "end":
@@ -2898,78 +2918,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee5, null, [[0, 8]]);
       }))();
     },
-    //Edit 
-    editCustomer: function editCustomer(id) {
-      var _this6 = this;
+    //Destroy 
+    deleteBooking: function deleteBooking(id) {
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
-              case 0:
-                _this6.id = id;
-                _context6.next = 3;
-                return axios.get("api/customer/".concat(id));
-
-              case 3:
-                response = _context6.sent;
-                _this6.formDataUpdate = response.data.data;
-
-              case 5:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    },
-    //Update 
-    updateCustomer: function updateCustomer() {
-      var _this7 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
-                return axios.patch("api/customer/".concat(_this7.id), _this7.formDataUpdate);
-
-              case 3:
-                response = _context7.sent;
-
-                _this7.$toasted.success('Booking berhasil diedit', {
-                  duration: 3000
-                });
-
-                location.reload();
-                _context7.next = 11;
-                break;
-
-              case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](0);
-                _this7.errors = _context7.t0.response.data.errors;
-
-              case 11:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, null, [[0, 8]]);
-      }))();
-    },
-    //Destroy 
-    deleteCustomer: function deleteCustomer(id) {
-      var _this8 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
               case 0:
                 try {
                   sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -2980,12 +2936,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     dangerMode: true
                   }).then(function (willDelete) {
                     if (willDelete) {
-                      axios["delete"]("api/customer/".concat(id)).then(function (response) {
+                      axios["delete"]("api/booking/".concat(id)).then(function (response) {
                         sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("File anda berhasil dihapus!", {
                           icon: "success"
                         });
 
-                        _this8.$toasted.success('Booking berhasil dhapus', {
+                        _this7.$toasted.success('Booking berhasil dhapus', {
                           duration: 3000
                         });
 
@@ -2999,29 +2955,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context8.stop();
+                return _context6.stop();
             }
           }
-        }, _callee8);
+        }, _callee6);
       }))();
     },
     // Status
-    statusCustomer: function statusCustomer(id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+    statusBooking: function statusBooking(id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
                 // const response =  axios.patch('/api/status/' + id);
                 try {
                   sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
                     title: "Apakah kamu yakin?",
-                    text: "Ubah status pembayaran!",
+                    text: "Ubah status pembayaran menjadi Lunas!",
                     buttons: true,
                     dangerMode: false
                   }).then(function (willDelete) {
                     if (willDelete) {
-                      axios.patch('/api/status/' + id).then(function (response) {
+                      axios.patch('/api/status/' + id, {
+                        status: 1
+                      }).then(function (response) {
                         sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Status berhasil diubah", {
                           icon: "success"
                         });
@@ -3035,19 +2993,214 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context9.stop();
+                return _context7.stop();
             }
           }
-        }, _callee9);
+        }, _callee7);
       }))();
     },
     // Delete Booking
-    deleteBooking: function deleteBooking() {
+    deleteBookingOtomatis: function deleteBookingOtomatis() {
       setInterval(function () {
         axios.get('/delete-booking').then(function () {
           console.log('5 detik');
         });
       }, 5000);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/Customer.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/Customer.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      customers: {},
+      search: null,
+      errors: {}
+    };
+  },
+  created: function created() {
+    this.getCustomer();
+  },
+  computed: {
+    filterCustomers: function filterCustomers() {
+      var _this = this;
+
+      if (this.search) {
+        return this.customers.filter(function (customer) {
+          return customer.name.toLowerCase().split(' ').includes(_this.search.toLowerCase());
+        });
+      } else return this.customers;
+    }
+  },
+  methods: {
+    // Read
+    getCustomer: function getCustomer() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('/api/customer');
+
+              case 2:
+                response = _context.sent;
+                _this2.customers = response.data.data;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    // Status
+    statusBooking: function statusBooking(id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                try {
+                  sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+                    title: "Apakah kamu yakin?",
+                    text: "Ubah status pembayaran menjadi Belum Lunas!",
+                    buttons: true,
+                    dangerMode: false
+                  }).then(function (willDelete) {
+                    if (willDelete) {
+                      axios.patch('/api/status/' + id, {
+                        status: 0
+                      }).then(function (response) {
+                        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Status berhasil diubah", {
+                          icon: "success"
+                        });
+                        location.reload();
+                      });
+                    } else {
+                      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()("Status gagal diubah!");
+                    }
+                  });
+                } catch (error) {}
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -3762,6 +3915,53 @@ __webpack_require__.r(__webpack_exports__);
     Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_1__["default"],
     Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_2__["default"],
     Booking: _components_pages_Booking__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/Customer.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/Customer.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_Sidebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Sidebar */ "./resources/js/components/Sidebar.vue");
+/* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Footer */ "./resources/js/components/Footer.vue");
+/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Navbar */ "./resources/js/components/Navbar.vue");
+/* harmony import */ var _components_pages_Customer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/pages/Customer */ "./resources/js/components/pages/Customer.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Sidebar: _components_Sidebar__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Footer: _components_Footer__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Navbar: _components_Navbar__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Customer: _components_pages_Customer__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 
@@ -24825,7 +25025,7 @@ var render = function() {
       },
       [
         _c("h1", { staticClass: "h3 mb-0 text-gray-800" }, [
-          _vm._v("Booking (" + _vm._s(_vm.customers.length) + " Orang )")
+          _vm._v("Booking (" + _vm._s(_vm.bookings.length) + " Orang )")
         ]),
         _vm._v(" "),
         _vm.errors.name
@@ -24836,7 +25036,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm.customers == ""
+    _vm.bookings == ""
       ? _c("div", [
           _c("p", { staticClass: "alert alert-info" }, [
             _vm._v("Booking Masih Kosong")
@@ -24851,6 +25051,32 @@ var render = function() {
           { staticClass: "card border-left-primary shadow h-100 py-2" },
           [
             _c("div", { staticClass: "card-body" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "form-control mr-sm-2",
+                attrs: {
+                  type: "search",
+                  placeholder: "Cari",
+                  "aria-label": "Cari"
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
               _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "table-responsive" }, [
@@ -24859,111 +25085,123 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.customers, function(customer, index) {
-                      return _c(
-                        "tr",
-                        { key: index, staticClass: "text-small" },
-                        [
-                          _c("td", [_vm._v(_vm._s(customer.created_at))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(customer.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(customer.identity))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(customer.age))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(customer.city))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(customer.gender))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(customer.service))]),
-                          _vm._v(" "),
-                          customer.vehicle != null
-                            ? _c("td", [_vm._v(_vm._s(customer.vehicle.type))])
-                            : _c("td", [_vm._v("-")]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("ul", { attrs: { type: "disk" } }, [
-                              _c("li", [
-                                _c("small", [
-                                  _vm._v(_vm._s(customer.schedule.ship))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c("small", [
+                    [
+                      _vm.filterBookings != ""
+                        ? _vm._l(_vm.filterBookings, function(booking, index) {
+                            return _c(
+                              "tr",
+                              { key: index, staticClass: "text-small" },
+                              [
+                                _c("td", [_vm._v(_vm._s(booking.created_at))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.identity))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.age))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.city))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.gender))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.service))]),
+                                _vm._v(" "),
+                                booking.vehicle != null
+                                  ? _c("td", [
+                                      _vm._v(_vm._s(booking.vehicle.type))
+                                    ])
+                                  : _c("td", [_vm._v("-")]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c("ul", { attrs: { type: "disk" } }, [
+                                    _c("li", [
+                                      _c("small", [
+                                        _vm._v(_vm._s(booking.schedule.ship))
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c("small", [
+                                        _vm._v(
+                                          _vm._s(booking.schedule.departure) +
+                                            " - " +
+                                            _vm._s(
+                                              booking.schedule.destination
+                                            ) +
+                                            " "
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c("small", [
+                                        _vm._v(
+                                          _vm._s(booking.schedule.date) +
+                                            " - " +
+                                            _vm._s(booking.schedule.time)
+                                        )
+                                      ])
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.budget))]),
+                                _vm._v(" "),
+                                _c("td", [
                                   _vm._v(
-                                    _vm._s(customer.schedule.departure) +
-                                      " - " +
-                                      _vm._s(customer.schedule.destination) +
-                                      " "
+                                    _vm._s(
+                                      booking.status == 0
+                                        ? "Belum Lunas"
+                                        : "Lunas"
+                                    )
                                   )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c("small", [
-                                  _vm._v(
-                                    _vm._s(customer.schedule.date) +
-                                      " - " +
-                                      _vm._s(customer.schedule.time)
-                                  )
-                                ])
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(customer.budget))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              _vm._s(
-                                customer.status == 0 ? "Belum Lunas" : "Lunas"
-                              )
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            customer.status == 0
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-info btn-circle btn-sm m-1 p-0",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.statusCustomer(customer.id)
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  booking.status == 0
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-info btn-circle btn-sm m-1 p-0",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.statusBooking(
+                                                booking.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-credit-card"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      ref: "delete",
+                                      refInFor: true,
+                                      staticClass:
+                                        "btn btn-danger btn-circle btn-sm m-1 py-0",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteBooking(booking.id)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fa fa-credit-card"
-                                    })
-                                  ]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                ref: "delete",
-                                refInFor: true,
-                                staticClass:
-                                  "btn btn-danger btn-circle btn-sm m-1 py-0",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteCustomer(customer.id)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fa fa-trash" })]
+                                    },
+                                    [_c("i", { staticClass: "fa fa-trash" })]
+                                  )
+                                ])
+                              ]
                             )
-                          ])
-                        ]
-                      )
-                    }),
-                    0
+                          })
+                        : [_vm._m(2)]
+                    ],
+                    2
                   )
                 ])
               ])
@@ -24991,7 +25229,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -25000,7 +25238,7 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.storeCustomer($event)
+                        return _vm.storeBooking($event)
                       }
                     }
                   },
@@ -25437,7 +25675,7 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(3)
+                    _vm._m(4)
                   ]
                 )
               ])
@@ -25468,7 +25706,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tgl")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tgl Booking")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Nama")]),
         _vm._v(" "),
@@ -25491,6 +25729,16 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "12" } }, [
+        _c("p", [_vm._v("Data tidak ditemukan")])
       ])
     ])
   },
@@ -25538,6 +25786,248 @@ var staticRenderFns = [
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Tambah")]
       )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/Customer.vue?vue&type=template&id=03193718&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/Customer.vue?vue&type=template&id=03193718& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c(
+      "div",
+      {
+        staticClass: "d-sm-flex align-items-center justify-content-between mb-4"
+      },
+      [
+        _c("h1", { staticClass: "h3 mb-0 text-gray-800" }, [
+          _vm._v("Customer (" + _vm._s(_vm.customers.length) + " Orang )")
+        ]),
+        _vm._v(" "),
+        _vm.errors.name
+          ? _c("small", { staticClass: "text-danger font-italic d-block" }, [
+              _vm._v(_vm._s(_vm.errors.name[0]))
+            ])
+          : _vm._e()
+      ]
+    ),
+    _vm._v(" "),
+    _vm.customers == ""
+      ? _c("div", [
+          _c("p", { staticClass: "alert alert-info" }, [
+            _vm._v("Booking Masih Kosong")
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-12 col-md-6 mb-4" }, [
+        _c(
+          "div",
+          { staticClass: "card border-left-primary shadow h-100 py-2" },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "form-control mr-sm-2",
+                attrs: {
+                  type: "search",
+                  placeholder: "Cari",
+                  "aria-label": "Cari"
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    [
+                      _vm.filterCustomers != ""
+                        ? _vm._l(_vm.filterCustomers, function(booking, index) {
+                            return _c(
+                              "tr",
+                              { key: index, staticClass: "text-small" },
+                              [
+                                _c("td", [_vm._v(_vm._s(booking.created_at))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.identity))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.age))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.city))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.gender))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.service))]),
+                                _vm._v(" "),
+                                booking.vehicle != null
+                                  ? _c("td", [
+                                      _vm._v(_vm._s(booking.vehicle.type))
+                                    ])
+                                  : _c("td", [_vm._v("-")]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c("ul", { attrs: { type: "disk" } }, [
+                                    _c("li", [
+                                      _c("small", [
+                                        _vm._v(_vm._s(booking.schedule.ship))
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c("small", [
+                                        _vm._v(
+                                          _vm._s(booking.schedule.departure) +
+                                            " - " +
+                                            _vm._s(
+                                              booking.schedule.destination
+                                            ) +
+                                            " "
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c("small", [
+                                        _vm._v(
+                                          _vm._s(booking.schedule.date) +
+                                            " - " +
+                                            _vm._s(booking.schedule.time)
+                                        )
+                                      ])
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(booking.budget))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(
+                                      booking.status == 0
+                                        ? "Belum Lunas"
+                                        : "Lunas"
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  booking.status == 1
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-info btn-circle btn-sm m-1 p-0",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.statusBooking(
+                                                booking.id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-credit-card"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ])
+                              ]
+                            )
+                          })
+                        : [_vm._m(1)]
+                    ],
+                    2
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tgl")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nama")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Identitas")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Umur")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Kota")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("JK")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Layanan")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Kendaraan")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Jadwal")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Biaya")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "12" } }, [
+        _c("p", [_vm._v("Data tidak ditemukan")])
+      ])
     ])
   }
 ]
@@ -26752,6 +27242,53 @@ var render = function() {
             "div",
             { attrs: { id: "content" } },
             [_c("Navbar"), _vm._v(" "), _c("Booking")],
+            1
+          ),
+          _vm._v(" "),
+          _c("Footer")
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/Customer.vue?vue&type=template&id=1e537c28&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/Customer.vue?vue&type=template&id=1e537c28& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { attrs: { id: "wrapper" } },
+    [
+      _c("Sidebar"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "d-flex flex-column", attrs: { id: "content-wrapper" } },
+        [
+          _c(
+            "div",
+            { attrs: { id: "content" } },
+            [_c("Navbar"), _vm._v(" "), _c("Customer")],
             1
           ),
           _vm._v(" "),
@@ -42494,6 +43031,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/Customer.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/pages/Customer.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Customer_vue_vue_type_template_id_03193718___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Customer.vue?vue&type=template&id=03193718& */ "./resources/js/components/pages/Customer.vue?vue&type=template&id=03193718&");
+/* harmony import */ var _Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Customer.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/Customer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Customer_vue_vue_type_template_id_03193718___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Customer_vue_vue_type_template_id_03193718___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/Customer.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/Customer.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/pages/Customer.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Customer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/Customer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/Customer.vue?vue&type=template&id=03193718&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/pages/Customer.vue?vue&type=template&id=03193718& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_template_id_03193718___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Customer.vue?vue&type=template&id=03193718& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/Customer.vue?vue&type=template&id=03193718&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_template_id_03193718___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_template_id_03193718___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/Dashboard.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/pages/Dashboard.vue ***!
@@ -42646,6 +43252,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_auth_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/auth/Login */ "./resources/js/views/auth/Login.vue");
 /* harmony import */ var _views_pages_Schedule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../views/pages/Schedule */ "./resources/js/views/pages/Schedule.vue");
 /* harmony import */ var _views_pages_Booking__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../views/pages/Booking */ "./resources/js/views/pages/Booking.vue");
+/* harmony import */ var _views_pages_Customer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../views/pages/Customer */ "./resources/js/views/pages/Customer.vue");
+
 
 
 
@@ -42696,6 +43304,17 @@ __webpack_require__.r(__webpack_exports__);
     path: '/booking',
     name: 'Booking',
     component: _views_pages_Booking__WEBPACK_IMPORTED_MODULE_4__["default"],
+    beforeEnter: function beforeEnter(to, from, next) {
+      axios.get('/api/booking').then(function () {
+        next();
+      })["catch"](function () {
+        return next('/login');
+      });
+    }
+  }, {
+    path: '/customer',
+    name: 'Customer',
+    component: _views_pages_Customer__WEBPACK_IMPORTED_MODULE_5__["default"],
     beforeEnter: function beforeEnter(to, from, next) {
       axios.get('/api/customer').then(function () {
         next();
@@ -42937,6 +43556,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Booking_vue_vue_type_template_id_f21ec102___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Booking_vue_vue_type_template_id_f21ec102___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/pages/Customer.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/views/pages/Customer.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Customer_vue_vue_type_template_id_1e537c28___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Customer.vue?vue&type=template&id=1e537c28& */ "./resources/js/views/pages/Customer.vue?vue&type=template&id=1e537c28&");
+/* harmony import */ var _Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Customer.vue?vue&type=script&lang=js& */ "./resources/js/views/pages/Customer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Customer_vue_vue_type_template_id_1e537c28___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Customer_vue_vue_type_template_id_1e537c28___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/pages/Customer.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/pages/Customer.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/views/pages/Customer.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Customer.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/Customer.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/pages/Customer.vue?vue&type=template&id=1e537c28&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/views/pages/Customer.vue?vue&type=template&id=1e537c28& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_template_id_1e537c28___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Customer.vue?vue&type=template&id=1e537c28& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/Customer.vue?vue&type=template&id=1e537c28&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_template_id_1e537c28___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Customer_vue_vue_type_template_id_1e537c28___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

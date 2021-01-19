@@ -11,7 +11,7 @@ class StatusController extends Controller
     public function __invoke(Customer $customer)
     {
         $customer->update([
-            'status' => 1
+            'status' => request('status')
         ]);
         return CustomerResource::make($customer);    
     }
