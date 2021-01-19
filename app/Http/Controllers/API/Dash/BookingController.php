@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\API\Dash;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Dash\CustomerResource;
+use App\Http\Requests\Dash\BookingRequest;
+use App\Http\Resources\Dash\{BookingResource, CustomerResource};
 use App\Models\{Customer, Vehicle};
 
 class BookingController extends Controller
@@ -15,29 +16,21 @@ class BookingController extends Controller
         return CustomerResource::collection($customers);    
     }
     // Store
-    public function store()
+    public function store(BookingRequest $request)
     {
-        $data = request()->validate([
-            'name'    => ['required', 'string', 'min:3', 'max:30'],
-            'identity'=> ['required', 'string', 'min:8', 'max:17'],
-            'age'     => ['required', 'max:3'],
-            'city'    => ['required', 'string', 'min:3', 'max:20'],
-            'gender'  => ['required', 'string', 'min:4', 'max:6'],
-            'schedule'=> ['required'],
-            'service' => ['required'],
-        ]);
+        $data = $request->validated();
 
-        $data['schedule_id'] = request('schedule');
-        $data['service_id']  = request('service');
+        $data['schedule_id'] =  $request->schedule;
+        $data['service_id']  = $request->service;
 
         // Budeget Orang
-        if (request('age')  >= 17) {
+        if ($request->age  >= 17) {
             $data['budget'] = 24000;
         } else $data['budget'] = 11000;
 
         // Budget Kendaraaan
-        if (request('service') == 2) {
-            $data['vehicle_id'] = request('vehicle');
+        if ($request->service == 2) {
+            $data['vehicle_id'] = $request->vehicle;
             $biayaKendaraan     = Vehicle::findOrFail($data['vehicle_id']);
             $data['budget']     = $biayaKendaraan->budget + $data['budget'];
         } else $data['vehicle_id'] = null;
@@ -45,6 +38,37 @@ class BookingController extends Controller
         return response(['message' => 'The item was created successfully'], 201);
     }
 
+    // Show
+    public function show(Customer $customer)
+    {
+        // Tidak bisa menggunakan CustomerResource / ada schedule id yang perlu di get
+        // Sedangkan CustomerResource memmuat schedule dalam bentuk object
+        return BookingResource::make($customer);
+    }
+
+    // Update
+    public function update(BookingRequest $request, Customer $customer)
+    {
+        $data = $request->validated();
+        $data['schedule_id'] =  $request->schedule;
+        $data['service_id']  = $request->service;
+
+        // Budeget Orang
+        if ($request->age  >= 17) {
+            $data['budget'] = 24000;
+        } else $data['budget'] = 11000;
+
+        // Budget Kendaraaan
+        if ($request->service == 2) {
+            $data['vehicle_id'] = $request->vehicle;
+            $biayaKendaraan     = Vehicle::findOrFail($data['vehicle_id']);
+            $data['budget']     = $biayaKendaraan->budget + $data['budget'];
+        } else $data['vehicle_id'] = null;
+        $customer->update($data);
+        return CustomerResource::make($customer);
+    }
+
+    // Destroy
     public function destroy(Customer $customer)
     {
         $customer->delete();

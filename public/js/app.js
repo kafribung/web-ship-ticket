@@ -2745,6 +2745,83 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2760,6 +2837,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       formDataUpdate: {},
       search: null,
+      id: null,
       errors: {}
     };
   },
@@ -2892,7 +2970,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context5.prev = 0;
                 _context5.next = 3;
-                return axios.post('api/booking', _this6.formDataStore);
+                return axios.post('/api/booking', _this6.formDataStore);
 
               case 3:
                 response = _context5.sent;
@@ -2918,14 +2996,87 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee5, null, [[0, 8]]);
       }))();
     },
-    //Destroy 
-    deleteBooking: function deleteBooking(id) {
+    // Edit Booking
+    editBooking: function editBooking(id) {
       var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var responese;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.prev = 0;
+                _this7.id = id;
+                _context6.next = 4;
+                return axios.get("/api/booking/".concat(id));
+
+              case 4:
+                responese = _context6.sent;
+                _this7.formDataUpdate = responese.data.data;
+                console.log(_this7.formDataUpdate.schedule);
+                _context6.next = 12;
+                break;
+
+              case 9:
+                _context6.prev = 9;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0);
+
+              case 12:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, null, [[0, 9]]);
+      }))();
+    },
+    // Update Booking
+    updateBooking: function updateBooking() {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.prev = 0;
+                _context7.next = 3;
+                return axios.patch("/api/booking/".concat(_this8.id), _this8.formDataUpdate);
+
+              case 3:
+                response = _context7.sent;
+
+                _this8.$toasted.success('Booking berhasil diedit', {
+                  duration: 3000
+                });
+
+                location.reload();
+                _context7.next = 11;
+                break;
+
+              case 8:
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](0);
+                console.log(_context7.t0);
+
+              case 11:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[0, 8]]);
+      }))();
+    },
+    //Destroy 
+    deleteBooking: function deleteBooking(id) {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 try {
                   sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -2941,7 +3092,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                           icon: "success"
                         });
 
-                        _this7.$toasted.success('Booking berhasil dhapus', {
+                        _this9.$toasted.success('Booking berhasil dhapus', {
                           duration: 3000
                         });
 
@@ -2955,18 +3106,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context6.stop();
+                return _context8.stop();
             }
           }
-        }, _callee6);
+        }, _callee8);
       }))();
     },
     // Status
     statusBooking: function statusBooking(id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
                 // const response =  axios.patch('/api/status/' + id);
                 try {
@@ -2993,10 +3144,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 1:
               case "end":
-                return _context7.stop();
+                return _context9.stop();
             }
           }
-        }, _callee7);
+        }, _callee9);
       }))();
     },
     // Delete Booking
@@ -25183,6 +25334,24 @@ var render = function() {
                                   _c(
                                     "button",
                                     {
+                                      staticClass:
+                                        "btn btn-warning btn-circle btn-sm m-0 p-0",
+                                      attrs: {
+                                        "data-toggle": "modal",
+                                        "data-target": "#modalUpdate"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editBooking(booking.id)
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-edit" })]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
                                       ref: "delete",
                                       refInFor: true,
                                       staticClass:
@@ -25683,6 +25852,475 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalUpdate",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateBooking($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.name,
+                            expression: "formDataUpdate.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Nama Lengkap" },
+                        domProps: { value: _vm.formDataUpdate.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.name
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.name[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.identity,
+                            expression: "formDataUpdate.identity"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          maxlength: "17",
+                          placeholder: "Identitas"
+                        },
+                        domProps: { value: _vm.formDataUpdate.identity },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "identity",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.identity
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.identity[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.age,
+                            expression: "formDataUpdate.age"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          max: "120",
+                          maxlength: "3",
+                          placeholder: "Umur"
+                        },
+                        domProps: { value: _vm.formDataUpdate.age },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "age",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.age
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.age[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formDataUpdate.city,
+                            expression: "formDataUpdate.city"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          maxlength: "20",
+                          placeholder: "Kota"
+                        },
+                        domProps: { value: _vm.formDataUpdate.city },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formDataUpdate,
+                              "city",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.city
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.city[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formDataUpdate.gender,
+                              expression: "formDataUpdate.gender"
+                            }
+                          ],
+                          staticClass: "form-control selected",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.formDataUpdate,
+                                "gender",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { disabled: "" },
+                              domProps: { value: null }
+                            },
+                            [_vm._v("Jenis Kelamin")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Pria")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Wanita")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.gender
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.gender[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formDataUpdate.schedule,
+                              expression: "formDataUpdate.schedule"
+                            }
+                          ],
+                          staticClass: "form-control selected",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.formDataUpdate,
+                                "schedule",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { disabled: "" } }, [
+                            _vm._v("Jadwal")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.schedules, function(schedule, index) {
+                            return _c(
+                              "option",
+                              { key: index, domProps: { value: schedule.id } },
+                              [
+                                _c("ul", [
+                                  _c("li", [
+                                    _vm._v(_vm._s(schedule.ship) + " ♦")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _vm._v(_vm._s(schedule.departure) + "-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _vm._v(_vm._s(schedule.destination) + " ♦")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _vm._v(_vm._s(schedule.date) + "-")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [_vm._v(_vm._s(schedule.time))])
+                                ])
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.schedule
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.errors.schedule[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formDataUpdate.service,
+                              expression: "formDataUpdate.service"
+                            }
+                          ],
+                          staticClass: "form-control selected",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.formDataUpdate,
+                                "service",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { disabled: "" },
+                              domProps: { value: null }
+                            },
+                            [_vm._v("Layanan")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.services, function(service, index) {
+                            return _c(
+                              "option",
+                              { key: index, domProps: { value: service.id } },
+                              [_vm._v(_vm._s(service.type))]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.service
+                        ? _c(
+                            "small",
+                            { staticClass: "text-danger font-italic d-block" },
+                            [_vm._v(_vm._s(_vm.formDataUpdate.service[0]))]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _vm.formDataUpdate.service == "2"
+                      ? _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.formDataUpdate.vehicle,
+                                  expression: "formDataUpdate.vehicle"
+                                }
+                              ],
+                              staticClass: "form-control selected",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.formDataUpdate,
+                                    "vehicle",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                {
+                                  attrs: { disabled: "" },
+                                  domProps: { value: null }
+                                },
+                                [_vm._v("Golongan Kendaraan")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.vehicles, function(vehicle, index) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: index,
+                                    domProps: { value: vehicle.id }
+                                  },
+                                  [_vm._v(_vm._s(vehicle.type))]
+                                )
+                              })
+                            ],
+                            2
+                          ),
+                          _vm._v(" "),
+                          _vm.errors.vehicle
+                            ? _c(
+                                "small",
+                                {
+                                  staticClass: "text-danger font-italic d-block"
+                                },
+                                [_vm._v(_vm._s(_vm.formDataUpdate.vehicle[0]))]
+                              )
+                            : _vm._e()
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._m(6)
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -25785,6 +26423,52 @@ var staticRenderFns = [
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Tambah")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Edit Booking")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-warning", attrs: { type: "submit" } },
+        [_vm._v("Edit")]
       )
     ])
   }

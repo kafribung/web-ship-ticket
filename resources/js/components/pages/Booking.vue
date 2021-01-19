@@ -60,6 +60,7 @@
                                     <td>{{ booking.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
                                     <td>
                                         <button   v-if="booking.status == 0" @click="statusBooking(booking.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
+                                        <button  @click="editBooking(booking.id)" class="btn btn-warning btn-circle btn-sm m-0 p-0" data-toggle="modal" data-target="#modalUpdate"><i class="fa fa-edit"></i></button>
                                         <button  ref="delete" @click="deleteBooking(booking.id)" class="btn btn-danger btn-circle btn-sm m-1 py-0"><i class="fa fa-trash"></i></button>
                                     </td>
                                     
@@ -155,6 +156,82 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Update -->
+        <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Booking</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="updateBooking">
+                            <div class="form-group">
+                                <input type="text" v-model="formDataUpdate.name"  class="form-control" placeholder="Nama Lengkap">
+                                <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" maxlength="17" v-model="formDataUpdate.identity"  class="form-control" placeholder="Identitas">
+                                <small v-if="errors.identity" class="text-danger font-italic d-block">{{ errors.identity[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" max="120" maxlength="3" v-model="formDataUpdate.age"  class="form-control" placeholder="Umur">
+                                <small v-if="errors.age" class="text-danger font-italic d-block">{{ errors.age[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" maxlength="20" v-model="formDataUpdate.city"  class="form-control" placeholder="Kota">
+                                <small v-if="errors.city" class="text-danger font-italic d-block">{{ errors.city[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <select v-model="formDataUpdate.gender" class="form-control selected">
+                                    <option disabled :value="null">Jenis Kelamin</option>
+                                    <option>Pria</option>
+                                    <option>Wanita</option>
+                                </select>
+                                <small v-if="errors.gender" class="text-danger font-italic d-block">{{ errors.gender[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <select v-model="formDataUpdate.schedule" class="form-control selected">
+                                    <option disabled>Jadwal</option>
+                                    <option v-for="(schedule, index) in schedules" :key="index" :value="schedule.id">
+                                        <ul>
+                                            <li>{{ schedule.ship }} &diams;</li>
+                                            <li>{{ schedule.departure }}-</li>
+                                            <li>{{ schedule.destination }} &diams;</li>
+                                            <li>{{ schedule.date }}-</li>
+                                            <li>{{ schedule.time }}</li>
+                                        </ul>    
+                                    </option>
+                                </select>
+                                <small v-if="errors.schedule" class="text-danger font-italic d-block">{{ errors.schedule[0] }}</small>
+                            </div>
+                            <div class="form-group">
+                                <select v-model="formDataUpdate.service" class="form-control selected">
+                                    <option disabled :value="null">Layanan</option>
+                                    <option v-for="(service, index) in services" :key="index" :value="service.id">{{ service.type }}</option>
+                                </select>
+                                <small v-if="errors.service" class="text-danger font-italic d-block">{{ formDataUpdate.service[0] }}</small>
+                            </div>
+                            <div class="form-group" v-if="formDataUpdate.service == '2'">
+                                <select v-model="formDataUpdate.vehicle" class="form-control selected">
+                                    <option disabled :value="null">Golongan Kendaraan</option>
+                                    <option v-for="(vehicle, index) in vehicles" :key="index" :value="vehicle.id">{{ vehicle.type }}</option>
+                                </select>
+                                <small v-if="errors.vehicle" class="text-danger font-italic d-block">{{ formDataUpdate.vehicle[0] }}</small>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-warning">Edit</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.container-fluid -->
     
@@ -177,6 +254,7 @@ export default {
             },
             formDataUpdate: {},
             search: null,
+            id: null,
             errors: {},
         }
     },
@@ -225,13 +303,38 @@ export default {
         // Create
         async storeBooking(){
             try {
-                const response = await axios.post('api/booking', this.formDataStore)
+                const response = await axios.post('/api/booking', this.formDataStore)
                 this.$toasted.success('Booking berhasil ditambahkan', {
                     duration : 3000,
                 })
                 location.reload()
             } catch (error) {
-                this.errors = error.response.data.errors   
+                this.errors = error.response.data.errors
+            }
+        },
+
+        // Edit Booking
+        async editBooking(id){
+            try {
+                this.id = id
+                const responese = await axios.get(`/api/booking/${id}`)
+                this.formDataUpdate = responese.data.data
+                console.log(this.formDataUpdate.schedule)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        // Update Booking
+        async updateBooking(){
+            try {
+                const response = await axios.patch(`/api/booking/${this.id}`, this.formDataUpdate)
+                this.$toasted.success('Booking berhasil diedit', {
+                    duration : 3000,
+                })
+                location.reload()
+            } catch (error) {
+                console.log(error)
             }
         },
 

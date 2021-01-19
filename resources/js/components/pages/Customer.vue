@@ -58,7 +58,7 @@
                                     <td>{{ booking.budget }}</td>
                                     <td>{{ booking.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
                                     <td>
-                                        <button   v-if="booking.status == 1" @click="statusBooking(booking.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
+                                        <button  v-if="booking.status == 1" @click="statusBooking(booking.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
                                     </td>
                                     
                                 </tr>
