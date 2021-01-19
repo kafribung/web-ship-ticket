@@ -68,17 +68,17 @@
                                 <input type="text" v-model="formDataStore.ship"  class="form-control" placeholder="Kapal">
                                 <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
                             </div>
-                            <div class="form-control">
-                                <select v-model="formDataStore.departure">
-                                    <option selected disabled>Keberangkatan</option>
+                            <div class="form-group">
+                                <select v-model="formDataStore.departure" class="form-control selected">
+                                    <option :value="null" disabled>Keberangkatan</option>
                                     <option>Pamatata</option>
                                     <option>Bira</option>
                                 </select>
                                 <small v-if="errors.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
                             </div>
-                            <div class="form-control">
-                                <select v-model="formDataStore.destination">
-                                    <option selected disabled>Tujuan</option>
+                            <div class="form-group">
+                                <select v-model="formDataStore.destination" class="form-control selected">
+                                    <option :value="null" disabled>Tujuan</option>
                                     <option v-if="formDataStore.departure == 'Bira'">Pamatata</option>
                                     <option v-if="formDataStore.departure == 'Pamatata'">Bira</option>
                                 </select>
@@ -119,16 +119,16 @@
                                 <input type="text" v-model="formDataUpdate.ship"  class="form-control" placeholder="Kapal">
                                 <small v-if="errors.ship" class="text-danger font-italic d-block">{{ errors.ship[0] }}</small>
                             </div>
-                            <div class="form-control">
-                                <select v-model="formDataUpdate.departure">
+                            <div class="form-group">
+                                <select v-model="formDataUpdate.departure" class="form-control selected">
                                     <option selected disabled>Keberangkatan</option>
                                     <option>Pamatata</option>
                                     <option>Bira</option>
                                 </select>
                                 <small v-if="errors.departure" class="text-danger font-italic d-block">{{ errors.departure[0] }}</small>
                             </div>
-                            <div class="form-control">
-                                <select v-model="formDataUpdate.destination">
+                            <div class="form-group">
+                                <select v-model="formDataUpdate.destination" class="form-control selected">
                                     <option selected disabled>Tujuan</option>
                                     <option v-if="formDataUpdate.departure == 'Bira'">Pamatata</option>
                                     <option v-if="formDataUpdate.departure == 'Pamatata'">Bira</option>
@@ -164,7 +164,10 @@ export default {
     data() {
         return {
             schedules : {},
-            formDataStore: {},
+            formDataStore: {
+                departure: null,
+                destination: null,
+            },
             formDataUpdate: {},
             id: null,
             errors: {},
@@ -217,9 +220,9 @@ export default {
         async deleteSchedule(id){
             try {
                 swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
-                    icon: "warning",
+                    title: "Apakah kamu yakin?",
+                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan file ini!",
+                    icon: "peringatan",
                     buttons: true,
                     dangerMode: true,
                 })
@@ -227,7 +230,7 @@ export default {
                 if (willDelete) {
                     axios.delete(`api/schedule/${id}`)
                     .then(response => {
-                        swal("Poof! Your imaginary file has been deleted!", {
+                        swal("File anda berhasil dihapus!", {
                         icon: "success",
                         });
                         this.$toasted.success('Admin berhasil dhapus', {
@@ -237,7 +240,7 @@ export default {
                     })
                     
                 } else {
-                    swal("Your imaginary file is safe!");
+                    swal("File anda aman!");
                 }
                 });
                 

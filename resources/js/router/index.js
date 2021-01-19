@@ -2,7 +2,7 @@ import Dashboard from '../views/pages/Dashboard'
 import Admin from '../views/pages/Admin'
 import Login from '../views/auth/Login'
 import Schedule from '../views/pages/Schedule'
-import Customer from '../views/pages/Customer'
+import Booking from '../views/pages/Booking'
 
 export default {
     mode: 'history',
@@ -45,9 +45,9 @@ export default {
             }
         },
         {
-            path: '/customer',
-            name: 'Customer',
-            component: Customer,
+            path: '/booking',
+            name: 'Booking',
+            component: Booking,
             beforeEnter: (to, from, next) => {
                 axios.get('/api/customer').then(() => { 
                     next()

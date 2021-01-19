@@ -7,7 +7,7 @@
             <!-- Main Content -->
             <div id="content">
                 <Navbar/>
-                <Customer/>
+                <Booking/>
             </div>
             <!-- End of Main Content -->
             <Footer/>
@@ -22,14 +22,14 @@ import Sidebar from '../../components/Sidebar'
 import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
 
-import Customer from '../../components/pages/Customer'
+import Booking from '../../components/pages/Booking'
 
 export default {
     components:{
         Sidebar,
         Footer,
         Navbar,
-        Customer,
+        Booking,
     }
 }
 </script>

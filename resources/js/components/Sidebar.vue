@@ -46,10 +46,18 @@
         </router-link>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <router-link :to="'/customer'" class="nav-item">
+        <router-link :to="'/booking'" class="nav-item">
             <div class="nav-link">
                 <i class="fas fa-fw fa-book"></i>
                 <span>Booking</span>
+            </div>
+        </router-link>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <router-link :to="'/customer'" class="nav-item">
+            <div class="nav-link">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Customer</span>
             </div>
         </router-link>
 
@@ -70,28 +78,8 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Login Screens:</h6>
                     <a class="collapse-item" href="login.html">Login</a>
-                    <a class="collapse-item" href="register.html">Register</a>
-                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Other Pages:</h6>
-                    <a class="collapse-item" href="404.html">404 Page</a>
-                    <a class="collapse-item" href="blank.html">Blank Page</a>
                 </div>
             </div>
-        </li>
-
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
-        </li>
-
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="tables.html">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span></a>
         </li>
 
         <!-- Logout Modal-->

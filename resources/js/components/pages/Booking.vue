@@ -4,6 +4,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Booking ({{ customers.length }} Orang )</h1>
+            <small v-if="errors.name" class="text-danger font-italic d-block">{{ errors.name[0] }}</small>
         </div>
 
         <div v-if="customers == ''">
@@ -99,7 +100,7 @@
                                 <small v-if="errors.city" class="text-danger font-italic d-block">{{ errors.city[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <select v-model="formDataStore.gender" class="form-control" style="padding: 0 0 0 0;">
+                                <select v-model="formDataStore.gender" class="form-control selected">
                                     <option disabled :value="null">Jenis Kelamin</option>
                                     <option>Pria</option>
                                     <option>Wanita</option>
@@ -107,7 +108,7 @@
                                 <small v-if="errors.gender" class="text-danger font-italic d-block">{{ errors.gender[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <select v-model="formDataStore.schedule" class="form-control" style="padding: 0 0 0 0;">
+                                <select v-model="formDataStore.schedule" class="form-control selected">
                                     <option disabled :value="null">Jadwal</option>
                                     <option v-for="(schedule, index) in schedules" :key="index" :value="schedule.id">
                                         <ul>
@@ -122,14 +123,14 @@
                                 <small v-if="errors.schedule" class="text-danger font-italic d-block">{{ errors.schedule[0] }}</small>
                             </div>
                             <div class="form-group">
-                                <select v-model="formDataStore.service" class="form-control" style="padding: 0 0 0 0;">
+                                <select v-model="formDataStore.service" class="form-control selected">
                                     <option disabled :value="null">Layanan</option>
                                     <option v-for="(service, index) in services" :key="index" :value="service.id">{{ service.type }}</option>
                                 </select>
                                 <small v-if="errors.service" class="text-danger font-italic d-block">{{ formDataStore.service[0] }}</small>
                             </div>
                             <div class="form-group" v-if="formDataStore.service == '2'">
-                                <select v-model="formDataStore.vehicle" class="form-control" style="padding: 0 0 0 0;">
+                                <select v-model="formDataStore.vehicle" class="form-control selected">
                                     <option disabled :value="null">Golongan Kendaraan</option>
                                     <option v-for="(vehicle, index) in vehicles" :key="index" :value="vehicle.id">{{ vehicle.type }}</option>
                                 </select>
@@ -209,7 +210,7 @@ export default {
                 })
                 location.reload()
             } catch (error) {
-                this.errors = error.response.data.errors    
+                this.errors = error.response.data.errors   
             }
         },
 
@@ -304,3 +305,12 @@ export default {
     },
 }
 </script>
+
+<style>
+    .form-control{
+        width: 100%;
+    }
+    .selected{
+        padding: 0;
+    }
+</style>
