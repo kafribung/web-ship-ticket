@@ -11,10 +11,9 @@ import router from './router'
 import Toasted from 'vue-toasted'
 Vue.use(Toasted)
 
-// Datatable
-import DataTable from 'laravel-vue-datatable';
-Vue.use(DataTable);
-
+// Pagination
+import pagination from 'laravel-vue-pagination'
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 new Vue({
     el: "#app",

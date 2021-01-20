@@ -22,7 +22,7 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Tgl</th>
+                                    <th scope="col">Tgl Booking</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Identitas</th>
                                     <th scope="col">Umur</th>
@@ -37,30 +37,29 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <template v-if="filterCustomers != ''">
-                                    <tr class="text-small" v-for="(booking, index) in filterCustomers" :key="index">
-                                    <td>{{ booking.created_at }}</td>
-                                    <td>{{ booking.name }}</td>
-                                    <td>{{ booking.identity }}</td>
-                                    <td>{{ booking.age }}</td>
-                                    <td>{{ booking.city }}</td>
-                                    <td>{{ booking.gender }}</td>
-                                    <td>{{ booking.service }}</td>
-                                    <td v-if="booking.vehicle != null">{{ booking.vehicle.type }}</td>
+                                <template v-if="filterCustomer != ''">
+                                    <tr class="text-small" v-for="(customer, index) in filterCustomer.data" :key="index">
+                                    <td>{{ customer.created_at }}</td>
+                                    <td>{{ customer.name }}</td>
+                                    <td>{{ customer.identity }}</td>
+                                    <td>{{ customer.age }}</td>
+                                    <td>{{ customer.city }}</td>
+                                    <td>{{ customer.gender }}</td>
+                                    <td>{{ customer.service }}</td>
+                                    <td v-if="customer.vehicle != null">{{ customer.vehicle.type }}</td>
                                     <td v-else>-</td>
                                     <td>
                                         <ul type="disk">
-                                            <li><small>{{ booking.schedule.ship }}</small></li>
-                                            <li><small>{{ booking.schedule.departure }} - {{ booking.schedule.destination }} </small> </li>
-                                            <li><small>{{ booking.schedule.date }} - {{ booking.schedule.time }}</small> </li>
+                                            <li><small>{{ customer.schedule.ship }}</small></li>
+                                            <li><small>{{ customer.schedule.departure }} - {{ customer.schedule.destination }} </small> </li>
+                                            <li><small>{{ customer.schedule.date }} - {{ customer.schedule.time }}</small> </li>
                                         </ul>
                                     </td>
-                                    <td>{{ booking.budget }}</td>
-                                    <td>{{ booking.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
+                                    <td>{{ customer.budget }}</td>
+                                    <td>{{ customer.status == 0 ? 'Belum Lunas' : 'Lunas' }}</td>
                                     <td>
-                                        <button  v-if="booking.status == 1" @click="statusBooking(booking.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
+                                        <button  v-if="customer.status == 1" @click="statusCustomer(customer.id)" class="btn btn-info btn-circle btn-sm m-1 p-0"><i class="fa fa-credit-card"></i></button>
                                     </td>
-                                    
                                 </tr>
                                 </template>
                                 <template v-else>
@@ -68,9 +67,11 @@
                                         <td colspan="12"><p>Data tidak ditemukan</p></td>
                                     </tr>
                                 </template>
-                                
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="float-right">
+                            <pagination :data="customers" @pagination-change-page="getCustomer"></pagination>
                         </div>
                     </div>
                 </div>
@@ -98,12 +99,11 @@ export default {
         this.getCustomer()
     },
     computed: {
-        filterCustomers() {
+        filterCustomer() {
             if (this.search) {
                 return this.customers.filter((customer) => {
                     return customer.name
                         .toLowerCase()
-                        .split(' ')
                         .includes(this.search.toLowerCase());
                 });
             } else return this.customers;
@@ -111,13 +111,13 @@ export default {
     },
     methods: {
         // Read
-        async getCustomer(){
-            const response = await axios.get('/api/customer')
-            this.customers = response.data.data
+        async getCustomer(page = 1){
+            const response = await axios.get('/api/customer?page=' + page)
+            this.customers = response.data
         },
 
         // Status
-        async statusBooking(id){
+        async statusCustomer(id){
             try {
                 swal({
                     title: "Apakah kamu yakin?",

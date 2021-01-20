@@ -18,7 +18,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "laravel-vue-datatable": "^0.6.0",
+        "laravel-vue-pagination": "^2.3.1",
         "sweetalert": "^2.1.2",
         "vue": "^2.6.12",
         "vue-router": "^3.4.9",

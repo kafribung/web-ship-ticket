@@ -11,7 +11,7 @@ class CustomerController extends Controller
     // Read
     public function __invoke()
     {
-        $customers = Customer::with('service', 'schedule', 'vehicle')->where('status', 1)->latest()->get();
+        $customers = Customer::with('service', 'schedule', 'vehicle')->where('status', 1)->latest()->paginate(50);
         return CustomerResource::collection($customers);    
     }
 }
