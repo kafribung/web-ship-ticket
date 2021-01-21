@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
 use App\Http\Controllers\API\Dash\{AdminConrtoller, BookingController, CustomerController, DashboardController, DeleteBookingController, ScheduleController, ServiceController, StatusController, VehicleController};
+use App\Http\Controllers\API\Mobile\MobileBookingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Website
 Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('dashboard', DashboardController::class);
     // Admin
@@ -56,3 +58,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('logout', LogoutController::class);
 });
 Route::post('login', LoginController::class);
+
+// Android
+Route::post('booking/mobile', MobileBookingController::class);
+
