@@ -15,6 +15,7 @@ class DashboardController extends Controller
         $data['admin']    = User::where('role', 1)->count();
         $data['schedule'] = Schedule::count();
         $data['booking']  = Customer::where('status', 0)->count();
+        $data['customer']  = Customer::where('status', 1)->count();
         return DashboardResource::make($data);
     }
 }

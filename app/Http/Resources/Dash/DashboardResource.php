@@ -20,6 +20,7 @@ class DashboardResource extends JsonResource
             'admin' => $this->admin,
             'schedule' => $this->schedule,
             'booking' => $this->booking,
+            'customer' => $this->customer,
         ];
     }
 }
