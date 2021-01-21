@@ -147,7 +147,6 @@ export default {
         async getAuth(){
             const response = await axios.get('api/dashboard')
             this.auth = response.data.data
-            console.log(this.auth)
         },
         // Read
         async getAdmin(){
