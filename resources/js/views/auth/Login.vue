@@ -27,11 +27,6 @@
                 />
                 <button type="submit" class="fadeIn fourth">Log In</button>
             </form>
-
-            <!-- Remind Passowrd -->
-            <div id="formFooter">
-                <a class="underlineHover" href="#">Forgot Password?</a>
-            </div>
         </div>
     </div>
 </template>
@@ -49,17 +44,14 @@ export default {
     },
     methods: {
         async handleLogin(){
-            await axios.get('/sanctum/csrf-cookie').then(response => {
-                axios.post('/api/login', this.formData)
-                .then((response) => {
-                    this.$router.push('/dashboard')
-                })
-                .catch(err => {
-                    if (err.response.data.message)
-                        this.errors = err.response.data.message
-                    else this.errors = err.response.message
-                })
-            });
+            try {
+                const response = await axios.post('/api/login', this.formData)
+                this.$router.push('/dashboard')
+            } catch (error) {
+                if (error.response.data.message)
+                    this.errors = error.response.data.message
+                else this.errors = error.response.message
+            }
         },
     }
 }
