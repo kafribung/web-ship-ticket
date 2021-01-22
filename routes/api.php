@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\Mobile\{MobileBookingController, MobileScheduleController};
 use App\Http\Controllers\API\Auth\{LoginController, LogoutController};
 use App\Http\Controllers\API\Dash\{AdminConrtoller, BookingController, CustomerController, DashboardController, DeleteBookingController, ScheduleController, ServiceController, StatusController, VehicleController};
-use App\Http\Controllers\API\Mobile\MobileBookingController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('login', LoginController::class);
+
+// Android
+Route::post('booking/mobile', MobileBookingController::class);
+Route::get('schedule/mobile', [ScheduleController::class, 'index']);
+Route::get('service/mobile', ServiceController::class);
+Route::get('vehicle/mobile', VehicleController::class);
 
 // Website
 Route::group(['middleware' => 'auth:sanctum'], function(){
@@ -57,8 +65,4 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     Route::post('logout', LogoutController::class);
 });
-Route::post('login', LoginController::class);
-
-// Android
-Route::post('booking/mobile', MobileBookingController::class);
 
