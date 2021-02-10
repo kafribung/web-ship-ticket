@@ -127,7 +127,13 @@ export default {
     },
     methods: {
         async handleDashboard(){
-            const response = await axios.get('/api/dashboard');
+            const token = localStorage.getItem('token')
+            const headers = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+            const response = await axios.get('/api/dashboard', headers);
             this.dashboard = response.data.data
         }
     },

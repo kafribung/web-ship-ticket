@@ -96,13 +96,15 @@
 export default {
     methods: {
         handleLogout(){
-            const header = {
+            const token = localStorage.getItem('token')
+            const accessToken = {
                 headers: {
-                    'Authorization': `Basic ${localStorage.getItem('token')}`
-                },
+                    'Authorization': `Bearer ${token}`
+                }
             }
-            axios.post('http://127.0.0.1:8000/api/logout', header)
+            axios.post('http://127.0.0.1:8000/api/logout', accessToken)
             .then(response => {
+                localStorage.clear()
                 this.$router.push('/login')
             }).catch(error => {
                 console.log(error)

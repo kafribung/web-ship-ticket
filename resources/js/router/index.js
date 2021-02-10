@@ -21,7 +21,14 @@ export default {
             name: 'Dashboard',
             component: Dashboard,
             beforeEnter: (to, from, next) => {
-                axios.get('/api/dashboard').then(()=> { 
+                const token = localStorage.getItem('token')
+                const accessToken = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+                axios.get('/api/dashboard', accessToken)
+                    .then(() => { 
                     next()
                 }).catch(() => next('/login'))
             }
@@ -31,7 +38,13 @@ export default {
             name: 'Admin',
             component: Admin,
             beforeEnter: (to, from, next) => {
-                axios.get('/api/admin').then(()=> { 
+                const token = localStorage.getItem('token')
+                const accessToken = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+                axios.get('/api/admin', accessToken).then(()=> { 
                     next()
                 }).catch(() => next('/login'))
             }
@@ -41,7 +54,13 @@ export default {
             name: 'Schedule',
             component: Schedule,
             beforeEnter: (to, from, next) => {
-                axios.get('/api/schedule').then(() => {
+                const token = localStorage.getItem('token')
+                const accessToken = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+                axios.get('/api/schedule', accessToken).then(() => {
                     next()
                 }).catch(() => next('/login'))
             }
@@ -51,7 +70,13 @@ export default {
             name: 'Booking',
             component: Booking,
             beforeEnter: (to, from, next) => {
-                axios.get('/api/booking').then(() => { 
+                const token = localStorage.getItem('token')
+                const accessToken = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+                axios.get('/api/booking', accessToken).then(() => { 
                     next()
                 }).catch(() => next('/login'))
             }
@@ -61,7 +86,13 @@ export default {
             name: 'Customer',
             component: Customer,
             beforeEnter: (to, from, next) => {
-                axios.get('/api/customer').then(() => { 
+                const token = localStorage.getItem('token')
+                const accessToken = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+                axios.get('/api/customer', accessToken).then(() => { 
                     next()
                 }).catch(() => next('/login'))
             }

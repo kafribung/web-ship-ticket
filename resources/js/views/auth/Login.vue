@@ -46,6 +46,7 @@ export default {
         async handleLogin(){
             try {
                 const response = await axios.post('/api/login', this.formData)
+                localStorage.setItem('token', response.data.data.token)
                 this.$router.push('/dashboard')
             } catch (error) {
                 if (error.response.data.message)
