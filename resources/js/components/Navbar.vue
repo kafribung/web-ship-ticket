@@ -40,9 +40,19 @@ export default {
     mounted() {
         this.handleNavbar()
     },
+    computed: {
+        getHeaders(){
+            const token = localStorage.getItem('token')
+            return {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        },
+    },
     methods: {
         async handleNavbar(){
-            const response = await axios.get('/api/dashboard');
+            const response = await axios.get('/api/dashboard', this.getHeaders);
             this.auth = response.data.data
         }
     },

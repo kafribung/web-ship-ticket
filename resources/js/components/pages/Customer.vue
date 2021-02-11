@@ -108,11 +108,20 @@ export default {
                 });
             } else return this.customers;
         },
+
+        getHeaders(){
+            const token = localStorage.getItem('token')
+            return {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        },
     },
     methods: {
         // Read
         async getCustomer(page = 1){
-            const response = await axios.get('/api/customer?page=' + page)
+            const response = await axios.get('/api/customer?page=' + page, this.getHeaders)
             this.customers = response.data
         },
 
@@ -129,7 +138,7 @@ export default {
                 if (willDelete) {
                     axios.patch('/api/status/' + id, {
                         status: 0
-                    })
+                    }, this.getHeaders)
                     .then(response => {
                         swal("Status berhasil diubah", {
                         icon: "success",

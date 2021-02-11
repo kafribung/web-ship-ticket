@@ -176,17 +176,27 @@ export default {
     created() {
         this.getSchedule()
     },
+    computed: {
+        getHeaders(){
+            const token = localStorage.getItem('token')
+            return {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        },
+    },
     methods: {
         // Read
         async getSchedule(){
-            const response = await axios.get('/api/schedule')
+            const response = await axios.get('/api/schedule', this.getHeaders)
             this.schedules = response.data.data
         },
 
         // Create
         async storeSchedule(){
             try {
-                const response = await axios.post('api/schedule', this.formDataStore)
+                const response = await axios.post('api/schedule', this.formDataStore, this.getHeaders)
                 this.$toasted.success('Jadwal berhasil ditambahkan', {
                     duration : 3000,
                 })
@@ -199,14 +209,14 @@ export default {
         //Edit 
         async editSchedule(id){
             this.id = id
-            const response = await axios.get(`api/schedule/${id}`)
+            const response = await axios.get(`api/schedule/${id}`, this.getHeaders)
             this.formDataUpdate = response.data.data 
         },
 
         //Update 
         async updateSchedule(){
             try {
-                const response = await axios.patch(`api/schedule/${this.id}`, this.formDataUpdate)
+                const response = await axios.patch(`api/schedule/${this.id}`, this.formDataUpdate, this.getHeaders)
                 this.$toasted.success('Jadwal berhasil diedit', {
                     duration : 3000,
                 })
@@ -228,7 +238,7 @@ export default {
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`api/schedule/${id}`)
+                    axios.delete(`api/schedule/${id}`, this.getHeaders)
                     .then(response => {
                         swal("File anda berhasil dihapus!", {
                         icon: "success",
@@ -246,11 +256,6 @@ export default {
                 
             } catch (error) {}
         },
-
     },
 }
 </script>
-
-<style>
-
-</style>
