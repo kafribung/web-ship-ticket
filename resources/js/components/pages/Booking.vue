@@ -278,32 +278,41 @@ export default {
                 });
             } else return this.bookings;
         },
+
+        getHeaders(){
+            const token = localStorage.getItem('token')
+            return {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        },
     },
     methods: {
         // Schedule
         async getSchedule(){
-            const response = await axios.get('/api/schedule')
+            const response = await axios.get('/api/schedule', this.getHeaders)
             this.schedules  = response.data.data
         },
         // Service
         async getService(){
-            const response = await axios.get('/api/service')
+            const response = await axios.get('/api/service', this.getHeaders)
             this.services  = response.data.data
         },
         async getVehicle(){
-            const response = await axios.get('/api/vehicle')
+            const response = await axios.get('/api/vehicle', this.getHeaders)
             this.vehicles  = response.data.data
         },
         // Read
         async getBooking(){
-            const response = await axios.get('/api/booking')
+            const response = await axios.get('/api/booking', this.getHeaders)
             this.bookings = response.data.data
         },
 
         // Create
         async storeBooking(){
             try {
-                const response = await axios.post('/api/booking', this.formDataStore)
+                const response = await axios.post('/api/booking', this.formDataStore, this.getHeaders)
                 this.$toasted.success('Booking berhasil ditambahkan', {
                     duration : 3000,
                 })
@@ -317,7 +326,7 @@ export default {
         async editBooking(id){
             try {
                 this.id = id
-                const responese = await axios.get(`/api/booking/${id}`)
+                const responese = await axios.get(`/api/booking/${id}`, this.getHeaders)
                 this.formDataUpdate = responese.data.data
                 console.log(this.formDataUpdate.schedule)
             } catch (error) {
@@ -328,7 +337,7 @@ export default {
         // Update Booking
         async updateBooking(){
             try {
-                const response = await axios.patch(`/api/booking/${this.id}`, this.formDataUpdate)
+                const response = await axios.patch(`/api/booking/${this.id}`, this.formDataUpdate, this.getHeaders)
                 this.$toasted.success('Booking berhasil diedit', {
                     duration : 3000,
                 })
@@ -350,7 +359,7 @@ export default {
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`api/booking/${id}`)
+                    axios.delete(`api/booking/${id}`, this.getHeaders)
                     .then(response => {
                         swal("File anda berhasil dihapus!", {
                         icon: "success",
@@ -365,13 +374,11 @@ export default {
                     swal("File anda aman!");
                 }
                 });
-                
             } catch (error) {}
         },
 
         // Status
         async statusBooking(id){
-            // const response =  axios.patch('/api/status/' + id);
             try {
                 swal({
                     title: "Apakah kamu yakin?",
@@ -383,7 +390,7 @@ export default {
                 if (willDelete) {
                     axios.patch('/api/status/' + id, {
                         status: 1
-                    })
+                    }, this.getHeaders)
                     .then(response => {
                         swal("Status berhasil diubah", {
                         icon: "success",
@@ -402,7 +409,7 @@ export default {
         // Delete Booking
         deleteBookingOtomatis(){
                 setInterval(function(){
-                axios.get('/delete-booking')
+                axios.get('/delete-booking', this.getHeaders)
                 .then(() => {
                 console.log('5 detik')
                 })
