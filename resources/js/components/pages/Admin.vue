@@ -142,22 +142,32 @@ export default {
         this.getAdmin()
         this.getAuth()
     },
+    computed: {
+        getHeaders(){
+            const token = localStorage.getItem('token')
+            return {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        },
+    },
     methods: {
         // Get Auth
         async getAuth(){
-            const response = await axios.get('api/dashboard')
+            const response = await axios.get('api/dashboard', this.getHeaders)
             this.auth = response.data.data
         },
         // Read
         async getAdmin(){
-            const response = await axios.get('/api/admin')
+            const response = await axios.get('/api/admin', this.getHeaders)
             this.admins = response.data.data
         },
 
         // Create
         async storeAdmin(){
             try {
-                const response = await axios.post('api/admin', this.formDataStore)
+                const response = await axios.post('api/admin', this.formDataStore, this.getHeaders)
                 this.$toasted.success('Data admin berhasil ditambahkan', {
                     duration : 3000,
                 })
@@ -176,14 +186,14 @@ export default {
         //Edit 
         async editAdmin(email){
             this.email = email
-            const response = await axios.get(`api/admin/${email}`)
+            const response = await axios.get(`api/admin/${email}`, this.getHeaders)
             this.formDataUpdate = response.data.data 
         },
 
         //Update 
         async updateAdmin(){
             try {
-                const response = await axios.patch(`api/admin/${this.email}`, this.formDataUpdate)
+                const response = await axios.patch(`api/admin/${this.email}`, this.formDataUpdate, this.getHeaders)
                 this.$toasted.success('Data admin berhasil diedit', {
                     duration : 3000,
                 })
@@ -211,7 +221,7 @@ export default {
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`api/admin/${email}`)
+                    axios.delete(`api/admin/${email}`, this.getHeaders)
                     .then(response => {
                         swal("File anda berhasil dihapus!", {
                         icon: "success",

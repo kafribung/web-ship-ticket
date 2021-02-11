@@ -125,15 +125,19 @@ export default {
     created() {
         this.handleDashboard()
     },
-    methods: {
-        async handleDashboard(){
+    computed: {
+        getHeaders(){
             const token = localStorage.getItem('token')
-            const headers = {
+            return {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             }
-            const response = await axios.get('/api/dashboard', headers);
+        },
+    },
+    methods: {
+        async handleDashboard(){
+            const response = await axios.get('/api/dashboard', this.getHeaders);
             this.dashboard = response.data.data
         }
     },
